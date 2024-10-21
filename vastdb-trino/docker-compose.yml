@@ -1,0 +1,49 @@
+networks:
+  proxy:
+    name: proxy
+    
+services:
+  traefik:
+    image: traefik:v3.1.6
+    ports:
+      - 443:443
+      - 8080:8080 # dashboard port 
+    networks:
+      - proxy
+    platform: linux/amd64
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --log.level=INFO
+      - --accesslog=true
+      # - --accesslog.format=json
+      # - --accesslog.fields.names.ClientUsername=keep
+      # - --accesslog.fields.headers.defaultMode=keep
+      - --providers.docker=true
+      - --providers.docker.exposedByDefault=false 
+      - --providers.docker.network=proxy
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.asDefault=true
+
+  trino:
+    container_name: trino
+    image: vastdataorg/trino-vast:429
+    ports:
+      - 18080:8080
+    networks:
+      - proxy
+    platform: linux/amd64
+    volumes:
+      - ./vast.properties:/etc/trino/catalog/vast.properties:ro
+      - ./config.properties:/etc/trino/config.properties:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mytrino.rule=PathPrefix(`/`)
+      - traefik.http.routers.mytrino.entrypoints=websecure
+      - traefik.http.routers.mytrino.tls=true
+      # Define middleware for headers inline.  Ensure ensure trino.properties has ...
+      # > http-server.process-forwarded=true
+      - traefik.http.routers.mytrino.middlewares=trino-headers@docker
+      - traefik.http.middlewares.trino-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
