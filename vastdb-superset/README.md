@@ -1,12 +1,14 @@
-Run: `../vastdb-trino/`
+## Trino
 
-Based on: https://superset.apache.org/docs/installation/docker-compose/
+- Run: `../vastdb-trino/`
 
-Clone Superset: `git clone --depth=1  https://github.com/apache/superset.git`
+## Superset
 
-Edit `docker-compose-image-tag.yml`
+- Based on: https://superset.apache.org/docs/installation/docker-compose/
 
-Modify:
+- Clone Superset: `git clone --depth=1  https://github.com/apache/superset.git`
+
+- Edit `docker-compose-image-tag.yml`, modify:
 
 ```yml
     container_name: superset_app
@@ -14,6 +16,6 @@ Modify:
     command: bash -c "pip3 install trino[sqlalchemy] && /app/docker/docker-bootstrap.sh app-gunicorn"
 ```
 
-SQLAlchemy URI: `trino://admin@192.168.0.10:443/vast?verify=false`
-
-Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
+- Add TrinoDatabase connection
+  - SQLAlchemy URI: `trino://admin@192.168.0.10:443/vast?verify=false`
+  - Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
