@@ -1,25 +1,23 @@
-## Trino
+# VastDB Superset Quickstart
 
-- Run: `../vastdb-trino/`
+**Caution**: Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
 
-## Superset
+## Overview
 
-- Based on: https://superset.apache.org/docs/installation/docker-compose/
+Docker compose quickstart environment to try Apache Superset with Vast Database.
 
-- Clone Superset: `git clone --depth=1  https://github.com/apache/superset.git`
+## Dependency
 
-- Edit `docker-compose-image-tag.yml`, modify:
+- Run trino using the instructions here: [../vastdb-trino/README.md](../vastdb-trino/README.md)
+- If you change the port exposed by ../vastdb-trino, update the 
 
-```yml
-    container_name: superset_app
-   # command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
-    command: bash -c "pip3 install trino[sqlalchemy] && /app/docker/docker-bootstrap.sh app-gunicorn"
-```
+## Instructions
 
-- `export TAG=4.0.2`
+- cd into this folder
+- run `docker compose up`
 
-- Add 'Trino' Database connection
+- When superset is running, add a 'Trino' Database connection:
   - SQLAlchemy URI: `trino://admin@192.168.0.10:8443/vast?verify=false`
     - Ensure the `IP` matches the hostname or IP address where you are running docker.  Do NOT use `localhost` or `127.0.0.1`
-    - The port must match the trino exposed
+    - The port must match the trino exposed (default is 8443)
   - Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
