@@ -6,16 +6,16 @@ services:
   traefik:
     image: traefik:v3.1.6
     ports:
-      - 443:443
-      - 8080:8080 # dashboard port 
+      - 8443:443
+      # - 8080:8080 # dashboard port 
     networks:
       - proxy
     platform: linux/amd64
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command:
-      - --api.dashboard=true
-      - --api.insecure=true
+      # - --api.dashboard=true
+      # - --api.insecure=true
       - --log.level=INFO
       - --accesslog=true
       # - --accesslog.format=json
