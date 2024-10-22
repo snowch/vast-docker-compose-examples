@@ -10,9 +10,9 @@ Docker compose quickstart environment to try Trino with Vast Database.
 
 - Change `vast.properties` to match your environment.
 - Change `docker-compose.yml` to use the correct container image:
- - Vast 4.7 - use `vastdataorg/trino-vast:375`
- - Vast 5.0 - use `vastdataorg/trino-vast:420`
- - Vast 5.1 - use `vastdataorg/trino-vast:429``
+  - Vast 4.7 - use `vastdataorg/trino-vast:375`
+  - Vast 5.0 - use `vastdataorg/trino-vast:420`
+  - Vast 5.1 - use `vastdataorg/trino-vast:429``
 - Run `docker-compose up`
 
 ## Test with the Trino client
