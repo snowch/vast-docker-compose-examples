@@ -1,0 +1,7 @@
+nifi_extensions/
+nifi_state/
+nifi_db/
+nifi_flowfile/
+nifi_profile/
+nifi_content/
+nifi_provenance/
