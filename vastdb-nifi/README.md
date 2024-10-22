@@ -35,11 +35,11 @@ docker compose up
 
 Wait a few minutes, then:
 
-- Open the URL: https://hostname_or_ipaddress:8443
+- Open the URL: https://hostname_or_ipaddress:18443
   - username: admin
   - password: 123456123456
 
 **Note**:
 
 - If you receive a SNI error when accessing NiFi from your browser, verify the NIFI_HOST variable is set to your NiFi hostname or ip address.
-- NiFi should be accessible when the logs output org.apache.nifi.web.server.JettyServer Started Server on https://abcdefghi:8443/nifi
+- NiFi should be accessible when the logs output org.apache.nifi.web.server.JettyServer Started Server on https://abcdefghi:18443/nifi
