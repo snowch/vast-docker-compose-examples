@@ -16,6 +16,8 @@
     command: bash -c "pip3 install trino[sqlalchemy] && /app/docker/docker-bootstrap.sh app-gunicorn"
 ```
 
+- `export TAG=4.0.2`
+
 - Add 'Trino' Database connection
   - SQLAlchemy URI: `trino://admin@192.168.0.10:443/vast?verify=false`
   - Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
