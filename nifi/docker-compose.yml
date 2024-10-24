@@ -9,7 +9,7 @@ services:
                echo 'NIFI_HOST is set: \$NIFI_HOST';
                exit 0;
              else
-               echo 'Quiting. Mandatory NIFI_HOST environment is not set.';
+               echo 'Mandatory NIFI_HOST environment is not set.  Quiting.';
                exit 1;
              fi"
 
