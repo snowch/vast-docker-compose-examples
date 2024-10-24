@@ -38,7 +38,7 @@ services:
       - ./volumes/warehouse:/opt/hive/data/warehouse
       - ./custom_conf/:/opt/hive/custom_conf/
       - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
-      - ./jars/bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
+      - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
       - ./jars/postgresql.jar:/opt/hive/lib/postgresql.jar
     networks:
       - hive
@@ -63,7 +63,7 @@ services:
       - ./volumes/warehouse:/opt/hive/data/warehouse
       - ./custom_conf/:/opt/hive/custom_conf/
       - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
-      - ./jars/bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
+      - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
     networks:
       - hive
 
