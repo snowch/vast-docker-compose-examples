@@ -1,7 +1,23 @@
-version: '3.9'
 services:
+
+  setup:
+    image: alpine:latest
+    volumes:
+      - ./jars:/mnt/jars
+    networks:
+      - hive
+    command: >
+      ash -c "apk add --no-cache --quiet curl outils-md5 &&
+              curl -C - -s -o /mnt/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.3.6.jar &&
+              curl -C - -s -o /mnt/jars/aws-java-sdk-bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.777/aws-java-sdk-bundle-1.12.777.jar &&
+              curl -C - -s -o /mnt/jars/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
+              "
+
   postgres:
     image: postgres
+    depends_on:
+      setup:
+        condition: service_completed_successfully
     restart: unless-stopped
     container_name: postgres
     hostname: postgres
@@ -15,11 +31,17 @@ services:
       - ./volumes/hive-db:/var/lib/postgresql
     networks:
       - hive
+    healthcheck:
+      test: pg_isready -h localhost -d $$POSTGRES_DB -U $$POSTGRES_USER
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   metastore:
     image: apache/hive:${HIVE_VERSION}
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
     container_name: metastore
     hostname: metastore
