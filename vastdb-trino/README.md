@@ -15,6 +15,10 @@ Docker compose quickstart environment to try Trino with Vast Database.
   - Vast 5.1 - use `vastdataorg/trino-vast:429`
 - Run `docker-compose up`
 
+### Hive Setup
+
+**NOTE:** If you wish to access Hive S3 datasets, change `hive.properties` to match your environment.
+
 ## Test with the Trino client
 
 Start the client from within the trino container:
@@ -27,6 +31,8 @@ Note:
 - replace `192.168.0.10` with the hostname or ip of your docker compose host
 - replace `8443` if you have changed the port exposed in docker-compose.yml
 
+### Vast DB
+
 Now you can execute queries against the server – you must start with the use command to set the context:
 
 ```sql
@@ -36,6 +42,15 @@ show columns from vast_db_table;
 select * from vast_db_table limit 1;
 ```
 
+### Hive
+
+```sql
+CREATE SCHEMA IF NOT EXISTS hive.riverflow WITH (location = 's3a://datastore/csnow_trino');
+```
+
+```sql
+CREATE EXTERNAL TABLE NAME_TEST_S3(name string, age int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TextFile LOCATION 's3a://datastore/';
+```
 
 
 

@@ -1,0 +1,19 @@
+connector.name=hive
+
+# Provide the URI for your hive server
+hive.metastore.uri=thrift://hostname:9083
+
+# Provide the VAST S3 Endpoint URI
+hive.s3.endpoint=http://x.x.x.x
+
+# Provide the VAST S3 credentials
+hive.s3.aws-access-key=xxxx
+hive.s3.aws-secret-key=xxxx
+
+hive.s3.path-style-access=true
+hive.s3.ssl.enabled=false
+hive.allow-drop-table=true
+hive.non-managed-table-writes-enabled=true
+hive.non-managed-table-creates-enabled=true
+hive.temporary-staging-directory-path=/var/tmp/
+hive.recursive-directories = true

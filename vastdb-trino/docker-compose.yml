@@ -37,6 +37,7 @@ services:
     platform: linux/amd64
     volumes:
       - ./vast.properties:/etc/trino/catalog/vast.properties:ro
+      - ./hive.properties:/etc/trino/catalog/hive.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     labels:
       - traefik.enable=true
