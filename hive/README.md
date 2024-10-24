@@ -5,8 +5,14 @@
 ## Instructions
 
 ```
-wget -c -P volumes/warehouse/ https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
-export POSTGRES_LOCAL_PATH=volumes/warehouse/postgresql-42.5.1.jar 
+wget https://archive.apache.org/dist/hadoop/core/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+cp hadoop-3.3.6/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar volumes/warehouse/hadoop-aws.jar
+cp hadoop-3.3.6/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar volumes/warehouse/bundle.jar 
+
+# wget -c -O volumes/warehouse/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.1/hadoop-aws-3.4.1.jar
+# wget -c -O volumes/warehouse/bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.777/aws-java-sdk-bundle-1.12.777.jar
+# wget -c -O volumes/warehouse/bundle.jar https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.28.28/bundle-2.28.28.jar
+wget -c -O volumes/warehouse/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
 ```
 
 ```bash
@@ -15,8 +21,16 @@ docker compose up
 
 ## Overview
 
-Accessing Beeline:
+Accessing with Beeline:
 
 ```bash
 docker exec -it hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
+```
+
+Accessing the web interface:
+
+- http://your_docker_host:10002/
+
+```sql
+CREATE EXTERNAL TABLE NAME_TEST_S3(name string, age int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TextFile LOCATION 's3a://datastore/mytable';
 ```
