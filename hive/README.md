@@ -2,13 +2,20 @@
 
 **Caution**: Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
 
+## Prerequisites
+
+- Vast S3 Credentials
+- Vast S3 Endpoint
+
 ## Instructions
 
+Modify hdfs-site.xml with your Vast S3 endpoint and credentials:
+
+```bash
+cp custom_conf/hdfs-site.xml-template custom_conf/hdfs-site.xml
 ```
-wget -c -O jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.3.6.jar
-wget -c -O jars/aws-java-sdk-bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.777/aws-java-sdk-bundle-1.12.777.jar
-wget -c -O jars/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
-```
+
+Start the hive environment:
 
 ```bash
 docker compose up
@@ -16,16 +23,16 @@ docker compose up
 
 ## Overview
 
-Accessing with Beeline:
+You can test by accessing the environment with beeline:
 
 ```bash
 docker exec -it hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 ```
 
-Accessing the web interface:
-
-- http://your_docker_host:10002/
+From beeline you can run SQL commands, e.g.
 
 ```sql
-CREATE EXTERNAL TABLE NAME_TEST_S3(name string, age int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TextFile LOCATION 's3a://datastore/mytable';
+CREATE EXTERNAL TABLE TEST_S3 (name string, age int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TextFile LOCATION 's3a://datastore/test_table';
 ```
+
+- Ensure you update the s3a url to reflect your environment.
