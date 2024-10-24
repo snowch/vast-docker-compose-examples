@@ -1,8 +1,25 @@
 services:
+
+  setup:
+    image: alpine:latest
+    environment:
+      - DOCKER_HOST_IP=${DOCKER_HOST_IP:-""}
+    command: >
+      ash -c "if [ -n \"$DOCKER_HOST_IP\" ]; then
+               echo 'DOCKER_HOST_IP is set: $DOCKER_HOST_IP';
+               exit 0;
+             else
+               echo 'Mandatory DOCKER_HOST_IP environment variable is not set.  Quiting.';
+               exit 1;
+             fi"
+
   zoo1:
     image: confluentinc/cp-zookeeper:7.3.2
     hostname: zoo1
     container_name: zoo1
+    depends_on:
+      setup:
+        condition: service_completed_successfully
     ports:
       - "2181:2181"
     environment:
@@ -20,7 +37,7 @@ services:
       - "29092:29092"
       - "9999:9999"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${DOCKER_HOST_IP}:9093,DOCKER://host.docker.internal:29092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${DOCKER_HOST_IP:-""}:9093,DOCKER://host.docker.internal:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
