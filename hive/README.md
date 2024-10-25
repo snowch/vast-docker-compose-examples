@@ -25,7 +25,9 @@ Start the hive environment:
 docker compose up
 ```
 
-## Overview
+## Using
+
+### Beeline
 
 You can test by accessing the environment with beeline:
 
@@ -44,6 +46,16 @@ LOCATION 's3a://datastore/test_table';
 
 - Ensure you update the s3a url to reflect your environment.
 
+### Web UI
+
+- Access the web ui at http://your_host_name_or_ip:10002
+
+
+## Iceberg
+
+This section is currently under development and may not work.
+
+```sql
 create database csnow_iceberg_demo_db;
 use csnow_iceberg_demo_db;
 
@@ -55,5 +67,5 @@ CREATE EXTERNAL TABLE twitter_data (
 PARTITIONED BY (ts string) STORED BY ICEBERG
 LOCATION 's3a://datastore/csnow_iceberg_demo.db/twitter_data/';
 
-
 select * from twitter_data;
+```
