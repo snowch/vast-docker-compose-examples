@@ -52,8 +52,11 @@ RUN /opt/setup-scripts/setup_spark.py \
     --spark-version="${spark_version}" \
     --hadoop-version="${hadoop_version}" \
     --scala-version="${scala_version}" \
-    --spark-download-url="${spark_download_url}" \
-    --spark_jars_packages="${spark_jars_packages}"  ### add spark packages 
+    --spark-download-url="${spark_download_url}"
+
+### v Add support for S3
+RUN mvn dependency:copy -Dartifact="${SPARK_JARS_PACKAGES}" -DoutputDirectory="${SPARK_HOME}/jars"
+### ^ Add support for S3
 
 # Configure IPython system-wide
 #COPY ipython_kernel_config.py "/etc/ipython/"
