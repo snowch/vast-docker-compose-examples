@@ -45,12 +45,27 @@ select * from vast_db_table limit 1;
 ### Hive
 
 ```sql
-CREATE SCHEMA IF NOT EXISTS hive.riverflow WITH (location = 's3a://datastore/csnow_trino');
+CREATE SCHEMA IF NOT EXISTS hive.iceberg WITH (location = 's3a://datastore/csnow_iceberg');
+
+CREATE TABLE hive.iceberg.twitter_data (
+    ts VARCHAR,
+    id BIGINT,
+    id_str VARCHAR,
+    text VARCHAR
+)
+WITH (
+    format = 'TEXTFILE',
+    external_location = 's3a://datastore/csnow_iceberg/twitter_data'
+);
 ```
+
+### Hive + Vast DB
 
 ```sql
-CREATE EXTERNAL TABLE NAME_TEST_S3(name string, age int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TextFile LOCATION 's3a://datastore/';
+SELECT 
+  *
+FROM
+  vast."vastdb|twitter_import".twitter_data vtd 
+  FULL OUTER JOIN hive.iceberg.twitter_data htd 
+    ON vtd.created_at = htd.ts;
 ```
-
-
-
