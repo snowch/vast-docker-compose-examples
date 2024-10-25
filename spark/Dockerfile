@@ -1,10 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-###### v add spark packages
-ARG spark_jar_packages
-###### ^ add spark packages
-
 ARG REGISTRY=quay.io
 ARG OWNER=jupyter
 ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook
@@ -43,8 +39,8 @@ ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info"
 
-#COPY setup_spark.py /opt/setup-scripts/
-RUN wget -O  /opt/setup-scripts/setup_spark.py https://raw.githubusercontent.com/jupyter/docker-stacks/main/images/pyspark-notebook/setup_spark.py
+COPY setup_spark.py /opt/setup-scripts/
+#RUN wget -O  /opt/setup-scripts/setup_spark.py https://raw.githubusercontent.com/jupyter/docker-stacks/main/images/pyspark-notebook/setup_spark.py
 RUN chmod a+x /opt/setup-scripts/setup_spark.py
 
 # Setup Spark
@@ -55,7 +51,10 @@ RUN /opt/setup-scripts/setup_spark.py \
     --spark-download-url="${spark_download_url}"
 
 ### v Add support for S3
-RUN mvn dependency:copy -Dartifact="${SPARK_JARS_PACKAGES}" -DoutputDirectory="${SPARK_HOME}/jars"
+RUN wget -c -O ${SPARK_HOME}/jars/aws-java-sdk.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.12.742/aws-java-sdk-1.12.742.jar && \
+     wget -c -O ${SPARK_HOME}/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar && \
+     wget -c -O ${SPARK_HOME}/jars/hadoop-client.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client/3.3.4/hadoop-client-3.3.4.jar && \
+     wget -c -O ${SPARK_HOME}/jars/aws-java-sdk-dynamodb.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-dynamodb/1.12.742/aws-java-sdk-dynamodb-1.12.742.jar
 ### ^ Add support for S3
 
 # Configure IPython system-wide
