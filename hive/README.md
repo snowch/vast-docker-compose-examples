@@ -15,6 +15,10 @@ Modify hdfs-site.xml with your Vast S3 endpoint and credentials:
 cp custom_conf/hdfs-site.xml-template custom_conf/hdfs-site.xml
 ```
 
+```bash
+touch .env-local
+```
+
 Start the hive environment:
 
 ```bash
@@ -39,3 +43,17 @@ LOCATION 's3a://datastore/test_table';
 ```
 
 - Ensure you update the s3a url to reflect your environment.
+
+create database csnow_iceberg_demo_db;
+use csnow_iceberg_demo_db;
+
+CREATE EXTERNAL TABLE twitter_data (
+    id BIGINT,
+    id_str STRING,
+    text STRING
+)
+PARTITIONED BY (ts string) STORED BY ICEBERG
+LOCATION 's3a://datastore/csnow_iceberg_demo.db/twitter_data/';
+
+
+select * from twitter_data;
