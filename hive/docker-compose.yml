@@ -45,7 +45,11 @@ services:
     restart: unless-stopped
     container_name: metastore
     hostname: metastore
-    env_file: .env-local
+    env_file:
+      - path: .env # default
+        required: true
+      - path: .env-local # optional override
+        required: false
     environment:
       DB_DRIVER: postgres
       SERVICE_NAME: 'metastore'
@@ -71,7 +75,11 @@ services:
       - metastore
     restart: unless-stopped
     container_name: hiveserver2
-    env_file: .env-local
+    env_file:
+      - path: .env # default
+        required: true
+      - path: .env-local # optional override
+        required: false
     environment:
       HIVE_SERVER2_THRIFT_PORT: 10000
       SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'

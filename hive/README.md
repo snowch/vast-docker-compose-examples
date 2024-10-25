@@ -15,14 +15,10 @@ Modify hdfs-site.xml with your Vast S3 endpoint and credentials:
 cp custom_conf/hdfs-site.xml-template custom_conf/hdfs-site.xml
 ```
 
-```bash
-touch .env-local
-```
-
 Start the hive environment:
 
 ```bash
-docker compose up
+docker compose up -d && docker compose logs -f
 ```
 
 ## Using
