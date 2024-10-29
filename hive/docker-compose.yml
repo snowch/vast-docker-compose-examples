@@ -1,13 +1,26 @@
 services:
 
-  setup:
+  setup_config:
+    image: hairyhenderson/gomplate:latest
+    working_dir: /workspace
+    env_file:
+      - ../.env-local
+    volumes:
+      - ./templates:/workspace/templates
+      - ./generated:/workspace/output
+    command: "-f /workspace/templates/hdfs-site-template.xml -o /workspace/output/hdfs-site.xml"
+
+  setup_jars:
     image: alpine:latest
+    depends_on:
+      setup_config:
+        condition: service_completed_successfully
     volumes:
       - ./jars:/mnt/jars
     networks:
       - hive
     command: >
-      ash -c "apk add --no-cache --quiet curl outils-md5 &&
+      ash -c "apk add --no-cache --quiet curl &&
               curl -C - -s -o /mnt/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.3.6.jar &&
               curl -C - -s -o /mnt/jars/aws-java-sdk-bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.777/aws-java-sdk-bundle-1.12.777.jar &&
               curl -C - -s -o /mnt/jars/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
@@ -16,7 +29,7 @@ services:
   postgres:
     image: postgres
     depends_on:
-      setup:
+      setup_jars:
         condition: service_completed_successfully
     restart: unless-stopped
     container_name: postgres
@@ -25,10 +38,11 @@ services:
       POSTGRES_DB: 'metastore_db'
       POSTGRES_USER: 'hive'
       POSTGRES_PASSWORD: 'password'
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - '5432:5432'
     volumes:
-      - ./volumes/hive-db:/var/lib/postgresql
+      - ./volumes/hive-db:/var/lib/postgresql/data
     networks:
       - hive
     healthcheck:
@@ -46,10 +60,8 @@ services:
     container_name: metastore
     hostname: metastore
     env_file:
-      - path: .env # default
-        required: true
-      - path: .env-local # optional override
-        required: false
+      - path: .env
+      - path: ../.env-local
     environment:
       DB_DRIVER: postgres
       SERVICE_NAME: 'metastore'
@@ -62,7 +74,7 @@ services:
       - '9083:9083'
     volumes:
       - ./volumes/warehouse:/opt/hive/data/warehouse
-      - ./custom_conf/:/opt/hive/custom_conf/
+      - ./generated/:/opt/hive/custom_conf/
       - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
       - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
       - ./jars/postgresql.jar:/opt/hive/lib/postgresql.jar
@@ -76,10 +88,8 @@ services:
     restart: unless-stopped
     container_name: hiveserver2
     env_file:
-      - path: .env # default
-        required: true
-      - path: .env-local # optional override
-        required: false
+      - path: .env
+      - path: ../.env-local
     environment:
       HIVE_SERVER2_THRIFT_PORT: 10000
       SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
@@ -91,7 +101,7 @@ services:
       - '10002:10002'
     volumes:
       - ./volumes/warehouse:/opt/hive/data/warehouse
-      - ./custom_conf/:/opt/hive/custom_conf/
+      - ./generated/:/opt/hive/custom_conf/
       - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
       - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
     networks:
@@ -100,3 +110,6 @@ services:
 networks:
   hive:
     name: hive
+
+volumes:
+  config_data:
