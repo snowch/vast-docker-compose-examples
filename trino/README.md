@@ -24,7 +24,8 @@ Docker compose quickstart environment to try Trino with Vast Database.
 Start the client from within the trino container:
 
 ```bash
-docker exec -it trino trino --server https://192.168.0.10:8443 --insecure
+export DOCKER_HOST_OR_IP=##CHANGE_ME##
+docker exec -it trino trino --server https://${DOCKER_HOST_OR_IP}:8443 --insecure
 ```
 
 Note:

@@ -3,6 +3,18 @@ networks:
     name: proxy
     
 services:
+
+  setup_config:
+    image: hairyhenderson/gomplate:latest
+    working_dir: /workspace
+    env_file:
+      - ../.env-local
+    volumes:
+      - ./templates:/workspace/templates
+      - ./generated:/workspace/output
+    command: "-f /workspace/templates/hive.properties-template -o /workspace/output/hive.properties \
+              -f /workspace/templates/vast.properties-template -o /workspace/output/vast.properties"
+
   traefik:
     image: traefik:v3.1.6
     ports:
@@ -30,14 +42,17 @@ services:
   trino:
     container_name: trino
     image: vastdataorg/trino-vast:429
+    depends_on:
+      setup_config:
+        condition: service_completed_successfully
     ports:
       - 18080:8080
     networks:
       - proxy
     platform: linux/amd64
     volumes:
-      - ./vast.properties:/etc/trino/catalog/vast.properties:ro
-      - ./hive.properties:/etc/trino/catalog/hive.properties:ro
+      - ./generated/vast.properties:/etc/trino/catalog/vast.properties:ro
+      - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     labels:
       - traefik.enable=true
