@@ -7,8 +7,8 @@ hive.metastore.uri=thrift://{{ env.Getenv "DOCKER_HOST_OR_IP" | required "Missin
 hive.s3.endpoint={{ env.Getenv "S3A_ENDPOINT" | required "Missing S3A_ENDPOINT environment variable!" }}
 
 # Provide the VAST S3 credentials
-hive.s3.aws-access-key=={{ env.Getenv "S3A_ACCESS_KEY" | required "Missing S3A_ACCESS_KEY environment variable!" }}
-hive.s3.aws-secret-key=={{ env.Getenv "S3A_SECRET_KEY" | required "Missing S3A_SECRET_KEY environment variable!" }}
+hive.s3.aws-access-key={{ env.Getenv "S3A_ACCESS_KEY" | required "Missing S3A_ACCESS_KEY environment variable!" }}
+hive.s3.aws-secret-key={{ env.Getenv "S3A_SECRET_KEY" | required "Missing S3A_SECRET_KEY environment variable!" }}
 
 hive.s3.path-style-access=true
 hive.s3.ssl.enabled={{ env.Getenv "S3A_SSL_ENABLED" | required "Missing S3A_SSL_ENABLED environment variable!" }}
@@ -16,4 +16,4 @@ hive.allow-drop-table=true
 hive.non-managed-table-writes-enabled=true
 hive.non-managed-table-creates-enabled=true
 hive.temporary-staging-directory-path=/var/tmp/
-hive.recursive-directories = true
+hive.recursive-directories=true
