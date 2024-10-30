@@ -33,57 +33,79 @@ Let's test S3a configuration works by trying to create a HIVE SCHEMA.
 
 ```sql
 -- CHANGE the s3a URI to reflect your environment
-CREATE SCHEMA csnow MANAGEDLOCATION 's3a://datastore/csnow';
+CREATE SCHEMA csnow 
+LOCATION 's3a://datastore/csnow_hive_location' 
+MANAGEDLOCATION 's3a://datastore/csnow_hive_managed_location';
 ```
 
-Verify the shema exists (note SCHEMA and DATABASE are interchangeable):
+Verify the shema exists (note the terms SCHEMA and DATABASE are interchangeable with Hive):
+
 
 ```sql
-SHOW SCHEMAS;
-```
-
-I see:
-
-```
-+----------------+
-| database_name  |
-+----------------+
-| csnow          |
-| default        |
-+----------------+
-```
-
-Now, 
-
-```sql
-DESCRIBE csnow;
+DESCRIBE SCHEMA csnow;
 ```
 
 Which shows:
 
 ```
-+----------+----------+-----------------------------------------+-----------------------------------------+-------------+-------------+-----------------+----------------+
-| db_name  | comment  |                location                 |             managedlocation             | owner_name  | owner_type  | connector_name  | remote_dbname  |
-+----------+----------+-----------------------------------------+-----------------------------------------+-------------+-------------+-----------------+----------------+
-| csnow    |          | file:/opt/hive/data/warehouse/csnow.db  | file:/opt/hive/data/warehouse/csnow.db  | hive        | USER        |                 |                |
-+----------+----------+-----------------------------------------+-----------------------------------------+-------------+-------------+-----------------+----------------+
++----------+----------+--------------------------------------+----------------------------------------------+-------------+-------------+-----------------+----------------+
+| db_name  | comment  |               location               |               managedlocation                | owner_name  | owner_type  | connector_name  | remote_dbname  |
++----------+----------+--------------------------------------+----------------------------------------------+-------------+-------------+-----------------+----------------+
+| csnow    |          | s3a://datastore/csnow_hive_location  | s3a://datastore/csnow_hive_managed_location  | hive        | USER        |                 |                |
++----------+----------+--------------------------------------+----------------------------------------------+-------------+-------------+-----------------+----------------+
 ```
 
 ```sql
 USE csnow;
 ```
 
+#### Iceberg tables
+
 ```sql
-CREATE EXTERNAL TABLE twitter_data (
+CREATE TABLE twitter_data (
     id BIGINT,
     id_str STRING,
     text STRING
 )
-PARTITIONED BY (ts string) STORED BY ICEBERG
-LOCATION 's3a://datastore/csnow/twitter_data/';
+PARTITIONED BY (ts string) STORED BY ICEBERG;
 ```
 
-- Ensure you update the s3a url to reflect your environment.
+```sql
+DESCRIBE FORMATTED twitter_data
+```
+
+```
++------------------------------------+----------------------------------------------------+----------------------------------------------------+
+|              col_name              |                     data_type                      |                      comment                       |
++------------------------------------+----------------------------------------------------+----------------------------------------------------+
+...
+| Location:                          | s3a://datastore/csnow_hive_location/twitter_data   | NULL                                               |
+| Table Type:                        | EXTERNAL_TABLE                                     | NULL                                               |
+| Table Parameters:                  | NULL                                               | NULL                                               |
+|                                    | EXTERNAL                                           | TRUE                                               |
+|                                    | TRANSLATED_TO_EXTERNAL                             | TRUE                                               |
+...
+|                                    | metadata_location                                  | s3a://datastore/csnow_hive_location/twitter_data/metadata/00000-ca548db6-6846-4dc3-aae2-8b55cad1f8c6.metadata.json |
+...
+|                                    | storage_handler                                    | org.apache.iceberg.mr.hive.HiveIcebergStorageHandler |
++------------------------------------+----------------------------------------------------+----------------------------------------------------+
+```
+
+Note: 
+  - The table type is `EXTERNAL_TABLE` even though we didn't specify this.
+  - The parameter `TRANSLATED_TO_EXTERNAL=TRUE` - what does this mean?
+
+
+#### Iceberg external tables
+
+```sql
+CREATE EXTERNAL TABLE twitter_data_external (
+    id BIGINT,
+    id_str STRING,
+    text STRING
+)
+PARTITIONED BY (ts string) STORED BY ICEBERG;
+```
 
 ### Web UI
 
