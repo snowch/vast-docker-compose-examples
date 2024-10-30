@@ -14,16 +14,12 @@ Run the following script to create folders for nifi to store its state and to do
 ./setup_env.sh
 ```
 
-Set NIFI_HOST to the hostname or ip address where you are running NiFi.
+Set `DOCKER_HOST_OR_IP` in `../.env-local` to the hostname or ip address where you are running NiFi.
 This is the name you will enter in your browser.
 
-E.g. If you will access NiFi by the URL https://my_nifi_host:some_port then `NIFI_HOST=my_nifi_host`
+E.g. If you will access NiFi by the URL https://my_nifi_host:some_port then `DOCKER_HOST_OR_IP=my_nifi_host`
 
-**IMPORTANT**: If you don't set this correctly, NiFi will not work.
-
-```bash
-export NIFI_HOST=hostname_or_ipaddress
-```
+**IMPORTANT**: If you don't set this correctly, NiFi will not work - you will received a TLS SNI Error.
 
 Finally, run docker compose up to start up NiFi.
 
@@ -35,11 +31,11 @@ docker compose up
 
 Wait a few minutes, then:
 
-- Open the URL: https://hostname_or_ipaddress:18443
+- Open the URL: https://DOCKER_HOST_OR_IP:18443
   - username: admin
   - password: 123456123456
 
 **Note**:
 
-- If you receive a SNI error when accessing NiFi from your browser, verify the NIFI_HOST variable is set to your NiFi hostname or ip address.
+- If you receive a SNI error when accessing NiFi from your browser, verify the DOCKER_HOST_OR_IP variable is set to your NiFi hostname or ip address.
 - NiFi should be accessible when the logs output org.apache.nifi.web.server.JettyServer Started Server on https://abcdefghi:18443/nifi

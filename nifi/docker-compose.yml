@@ -2,14 +2,16 @@ services:
 
   setup:
     image: alpine:latest
+    env_file:
+      - ../.env-local
     environment:
-      - NIFI_HOST=${NIFI_HOST}
+      - DOCKER_HOST_OR_IP=${DOCKER_HOST_OR_IP}
     command: >
-      ash -c "if [ -n \"$NIFI_HOST\" ]; then
-               echo 'NIFI_HOST is set: \$NIFI_HOST';
+      ash -c "if [ -n \"$DOCKER_HOST_OR_IP\" ]; then
+               echo 'DOCKER_HOST_OR_IP is set: \$DOCKER_HOST_OR_IP';
                exit 0;
              else
-               echo 'Mandatory NIFI_HOST environment is not set.  Quiting.';
+               echo 'Mandatory DOCKER_HOST_OR_IP environment is not set.  Quiting.';
                exit 1;
              fi"
 
@@ -20,7 +22,7 @@ services:
       setup:
         condition: service_completed_successfully
     environment:
-      - NIFI_WEB_PROXY_HOST=${NIFI_HOST}
+      - NIFI_WEB_PROXY_HOST=${DOCKER_HOST_OR_IP}
       - SINGLE_USER_CREDENTIALS_USERNAME=admin
       - SINGLE_USER_CREDENTIALS_PASSWORD=123456123456
     ports:
