@@ -2,17 +2,13 @@
 
 **Caution**: Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
 
+**Caution**: Currently this image loses state when it is restarted.  Manually save any work that you need to keep.
+
 ## Overview
 
 Docker compose quickstart environment to try Apache NiFi with Vast S3 and Vast Database.
 
 ## Instructions
-
-Run the following script to create folders for nifi to store its state and to download extension NAR files that we need.  
-
-```bash
-./setup_env.sh
-```
 
 Set `DOCKER_HOST_OR_IP` in `../.env-local` to the hostname or ip address where you are running NiFi.
 This is the name you will enter in your browser.
