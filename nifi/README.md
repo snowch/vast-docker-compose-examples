@@ -25,14 +25,12 @@ docker compose up
 
 ## Using
 
-Wait a few minutes, then:
-
-- Open the URL: https://DOCKER_HOST_OR_IP:18443
+Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
   - username: admin
   - password: 123456123456
  
 > [!TIP]
-> - NiFi should be accessible when the logs (`docker compose logs`) output org.apache.nifi.web.server.JettyServer Started Server on https://abcdefghi:18443/nifi
+> - NiFi should be accessible when the logs (`docker compose logs`) output **org.apache.nifi.web.server.JettyServer Started Server on https://abcdefghi:18443/nifi**
 
 > [!IMPORTANT]
 > - If you receive a SNI error when accessing NiFi from your browser, verify the DOCKER_HOST_OR_IP variable is set to your NiFi hostname or ip address.
