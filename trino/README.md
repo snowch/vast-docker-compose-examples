@@ -2,14 +2,15 @@
 
 **Caution**: Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
 
+**Caution**: Currently this image loses state when it is restarted.  Manually save any work that you need to keep.
+
 ## Overview
 
 Docker compose quickstart environment to try Trino with Vast Database.
 
 ## Instructions
 
- - Change `vast.properties` to match your environment.
- - Change `docker-compose.yml` to use the correct container image:
+ - Change `.env` to use the correct container image:
   - Vast 4.7 - use `vastdataorg/trino-vast:375`
   - Vast 5.0 - use `vastdataorg/trino-vast:420`
   - Vast 5.1 - use `vastdataorg/trino-vast:429`
@@ -24,7 +25,14 @@ Docker compose quickstart environment to try Trino with Vast Database.
 Start the client from within the trino container:
 
 ```bash
-export DOCKER_HOST_OR_IP=##CHANGE_ME##
+# Check if .env-local exists in the current or parent directory
+if [ -f .env-local ]; then
+  source .env-local
+elif [ -f ../.env-local ]; then
+  source ../.env-local
+fi
+
+echo "Connecting to: $DOCKER_HOST_OR_IP"
 docker exec -it trino trino --server https://${DOCKER_HOST_OR_IP}:8443 --insecure
 ```
 
@@ -37,6 +45,12 @@ Note:
 Now you can execute queries against the server – you must start with the use command to set the context:
 
 ```sql
+SHOW SCHEMAS FROM vast;
+```
+
+Then use can select a schema:
+
+```sql
 use vast."vast-db-bucket|vast_db_schema";
 
 show columns from vast_db_table;
@@ -44,6 +58,12 @@ select * from vast_db_table limit 1;
 ```
 
 ### Hive
+
+```sql
+SHOW SCHEMAS FROM hive;
+```
+
+
 
 ```sql
 CREATE SCHEMA IF NOT EXISTS hive.iceberg WITH (location = 's3a://datastore/csnow_iceberg');
