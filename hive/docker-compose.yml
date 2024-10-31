@@ -34,13 +34,16 @@ services:
     restart: unless-stopped
     container_name: postgres
     hostname: postgres
+    env_file:
+      - path: .env
+      - path: ../.env-local
     environment:
       POSTGRES_DB: 'metastore_db'
       POSTGRES_USER: 'hive'
       POSTGRES_PASSWORD: 'password'
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - '5432:5432'
+      - '${EXT_POSTGRESQL_PORT}:5432'
     volumes:
       - ./volumes/hive-db:/var/lib/postgresql/data
     networks:
@@ -71,7 +74,7 @@ services:
                      -Djavax.jdo.option.ConnectionPassword=password'
       HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
     ports:
-      - '9083:9083'
+      - '${EXT_HIVE_METASTORE_PORT}:9083'
     volumes:
       - ./volumes/warehouse:/opt/hive/data/warehouse
       - ./generated/:/opt/hive/custom_conf/
@@ -91,14 +94,14 @@ services:
       - path: .env
       - path: ../.env-local
     environment:
-      HIVE_SERVER2_THRIFT_PORT: 10000
+      HIVESERVER2_THRIFT_PORT: 10000 # internal port
       SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
       IS_RESUME: 'true'
       SERVICE_NAME: 'hiveserver2'
       HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
     ports:
-      - '10000:10000'
-      - '10002:10002'
+      - '${EXT_HIVE_SERVER2_THRIFT_PORT}:10000'
+      - '${EXT_HIVE_SERVER2_WEB_UI_PORT}:10002'
     volumes:
       - ./volumes/warehouse:/opt/hive/data/warehouse
       - ./generated/:/opt/hive/custom_conf/

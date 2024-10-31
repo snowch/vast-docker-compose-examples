@@ -4,6 +4,7 @@ services:
     image: hairyhenderson/gomplate:latest
     working_dir: /workspace
     env_file:
+      - ./.env
       - ../.env-local
     command: "-i '{{env.Getenv \"DOCKER_HOST_OR_IP\" | required \"Mandatory DOCKER_HOST_OR_IP environment variable not found.\"}}'"
 
@@ -30,13 +31,12 @@ services:
       setup_jars:
         condition: service_completed_successfully
     env_file:
-      - ../.env-local
-    environment:
-      # - NIFI_PROXY_HOST=${DOCKER_HOST_OR_IP}
-      - SINGLE_USER_CREDENTIALS_USERNAME=admin
-      - SINGLE_USER_CREDENTIALS_PASSWORD=123456123456
+      - path: ./.env
+        required: true
+      - path: ../.env-local
+        required: true
     ports:
-      - "${NIFI_PORT:-18443}:8443"
+      - ${EXT_NIFI_PORT}:8443
     volumes:
       - ./nifi_extensions:/opt/nifi/nifi-current/nar_extensions:rw
       - ./nifi_state:/opt/nifi/nifi-current/state:rw
