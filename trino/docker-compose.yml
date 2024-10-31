@@ -13,7 +13,8 @@ services:
       - ./templates:/workspace/templates
       - ./generated:/workspace/output
     command: "-f /workspace/templates/hive.properties-template -o /workspace/output/hive.properties \
-              -f /workspace/templates/vast.properties-template -o /workspace/output/vast.properties"
+              -f /workspace/templates/vast.properties-template -o /workspace/output/vast.properties \
+              -f /workspace/templates/iceberg.properties-template -o /workspace/output/iceberg.properties"
 
   traefik:
     image: traefik:v3.1.6
@@ -41,7 +42,7 @@ services:
 
   trino:
     container_name: trino
-    image: vastdataorg/trino-vast:429
+    image: vastdataorg/trino-vast:${TRINO_VERSION}
     depends_on:
       setup_config:
         condition: service_completed_successfully
@@ -53,6 +54,7 @@ services:
     volumes:
       - ./generated/vast.properties:/etc/trino/catalog/vast.properties:ro
       - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
+      - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     labels:
       - traefik.enable=true
