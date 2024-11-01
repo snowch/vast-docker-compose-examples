@@ -14,7 +14,7 @@ Docker compose quickstart environment to try Trino with:
 
 ## Instructions
 
-- Change `.env` to use the correct container image
+- Change `.env` to use the correct container image for your Vast Database version
 - Run `docker compose up`
 
 ## Hive Configuration
@@ -91,3 +91,7 @@ FROM
   FULL OUTER JOIN hive.iceberg.twitter_data htd 
     ON vtd.created_at = htd.ts;
 ```
+
+## Changing the ports
+
+- You can change the ports exposed by docker in the .env file.
