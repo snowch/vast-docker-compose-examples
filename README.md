@@ -6,6 +6,9 @@ Example integrations with VAST Data
 > - Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
 > - Some of the images do NOT yet persist data when shutdown.  Ensure you regularly save any data that you need to keep.
 
+> [!NOTE]  
+> This project has only been tested on Mac OS (Silicon) and Linux (AMD64)
+
 # Setup
 
 - Copy `.env-example` to `.env-local` and update to reflect your environment
