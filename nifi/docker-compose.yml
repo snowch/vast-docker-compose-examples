@@ -24,6 +24,7 @@ services:
 
   nifi:
     image: apache/nifi:${NIFI_VERSION}
+    restart: unless-stopped
     platform: linux/amd64
     depends_on:
       verify_required_env:
