@@ -93,6 +93,10 @@ services:
     env_file:
       - path: .env
       - path: ../.env-local
+      # The hive image doesn't read the credentials from hdfs-site.xml
+      # with inserts or updates.  It expects env vars, so we define them
+      # in .env-aws-creds from the S3A_ creds we set in ../.env-local
+      - path: ./.env-aws-creds
     environment:
       HIVESERVER2_THRIFT_PORT: 10000 # internal port
       SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
