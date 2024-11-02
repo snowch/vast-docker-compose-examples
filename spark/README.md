@@ -19,7 +19,7 @@ Build the image (use the same command to rebuild the image if you make any chang
 docker compose build --no-cache
 ```
 
-Start the hive environment:
+Start the spark container:
 
 ```bash
 docker compose up -d && docker compose logs -f
