@@ -10,15 +10,17 @@ Docker compose quickstart environment to run Kafka for development purposes.
 
 ## Instructions
 
+Ensure `../.env-local` is created and populated with your environment.  See `../.env-example` for an example.  The key variable is `DOCKER_HOST_OR_IP`.
+
 ```bash
 docker compose up
 ```
 
 > [!NOTE]
-> - The KAFKA endpoint is: DOCKER_HOST_OR_IP:19092
+> The KAFKA endpoint is: `DOCKER_HOST_OR_IP:19092`
 
 ## Console
 
-The console can be access at:
+The console application can be access at:
 
-http://DOCKER_HOST_OR_IP:28080
+`http://DOCKER_HOST_OR_IP:28080`

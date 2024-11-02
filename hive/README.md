@@ -12,7 +12,7 @@
 
 ## Instructions
 
-Ensure `../.env-local` is created and populated with your environment.  See `../.env` for an example.
+Ensure `../.env-local` is created and populated with your environment.  See `../.env-example` for an example.
 
 Start the hive environment:
 

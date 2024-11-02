@@ -1,6 +1,6 @@
-# VAST Data - Docker Compose examples
+# Docker Compose examples for VAST Data.
 
-Example integrations with VAST Data
+This project aims to give you a quickstart way to try example integrations with VAST Data. The goal is to support functional testing of key technologies automated by docker compose. Most of the docker instance are single instance only and are therefore unlikely to be useful for performance testing.
 
 > [!CAUTION]
 > - Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
