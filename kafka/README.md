@@ -10,6 +10,8 @@ Docker compose quickstart environment to run Kafka for development purposes.
 
 ## Instructions
 
+Ensure `../.env-local` is created and populated with your environment.  See `../.env-example` for an example.  The key variable is `DOCKER_HOST_OR_IP`.
+
 ```bash
 docker compose up
 ```
