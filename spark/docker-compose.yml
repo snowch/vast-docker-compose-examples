@@ -5,21 +5,17 @@ services:
       args:
         spark_version: "3.4.4"
         scala_version: "2.13"
+    restart: unless-stopped
+    env_file:
+      - ../.env-local
     ports:
-      - "8888:8888"  # Map container port 8888 to host port 8888 (Jupyter Notebook)
-      - "4040:4040"  # Map container port 4040 to host port 4040 (TensorBoard)
-      - "4041:4041"  # Map container port 4041 to host port 4041 (Spark UI)
-      - "4042:4042"  # Map container port 4042 to host port 4042 (Spark History Server)
+      - "8888:8888"  # (Jupyter Notebook)
+      - "4040:4040"  # (TensorBoard)
+      - "4041:4041"  # (Spark UI)
+      - "4042:4042"  # (Spark History Server)
     volumes:
-      - ./examples:/home/jovyan/examples:rw  # Mount the examples directory to the container
-
-# Uncomment the following services if needed
-# (Requires additional configuration based on the script)
-#  vastdb:
-#    image: vastdata/vast-data-controller  # Replace with the actual vastdb image
-#    environment:
-#      # ... (Define environment variables for vastdb)
+      - ./examples:/home/jovyan/examples:rw
 
 volumes:
-  jupyter-pyspark-data:  # Optional volume to persist data
+  jupyter-pyspark-data:
 
