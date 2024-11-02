@@ -112,3 +112,6 @@ PARTITIONED BY (ts string) STORED BY ICEBERG;
 
 - Access the web ui at http://your_host_name_or_ip:10002
 
+## Changing the ports
+
+- You can change the ports exposed by docker in the `.env` file in this project folder.
