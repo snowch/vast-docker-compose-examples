@@ -1,4 +1,4 @@
-name: redpanda-quickstart-one-broker
+name: kafka
 networks:
   redpanda_network:
     driver: bridge
