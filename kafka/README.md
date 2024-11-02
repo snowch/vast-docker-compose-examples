@@ -15,7 +15,7 @@ docker compose up
 ```
 
 > [!NOTE]
-> - The KAFKA endpoint is: `DOCKER_HOST_OR_IP:19092`
+> The KAFKA endpoint is: `DOCKER_HOST_OR_IP:19092`
 
 ## Console
 
