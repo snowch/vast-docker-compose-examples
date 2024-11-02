@@ -19,6 +19,6 @@ docker compose up
 
 ## Console
 
-The console can be access at:
+The console application can be access at:
 
 http://DOCKER_HOST_OR_IP:28080
