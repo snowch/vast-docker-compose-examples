@@ -1,7 +1,7 @@
 services:
   jupyter-pyspark:
     build:
-      context: .
+      context: docker/
       args:
         spark_version: "3.4.4"
         scala_version: "2.13"
