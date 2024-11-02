@@ -14,6 +14,11 @@ Docker compose quickstart environment to run Kafka for development purposes.
 docker compose up
 ```
 
+> [!NOTE]
+> - The KAFKA endpoint is: DOCKER_HOST_OR_IP:19092
+
 ## Console
+
+The console can be access at:
 
 http://DOCKER_HOST_OR_IP:28080
