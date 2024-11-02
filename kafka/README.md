@@ -15,10 +15,10 @@ docker compose up
 ```
 
 > [!NOTE]
-> - The KAFKA endpoint is: DOCKER_HOST_OR_IP:19092
+> - The KAFKA endpoint is: `DOCKER_HOST_OR_IP:19092`
 
 ## Console
 
 The console application can be access at:
 
-http://DOCKER_HOST_OR_IP:28080
+`http://DOCKER_HOST_OR_IP:28080`
