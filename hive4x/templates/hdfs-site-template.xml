@@ -1,0 +1,26 @@
+<configuration>
+  <property>
+    <name>fs.s3a.impl</name>
+    <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+  </property>
+  <property>
+    <name>fs.s3a.access.key</name>
+    <value>{{ env.Getenv "S3A_ACCESS_KEY" | required "Missing S3A_ACCESS_KEY environment variable!" }}</value>
+  </property>
+  <property>
+    <name>fs.s3a.secret.key</name>
+    <value>{{ env.Getenv "S3A_SECRET_KEY" | required "Missing S3A_SECRET_KEY environment variable!" }}</value>
+  </property>
+  <property>
+    <name>fs.s3a.endpoint</name>
+    <value>{{ env.Getenv "S3A_ENDPOINT" | required "Missing S3A_ENDPOINT environment variable!" }}</value>
+  </property>
+  <property>
+    <name>fs.s3a.connection.ssl.enabled</name>
+    <value>{{ env.Getenv "S3A_SSL_ENABLED" | required "Missing S3A_SSL_ENABLED environment variable!" }}</value>
+  </property>
+  <property>
+    <name>fs.s3a.timeout</name>
+    <value>{{ env.Getenv "S3A_TIMEOUT"  | required "Missing S3A_TIMEOUT environment variable!" }}</value>
+  </property>
+</configuration>
