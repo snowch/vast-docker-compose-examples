@@ -53,9 +53,16 @@ services:
     networks:
       - proxy
     platform: linux/amd64
+    env_file:
+      - path: .env
+      - path: ../.env-local
+      # The hive image doesn't read the credentials from hdfs-site.xml
+      # with inserts or updates.  It expects env vars, so we define them
+      # in .env-aws-creds from the S3A_ creds we set in ../.env-local
+      - path: ./.env-aws-creds
     volumes:
       - ./generated/vast.properties:/etc/trino/catalog/vast.properties:ro
-      - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
+      # - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
       - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     labels:

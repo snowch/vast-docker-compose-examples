@@ -28,3 +28,14 @@ docker compose up -d && docker compose logs -f
 ## Using
 
 When the image has started, navigate to: `http://DOCKER_HOST_OR_IP:8888`
+
+## Details
+
+The image is built with jars for:
+
+- S3A support
+- Iceberg Support
+
+See [Dockerfile](./docker/Dockerfile).
+
+The environment variables in `../.env-local` are passed to the container.
