@@ -1,5 +1,0 @@
-.log
-.ipynb_checkpoints/
-.env
-dotenv
-${sys:SPARK_LOGS_DIR}/
