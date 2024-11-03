@@ -22,6 +22,7 @@ services:
       - start
       - --mode dev-container
       - --smp 1
+      - --memory 1G
       - --default-log-level=info
       - --config /tmp/redpanda.yml
     image: docker.redpanda.com/redpandadata/redpanda:v24.2.8
