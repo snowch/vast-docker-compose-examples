@@ -1,0 +1,36 @@
+services:
+
+  setup_config:
+    image: hairyhenderson/gomplate:latest
+    working_dir: /workspace
+    env_file:
+      - ../.env-local
+    volumes:
+      - ./templates:/workspace/templates
+      - ./generated:/workspace/output
+    command: "-f /workspace/templates/hdfs-site-template.xml -o /workspace/output/hdfs-site.xml"
+
+  jupyter-pyspark:
+    build:
+      context: docker/
+      args:
+        spark_version: "3.4.4"
+        scala_version: "2.13"
+    restart: unless-stopped
+    env_file:
+      - ../.env-local
+    depends_on:
+      setup_config:
+        condition: service_completed_successfully
+    ports:
+      - "8888:8888"  # (Jupyter Notebook)
+      - "4040:4040"  # (TensorBoard)
+      - "4041:4041"  # (Spark UI)
+      - "4042:4042"  # (Spark History Server)
+    volumes:
+      - ./examples:/home/jovyan/examples:rw
+      - ./generated/hdfs-site.xml:/usr/local/spark/conf/hdfs-site.xml:ro
+
+volumes:
+  jupyter-pyspark-data:
+
