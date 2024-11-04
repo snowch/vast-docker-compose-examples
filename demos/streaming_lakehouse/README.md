@@ -34,8 +34,8 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 
 ## Getting Started
 
-- Clone the parent project
-- Copy `.env-example` to `.env-local` and update to reflect your environment
+- Clone this git repository.
+- Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
 - Run the following projects:
   - [nifi](../../nifi)
   - [kafka](../../kafka)
