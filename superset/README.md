@@ -17,12 +17,12 @@ Docker compose quickstart environment to try Apache Superset with Vast Database.
 
 - cd into this folder
 - run `docker compose up`
-- visit http://your_host_name_or_ip:8088
+- visit http://DOCKER_HOST_OR_IP:8088
   - username: admin
   - password: admin
 
 - When superset is running, add a 'Trino' Database connection:
-  - SQLAlchemy URI, e.g. `trino://admin@your_trino_host_ip:8443/vast?verify=false`
+  - SQLAlchemy URI, e.g. `trino://admin@DOCKER_HOST_OR_IP:8443/vast?verify=false`
     - Ensure the `IP` matches the hostname or IP address where you are running docker.  Do NOT use `localhost` or `127.0.0.1`
     - The port must match the trino exposed (default is 8443)
   - Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
