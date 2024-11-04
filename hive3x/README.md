@@ -8,6 +8,7 @@
 > [!WARNING]
 > This image is currently broken.  When starting up for the first time, you need to comment out the following:
 > `      - ./pg_hba.conf:/var/lib/postgresql/data/pgdata/pg_hba.conf`
+> Then start the image, stop it uncomment the above live and restart it.
 
 ## Prerequisites
 
