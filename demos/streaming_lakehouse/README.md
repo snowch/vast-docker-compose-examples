@@ -7,6 +7,10 @@ The primary purpose of this example is to demonstrate how streaming data into th
 
 ## Streaming Flow
 
+This example uses a NiFi flow generate the creation of random tweets in realtime (using a NiFi ScriptProcessor).  The Tweets are published to a Kafka topic.
+
+A separate NiFi flow consumes from the Kafka topic and saves the tweets to the Vast DB.  Spark and Trino can be used to query from Iceberg tables that are stored on Vast S3 or from data in the Vast Database.  Queries can join data from both sources.  In addition Superset is configured to use Trino to provide a UI for data visualization and exploration.
+
 ![Streaming Flow](./assets/StreamingFlow.png)
 
 ## Bulk Import
