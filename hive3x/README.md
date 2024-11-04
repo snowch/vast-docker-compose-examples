@@ -27,7 +27,7 @@ docker compose up -d && docker compose logs -f
 You can test by accessing the environment with beeline:
 
 ```bash
-docker exec -it hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
+docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 ```
 
 Let's test S3a configuration works by trying to create a HIVE SCHEMA.
@@ -35,8 +35,7 @@ Let's test S3a configuration works by trying to create a HIVE SCHEMA.
 ```sql
 -- CHANGE the s3a URI to reflect your environment
 CREATE SCHEMA csnow 
-LOCATION 's3a://datastore/csnow_hive_location' 
-MANAGEDLOCATION 's3a://datastore/csnow_hive_managed_location';
+LOCATION 's3a://csnow-bucket/hive_location';
 ```
 
 Verify the shema exists (note the terms SCHEMA and DATABASE are interchangeable with Hive):
@@ -62,50 +61,29 @@ USE csnow;
 
 #### Iceberg tables
 
-```sql
-CREATE TABLE twitter_data (
-    id BIGINT,
-    id_str STRING,
-    text STRING
-)
-PARTITIONED BY (ts string) STORED BY ICEBERG;
-```
+From Trino:
 
 ```sql
-DESCRIBE FORMATTED twitter_data
-```
+-- TRINO ICEBERG CONNECTION
 
-```
-+------------------------------------+----------------------------------------------------+----------------------------------------------------+
-|              col_name              |                     data_type                      |                      comment                       |
-+------------------------------------+----------------------------------------------------+----------------------------------------------------+
-...
-| Location:                          | s3a://datastore/csnow_hive_location/twitter_data   | NULL                                               |
-| Table Type:                        | EXTERNAL_TABLE                                     | NULL                                               |
-| Table Parameters:                  | NULL                                               | NULL                                               |
-|                                    | EXTERNAL                                           | TRUE                                               |
-|                                    | TRANSLATED_TO_EXTERNAL                             | TRUE                                               |
-...
-|                                    | metadata_location                                  | s3a://datastore/csnow_hive_location/twitter_data/metadata/00000-ca548db6-6846-4dc3-aae2-8b55cad1f8c6.metadata.json |
-...
-|                                    | storage_handler                                    | org.apache.iceberg.mr.hive.HiveIcebergStorageHandler |
-+------------------------------------+----------------------------------------------------+----------------------------------------------------+
-```
+CREATE SCHEMA iceberg.social_media
+WITH (location = 's3a://csnow-bucket/iceberg/');
 
-Note: 
-  - The table type is `EXTERNAL_TABLE` even though we didn't specify this.
-  - The parameter `TRANSLATED_TO_EXTERNAL=TRUE` - what does this mean?
+CREATE TABLE iceberg.social_media.twitter_data (
+    created_at VARCHAR,
+    id INT,
+    id_str VARCHAR,
+    text VARCHAR
+);
+-- STORED BY ICEBERG;
 
+show create table iceberg.social_media.twitter_data;
 
-#### Iceberg external tables
+INSERT INTO iceberg.social_media.twitter_data
+(created_at, id, id_str, text)
+VALUES('1', 1, '1', 'Yay!');
 
-```sql
-CREATE EXTERNAL TABLE twitter_data_external (
-    id BIGINT,
-    id_str STRING,
-    text STRING
-)
-PARTITIONED BY (ts string) STORED BY ICEBERG;
+SELECT * FROM iceberg.social_media.twitter_data;
 ```
 
 ### Web UI

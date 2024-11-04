@@ -48,6 +48,7 @@ services:
     depends_on:
       setup_config:
         condition: service_completed_successfully
+    mem_limit: 4g
     ports:
       - 18080:8080
     networks:
