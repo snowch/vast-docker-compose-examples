@@ -37,36 +37,24 @@ docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 > [!TIP]
 > If beeline is unable to connect verify with logs `docker compose logs -f` to ensure you see output similar to `hive3-hiveserver2  | Hive Session ID = xxxxxxxx`.
 
-Let's test S3a configuration works by trying to create a HIVE SCHEMA.
 
 ```sql
--- CHANGE the s3a URI to reflect your environment
-CREATE SCHEMA csnow 
-LOCATION 's3a://csnow-bucket/hive_location';
+SET iceberg.catalog.vast_iceberg.type=hive;
+SET iceberg.catalog.vast_iceberg.uri=thrift://localhost:9083;
+SET iceberg.catalog.vast_iceberg.clients=10;
+SET iceberg.catalog.vast_iceberg.warehouse=s3://csnow-bucket/iceberg;
+
+CREATE DATABASE vast_iceberg
+LOCATION 's3a://csnow-bucket/iceberg';
+
+CREATE EXTERNAL TABLE vast_iceberg.x (i int)
+STORED BY 'org.apache.iceberg.mr.hive.HiveIcebergStorageHandler';
+
+DESCRIBE EXTENDED vast_iceberg.x;
 ```
 
-Verify the shema exists (note the terms SCHEMA and DATABASE are interchangeable with Hive):
 
-
-```sql
-DESCRIBE SCHEMA csnow;
-```
-
-Which shows:
-
-```
-+----------+----------+--------------------------------------+----------------------------------------------+-------------+-------------+-----------------+----------------+
-| db_name  | comment  |               location               |               managedlocation                | owner_name  | owner_type  | connector_name  | remote_dbname  |
-+----------+----------+--------------------------------------+----------------------------------------------+-------------+-------------+-----------------+----------------+
-| csnow    |          | s3a://datastore/csnow_hive_location  | s3a://datastore/csnow_hive_managed_location  | hive        | USER        |                 |                |
-+----------+----------+--------------------------------------+----------------------------------------------+-------------+-------------+-----------------+----------------+
-```
-
-```sql
-USE csnow;
-```
-
-#### Iceberg tables
+#### Iceberg from Trino
 
 From Trino:
 

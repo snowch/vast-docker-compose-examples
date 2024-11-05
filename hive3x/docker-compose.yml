@@ -11,21 +11,19 @@ services:
     command: "-f /workspace/templates/hdfs-site-template.xml -o /workspace/output/hdfs-site.xml"
 
   setup_jars:
-    image: alpine:latest
+    image: maven:3.8.6-openjdk-11-slim
     depends_on:
       setup_config:
         condition: service_completed_successfully
     volumes:
       - ./jars:/mnt/jars
+      - ./scripts/pom.xml:/usr/src/app/pom.xml
+    working_dir: /usr/src/app
     networks:
       - hive
     command: >
-      ash -c "apk add --no-cache --quiet curl #&&
-              curl -C - -s -o /mnt/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.1.1.jar &&
-              curl -C - -s -o /mnt/jars/aws-java-sdk-bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.271/aws-java-sdk-bundle-1.11.271.jar &&
-              curl -C - -s -o /mnt/jars/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
-              "
-
+      mvn dependency:copy-dependencies -DoutputDirectory=/mnt/jars
+        
   postgres:
     image: postgres:17.0-bookworm
     depends_on:
@@ -75,14 +73,13 @@ services:
                      -Djavax.jdo.option.ConnectionUserName=hive
                      -Djavax.jdo.option.ConnectionPassword=password'
       HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
+      HIVE_AUX_JARS_PATH: /opt/hive/lib/custom_lib
     ports:
       - '${EXT_HIVE_METASTORE_PORT}:9083'
     volumes:
       - warehouse:/opt/hive/data/warehouse
       - ./generated/:/opt/hive/custom_conf/
-      - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
-      - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
-      - ./jars/postgresql.jar:/opt/hive/lib/postgresql.jar
+      - ./jars/:/opt/hive/lib/custom_lib/
     networks:
       - hive
 
@@ -106,14 +103,14 @@ services:
       IS_RESUME: 'true'
       SERVICE_NAME: 'hiveserver2'
       HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
+      HIVE_AUX_JARS_PATH: /opt/hive/lib/custom_lib
     ports:
       - '${EXT_HIVE_SERVER2_THRIFT_PORT}:10000'
       - '${EXT_HIVE_SERVER2_WEB_UI_PORT}:10002'
     volumes:
       - warehouse:/opt/hive/data/warehouse
       - ./generated/:/opt/hive/custom_conf/
-      - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
-      - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
+      - ./jars/:/opt/hive/lib/custom_lib/
     networks:
       - hive
 
