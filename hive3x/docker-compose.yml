@@ -74,20 +74,28 @@ services:
                      -Djavax.jdo.option.ConnectionPassword=password'
       HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
       HIVE_AUX_JARS_PATH: /opt/hive/lib/custom_lib
+      # IS_RESUME: 'true'
+      # VERBOSE: 'true'
     ports:
       - '${EXT_HIVE_METASTORE_PORT}:9083'
     volumes:
       - warehouse:/opt/hive/data/warehouse
       - ./generated/:/opt/hive/custom_conf/
       - ./jars/:/opt/hive/lib/custom_lib/
+      - ./scripts/checkport.sh:/scripts/checkport.sh
     networks:
       - hive
+    healthcheck:
+      test: ["CMD", "bash", "-c", "/scripts/checkport.sh 9083"]
+      interval: 30s
+      retries: 10
 
   hiveserver2:
     image: apache/hive:${HIVE_VERSION}
     platform: linux/amd64
     depends_on:
-      - metastore
+      metastore:
+        condition: service_healthy
     restart: unless-stopped
     container_name: hive3-hiveserver2
     env_file:
