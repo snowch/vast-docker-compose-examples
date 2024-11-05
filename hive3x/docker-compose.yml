@@ -21,13 +21,13 @@ services:
       - hive
     command: >
       ash -c "apk add --no-cache --quiet curl #&&
-              # curl -C - -s -o /mnt/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.1.1.jar &&
-              # curl -C - -s -o /mnt/jars/aws-java-sdk-bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.271/aws-java-sdk-bundle-1.11.271.jar &&
-              # curl -C - -s -o /mnt/jars/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
+              curl -C - -s -o /mnt/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.1.1.jar &&
+              curl -C - -s -o /mnt/jars/aws-java-sdk-bundle.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.271/aws-java-sdk-bundle-1.11.271.jar &&
+              curl -C - -s -o /mnt/jars/postgresql.jar https://repo1.maven.org/maven2/org/postgresql/postgresql/42.5.6/postgresql-42.5.6.jar
               "
 
   postgres:
-    image: postgres
+    image: postgres:17.0-bookworm
     depends_on:
       setup_jars:
         condition: service_completed_successfully
@@ -36,20 +36,17 @@ services:
     hostname: postgres
     env_file:
       - path: .env
-      - path: ../.env-local
     environment:
       POSTGRES_DB: 'metastore_db'
       POSTGRES_USER: 'hive'
       POSTGRES_PASSWORD: 'password'
       PGDATA: /var/lib/postgresql/data/pgdata
-      # POSTGRES_INITDB_ARGS: "--auth=trust" # not secure
-      # POSTGRES_HOST_AUTH_METHOD: "trust" # not secure
     ports:
       - '${EXT_POSTGRESQL_PORT}:5432'
     volumes:
-      - ./volumes/hive-db:/var/lib/postgresql/data
-      # - ./initdb.sh:/docker-entrypoint-initdb.d/init-db.sh
-      - ./pg_hba.conf:/var/lib/postgresql/data/pgdata/pg_hba.conf
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/pg_hba.conf:/tmp/pg_hba.conf
+      - ./scripts/initdb.sh:/docker-entrypoint-initdb.d/init-db.sh
     networks:
       - hive
     healthcheck:
@@ -60,6 +57,7 @@ services:
 
   metastore:
     image: apache/hive:${HIVE_VERSION}
+    platform: linux/amd64
     depends_on:
       postgres:
         condition: service_healthy
@@ -80,7 +78,7 @@ services:
     ports:
       - '${EXT_HIVE_METASTORE_PORT}:9083'
     volumes:
-      - ./volumes/warehouse:/opt/hive/data/warehouse
+      - warehouse:/opt/hive/data/warehouse
       - ./generated/:/opt/hive/custom_conf/
       - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
       - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
@@ -88,35 +86,36 @@ services:
     networks:
       - hive
 
-  # hiveserver2:
-  #   image: apache/hive:${HIVE_VERSION}
-  #   depends_on:
-  #     - metastore
-  #   restart: unless-stopped
-  #   container_name: hive3-hiveserver2
-  #   env_file:
-  #     - path: .env
-  #     - path: ../.env-local
-  #     # The hive image doesn't read the credentials from hdfs-site.xml
-  #     # with inserts or updates.  It expects env vars, so we define them
-  #     # in .env-aws-creds from the S3A_ creds we set in ../.env-local
-  #     - path: ./.env-aws-creds
-  #   environment:
-  #     HIVESERVER2_THRIFT_PORT: 10000 # internal port
-  #     SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
-  #     IS_RESUME: 'true'
-  #     SERVICE_NAME: 'hiveserver2'
-  #     HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
-  #   ports:
-  #     - '${EXT_HIVE_SERVER2_THRIFT_PORT}:10000'
-  #     - '${EXT_HIVE_SERVER2_WEB_UI_PORT}:10002'
-  #   volumes:
-  #     - ./volumes/warehouse:/opt/hive/data/warehouse
-  #     - ./generated/:/opt/hive/custom_conf/
-  #     # - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
-  #     - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
-  #   networks:
-  #     - hive
+  hiveserver2:
+    image: apache/hive:${HIVE_VERSION}
+    platform: linux/amd64
+    depends_on:
+      - metastore
+    restart: unless-stopped
+    container_name: hive3-hiveserver2
+    env_file:
+      - path: .env
+      - path: ../.env-local
+      # The hive image doesn't read the credentials from hdfs-site.xml
+      # with inserts or updates.  It expects env vars, so we define them
+      # in .env-aws-creds from the S3A_ creds we set in ../.env-local
+      - path: ./.env-aws-creds
+    environment:
+      HIVESERVER2_THRIFT_PORT: 10000 # internal port
+      SERVICE_OPTS: '-Xmx1G -Dhive.metastore.uris=thrift://metastore:9083'
+      IS_RESUME: 'true'
+      SERVICE_NAME: 'hiveserver2'
+      HIVE_CUSTOM_CONF_DIR: /opt/hive/custom_conf
+    ports:
+      - '${EXT_HIVE_SERVER2_THRIFT_PORT}:10000'
+      - '${EXT_HIVE_SERVER2_WEB_UI_PORT}:10002'
+    volumes:
+      - warehouse:/opt/hive/data/warehouse
+      - ./generated/:/opt/hive/custom_conf/
+      - ./jars/hadoop-aws.jar:/opt/hive/lib/hadoop-aws.jar
+      - ./jars/aws-java-sdk-bundle.jar:/opt/hive/lib/aws-sdk-bundle.jar
+    networks:
+      - hive
 
 networks:
   hive:
@@ -124,3 +123,5 @@ networks:
 
 volumes:
   config_data:
+  postgres-data:
+  warehouse:

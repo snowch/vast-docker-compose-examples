@@ -17,9 +17,8 @@
 
 ## Instructions
 
-Ensure `../.env-local` is created and populated with your environment.  See `../.env-example` for an example.
-
-Start the hive environment:
+- Ensure `../.env-local` is created and populated with your environment.  See `../.env-example` for an example.
+- Start the hive environment:
 
 ```bash
 docker compose up -d && docker compose logs -f
@@ -34,6 +33,9 @@ You can test by accessing the environment with beeline:
 ```bash
 docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 ```
+
+> [!TIP]
+> If beeline is unable to connect verify with logs `docker compose logs -f` to ensure you see output similar to `hive3-hiveserver2  | Hive Session ID = xxxxxxxx`.
 
 Let's test S3a configuration works by trying to create a HIVE SCHEMA.
 
