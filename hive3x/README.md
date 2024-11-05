@@ -40,6 +40,7 @@ docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 >  - You may need to wait a minutes or two for the environment to start.
 >  - You should be able to connect when the hiveserver2 logs (`docker compose logs -f hiveserver2`) have this output: `hive3-hiveserver2  | Hive Session ID = xxxxxxxx`
 
+### Beeline SQL
 
 ```sql
 SET iceberg.catalog.vast_iceberg.type=hive;
@@ -59,9 +60,7 @@ DESCRIBE EXTENDED vast_iceberg.x;
 ```
 
 
-#### Iceberg from Trino
-
-From Trino:
+### Trino setup
 
 ```sql
 -- TRINO ICEBERG CONNECTION
@@ -88,7 +87,7 @@ SELECT * FROM iceberg.social_media.twitter_data;
 
 ### Web UI
 
-- Access the web ui at http://your_host_name_or_ip:10002
+- Access the web ui at http://DOCKER_HOST_OR_IP:10002
 
 ## Changing the ports
 
