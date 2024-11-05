@@ -42,7 +42,9 @@ docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 SET iceberg.catalog.vast_iceberg.type=hive;
 SET iceberg.catalog.vast_iceberg.uri=thrift://localhost:9083;
 SET iceberg.catalog.vast_iceberg.clients=10;
-SET iceberg.catalog.vast_iceberg.warehouse=s3://csnow-bucket/iceberg;
+
+-- NOTE: The following doesn't seem to be needed
+-- SET iceberg.catalog.vast_iceberg.warehouse=s3://csnow-bucket/iceberg;
 
 CREATE DATABASE vast_iceberg
 LOCATION 's3a://csnow-bucket/iceberg';
