@@ -5,10 +5,6 @@
 > - Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases.
 > - Currently this image loses state when it is restarted.  Manually save any work that you need to keep.
 
-> [!WARNING]
-> This image is currently broken.  When starting up for the first time, you need to comment out the following:
-> `      - ./pg_hba.conf:/var/lib/postgresql/data/pgdata/pg_hba.conf`
-> Then start the image, stop it uncomment the above live and restart it.
 
 ## Prerequisites
 
@@ -23,6 +19,11 @@
 ```bash
 docker compose up -d && docker compose logs -f
 ```
+
+## Stopping
+
+- `compose stop` to stop the docker instances and maintain state when next running `compose up`
+- `comopse down -v` to stop the docker instances and remove any state and volumes
 
 ## Using
 
