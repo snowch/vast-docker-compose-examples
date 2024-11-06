@@ -37,9 +37,8 @@ docker compose up -d && docker compose logs -f
 > docker compose stop
 > volumes=("database_repository" "nar_extensions" "state" "flowfile_repository" "content_repository" "provenance_repository")
 > 
+> timestamp=$(date +%Y-%m-%d_%H-%M-%S)
 > for volume in "${volumes[@]}"; do
->   timestamp=$(date +%Y-%m-%d_%H-%M-%S)
-> 
 >   # Create a temporary container to access the volume
 >   docker run --rm --volumes-from nifi -v $(pwd)/backup:/backup ubuntu tar -czvf /backup/${volume}_$timestamp.tar.gz /opt/nifi/nifi-current/$volume
 > done
