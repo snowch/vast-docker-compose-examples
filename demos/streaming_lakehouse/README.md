@@ -108,6 +108,13 @@ DESCRIBE EXTENDED vast_iceberg.twitter_data;
 s3cmd ls s3://csnow-bucket/iceberg/ -r
 ```
 
+Example output:
+
+```bash
+$ s3cmd ls s3://csnow-bucket/iceberg/ -r
+2024-11-06 22:00         1599  s3://csnow-bucket/iceberg/twitter_data/metadata/00000-d098452f-a8ac-4b8d-bfd4-2d25fa5c17bd.metadata.json
+```
+
 ### More coming soon ...
 
 
