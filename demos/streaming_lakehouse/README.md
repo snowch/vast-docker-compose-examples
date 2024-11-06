@@ -61,9 +61,51 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 
 ### Hive3x 
 
+Start metastore and hiveserver2:
+
 ```bash
 cd hive3x
-docker compose up -d 
+docker compose up -d
+```
+
+Run beeline:
+
+```bash
+docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
+```
+
+Create your hive iceberg database:
+
+```sql
+SET iceberg.catalog.vast_iceberg.type=hive;
+SET iceberg.catalog.vast_iceberg.uri=thrift://localhost:9083;
+SET iceberg.catalog.vast_iceberg.clients=10;
+
+### Change the s3a location to a bucket on your S3A_ENDPOINT ###
+CREATE DATABASE vast_iceberg
+LOCATION 's3a://csnow-bucket/iceberg';
+
+CREATE TABLE vast_iceberg.twitter_data (
+  created_at BIGINT,
+  id BIGINT,
+  id_str STRING,
+  text STRING
+)
+STORED BY 'org.apache.iceberg.mr.hive.HiveIcebergStorageHandler';
+
+DESCRIBE EXTENDED vast_iceberg.twitter_data;
+```
+
+### Install and Configure s3cmd
+
+- Install: https://github.com/s3tools/s3cmd/blob/master/INSTALL.md
+- Configure: `s3cmd --configure`
+
+### Verify Iceberg on S3
+
+```bash
+### Change the s3a location to a bucket on your S3A_ENDPOINT ###
+s3cmd ls s3://csnow-bucket/iceberg/ -r
 ```
 
 ### More coming soon ...
