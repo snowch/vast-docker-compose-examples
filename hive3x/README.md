@@ -22,8 +22,12 @@ docker compose up -d && docker compose logs -f
 
 ## Stopping
 
-- `compose stop` to stop the docker instances and maintain state when next running `compose up`
-- `comopse down -v` to stop the docker instances and remove any state and volumes
+- `docker compose stop` to stop the docker instances and maintain state when next running `compose up`
+- `docker compose down -v` to stop the docker instances and remove any state and volumes
+
+> [!CAUTION]
+> You may want to backup your data before running `docker compose down -v`.  You can backup with this command:
+> `docker exec -i hive3-postgres /usr/bin/pg_dump  -U hive metastore_db >  postgres-backup.sql`
 
 ## Using
 
