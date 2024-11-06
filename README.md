@@ -12,9 +12,17 @@ This project aims to give you a quickstart way to try example integrations with 
 # Setup
 
 - Copy `.env-example` to `.env-local` and update to reflect your environment
-- See the readme of each sub-project for usage instructions.  For example:
+- See the readme of each integration sub-project for usage instructions:
+  - [hive3x](./hive3x)
+  - [jupyter-pyspark](./jupyter-pyspark)
+  - [kafka](./kafka)
+  - [nifi](./nifi)
+  - [superset](./superset)
+  - [trino](./trino)
+- Most sub-projects follow the pattern:
  
   ```bash
   cd trino
   docker compose up -d && docker compose logs -f
   ```
+- The [demo](./demo) folder contains demos using these integrations.
