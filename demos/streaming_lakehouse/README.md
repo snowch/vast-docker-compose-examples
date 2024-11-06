@@ -171,6 +171,18 @@ fi
 echo "Superset URL: $DOCKER_HOST_OR_IP:8088"
 ```
 
+Navigate to:
+
+- Settings -> Database Connections
+  - +Database -> Trino
+    - URL: trino://admin@DOCKER_HOST_OR_IP:8443/vast?verify=false (replace DOCKER_HOST_OR_IP with your host)
+    - Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
+  - +Database -> Trino
+    - URL: trino://admin@DOCKER_HOST_OR_IP:8443/iceberg?verify=false (replace DOCKER_HOST_OR_IP with your host)
+    - Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
+   
+Verify you are able to naviate the Iceberg and Vast DB databases.
+
 ### More coming soon ...
 
 
