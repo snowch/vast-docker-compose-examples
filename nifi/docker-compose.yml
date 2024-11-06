@@ -17,7 +17,7 @@ services:
       - ./.env
       - ../.env-local
     volumes:
-      - ./nifi_extensions:/mnt/jars
+      - nar_extensions:/mnt/jars
       - ./setup_jars.sh:/workspace/setup_jars.sh
     command: >
       bash /workspace/setup_jars.sh
@@ -26,6 +26,7 @@ services:
     image: apache/nifi:${NIFI_VERSION}
     restart: unless-stopped
     platform: linux/amd64
+    container_name: nifi
     depends_on:
       verify_required_env:
         condition: service_completed_successfully
@@ -39,9 +40,17 @@ services:
     ports:
       - ${EXT_NIFI_PORT}:8443
     volumes:
-      - ./nifi_extensions:/opt/nifi/nifi-current/nar_extensions:rw
-      - ./nifi_state:/opt/nifi/nifi-current/state:rw
-      - ./nifi_db:/opt/nifi/nifi-current/database_repository:rw
-      - ./nifi_flowfile:/opt/nifi/nifi-current/flowfile_repository:rw
-      - ./nifi_content:/opt/nifi/nifi-current/content_repository:rw
-      - ./nifi_provenance:/opt/nifi/nifi-current/provenance_repository:rw
+      - nar_extensions:/opt/nifi/nifi-current/nar_extensions:rw
+      - state:/opt/nifi/nifi-current/state:rw
+      - database_repository:/opt/nifi/nifi-current/database_repository:rw
+      - flowfile_repository:/opt/nifi/nifi-current/flowfile_repository:rw
+      - content_repository:/opt/nifi/nifi-current/content_repository:rw
+      - provenance_repository:/opt/nifi/nifi-current/provenance_repository:rw
+
+volumes:
+  nar_extensions:
+  state:
+  database_repository:
+  flowfile_repository:
+  content_repository:
+  provenance_repository:

@@ -10,6 +10,8 @@ Docker compose quickstart environment to try Apache NiFi with Vast S3 and Vast D
 
 ## Instructions
 
+### Running
+
 Set `DOCKER_HOST_OR_IP` in `../.env-local` to the hostname or ip address where you are running NiFi.
 This is the name you will enter in your browser.
 
@@ -20,8 +22,30 @@ This is the name you will enter in your browser.
 Finally, run docker compose up to start up NiFi.
 
 ```bash
-docker compose up
+docker compose up -d && docker compose logs -f
 ```
+
+## Stopping
+
+- `docker compose stop` to stop the docker instances and maintain state when next running `compose up`
+- `docker compose down -v` to stop the docker instances and remove any state and volumes
+
+> [!CAUTION]
+> - You may want to backup your data before running `docker compose down -v`.  
+> - You can backup with a command *like* this:
+> ```
+> docker compose stop
+> volumes=("database_repository" "nar_extensions" "state" "flowfile_repository" "content_repository" "provenance_repository")
+> 
+> for volume in "${volumes[@]}"; do
+>   timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+> 
+>   # Create a temporary container to access the volume
+>   docker run --rm --volumes-from nifi -v $(pwd)/backup:/backup ubuntu tar -czvf /backup/${volume}_$timestamp.tar.gz /opt/nifi/nifi-current/$volume
+> done
+> ```
+> - You are responsible for verifying your backup and restore process works.
+
 
 ## Using
 
