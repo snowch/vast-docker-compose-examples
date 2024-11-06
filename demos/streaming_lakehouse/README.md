@@ -115,6 +115,44 @@ $ s3cmd ls s3://csnow-bucket/iceberg/ -r
 2024-11-06 22:00         1599  s3://csnow-bucket/iceberg/twitter_data/metadata/00000-d098452f-a8ac-4b8d-bfd4-2d25fa5c17bd.metadata.json
 ```
 
+### Trino
+
+Start trino:
+
+```bash
+cd trino
+docker compose up -d
+```
+
+Connect to trino:
+
+```bash
+if [ -f .env-local ]; then
+  source .env-local
+elif [ -f ../.env-local ]; then
+  source ../.env-local
+fi
+
+echo "Connecting to: $DOCKER_HOST_OR_IP"
+docker exec -it trino trino --server https://${DOCKER_HOST_OR_IP}:8443 --insecure
+```
+
+Verify iceberg table exists:
+
+```bash
+trino> show tables in iceberg.vast_iceberg;
+```
+
+For me this outputs:
+
+```bash
+    Table
+--------------
+ twitter_data
+(1 row)
+```
+
+
 ### More coming soon ...
 
 
