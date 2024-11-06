@@ -16,6 +16,7 @@ This project aims to give you a quickstart way to try example integrations with 
 
 # Setup
 
+- Clone this repo.
 - Copy `.env-example` to `.env-local` and update to reflect your environment
 - See the readme of each integration sub-project for usage instructions:
   - [hive3x](./hive3x)
