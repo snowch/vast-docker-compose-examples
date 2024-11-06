@@ -37,14 +37,25 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 - Clone this git repository.
 - Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
 - Run the following projects:
+  - [hive3x](../../hive3x)
+  - [kafka](../../kafka)
   - [nifi](../../nifi)
     - Upload the [NiFi Flow File](./assets/NiFi_Flow.json) 
-  - [kafka](../../kafka)
-  - [hive3x](../../hive3x)
   - [jupyter-pyspark](../../jupyter-pyspark)
   - [trino](../../trino)
   - [superset](../../superset)
   
 ## Detailed Setup Instructions
 
-Coming soon ...
+### Clone and configure
+
+- Clone this git repository.
+- Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment:
+  - DOCKER_HOST_OR_IP
+  - S3A_ACCESS_KEY
+  - S3A_SECRET_KEY
+  - S3A_ENDPOINT
+  - VASTDB_ACCESS_KEY
+  - VASTDB_SECRET_KEY
+  - VASTDB_ENDPOINT
+  - VASTDB_DATA_ENDPOINTS
