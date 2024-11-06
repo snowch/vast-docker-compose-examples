@@ -143,7 +143,7 @@ Verify iceberg table exists:
 trino> show tables in iceberg.vast_iceberg;
 ```
 
-For me this outputs:
+This should output:
 
 ```bash
     Table
