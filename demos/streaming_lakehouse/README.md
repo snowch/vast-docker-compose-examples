@@ -47,7 +47,7 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
   
 ## Detailed Setup Instructions
 
-### Clone and configure
+### Clone repo and configure
 
 - Clone this git repository.
 - Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment:
@@ -58,4 +58,12 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
   - VASTDB_ACCESS_KEY
   - VASTDB_SECRET_KEY
   - VASTDB_ENDPOINT
-  - VASTDB_DATA_ENDPOINTS
+
+### Hive3x 
+
+```bash
+cd hive3x
+docker compose up -d 
+```
+
+
