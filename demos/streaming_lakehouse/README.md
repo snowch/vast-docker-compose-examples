@@ -183,7 +183,7 @@ Navigate to:
     - SQLAlchemy URI: `trino://admin@DOCKER_HOST_OR_IP:8443/iceberg?verify=false` (replace DOCKER_HOST_OR_IP with your host)
     - Advanced -> Other -> Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
    
-Verify you are able to naviate the Iceberg and Vast DB databases.
+Verify in SQL Lab that you are able to naviate the Iceberg and Vast DB databases.
 
 ### More coming soon ...
 
