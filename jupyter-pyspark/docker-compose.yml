@@ -30,7 +30,3 @@ services:
     volumes:
       - ./examples:/home/jovyan/examples:rw
       - ./generated/hdfs-site.xml:/usr/local/spark/conf/hdfs-site.xml:ro
-
-volumes:
-  jupyter-pyspark-data:
-
