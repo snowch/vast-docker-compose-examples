@@ -25,4 +25,4 @@ This project aims to give you a quickstart way to try example integrations with 
   cd trino
   docker compose up -d && docker compose logs -f
   ```
-- The [demo](./demo) folder contains demos using these integrations.
+- The [demos](./demos) folder contains demos using these integrations.
