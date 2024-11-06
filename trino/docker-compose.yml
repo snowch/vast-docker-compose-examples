@@ -66,6 +66,11 @@ services:
       # - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
       - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
+    healthcheck:
+      # test port 9083 is available
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/localhost/8080"]
+      interval: 30s
+      retries: 10
     labels:
       - traefik.enable=true
       - traefik.http.routers.mytrino.rule=PathPrefix(`/`)
