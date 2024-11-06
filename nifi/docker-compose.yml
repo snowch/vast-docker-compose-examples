@@ -33,9 +33,9 @@ services:
       setup_jars:
         condition: service_completed_successfully
     env_file:
-      - path: ./.env
-        required: true
       - path: ../.env-local
+        required: true
+      - path: ./.env
         required: true
     ports:
       - ${EXT_NIFI_PORT}:8443
