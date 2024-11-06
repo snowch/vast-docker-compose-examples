@@ -25,6 +25,10 @@ Start the spark container:
 docker compose up -d && docker compose logs -f
 ```
 
+## Persistence
+
+Any changes you make in the notebook to the examples folder are saved to the examples folder locally.
+
 ## Using
 
 When the image has started, navigate to: `http://DOCKER_HOST_OR_IP:8888`
