@@ -28,7 +28,7 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 - Docker Compose
 - Host with:
   - approx. 24GB Memory
-  - TBC cores
+  - approx. 8 cores
 - Vast S3 Bucket
 - Vast Database
 
@@ -38,10 +38,13 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 - Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
 - Run the following projects:
   - [nifi](../../nifi)
+    - Upload the [NiFi Flow File](./assets/NiFi_Flow.json) 
   - [kafka](../../kafka)
-  - [superset](../../superset)
-  - [trino](../../trino)
   - [hive3x](../../hive3x)
   - [jupyter-pyspark](../../jupyter-pyspark)
+  - [trino](../../trino)
+  - [superset](../../superset)
+  
+## Detailed Setup Instructions
 
-
+Coming soon ...
