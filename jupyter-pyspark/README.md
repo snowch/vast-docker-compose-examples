@@ -1,4 +1,4 @@
-# Spark Quickstart
+# Jupyter + PySpark Quickstart
 
 > [!CAUTION]
 > - Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases.
@@ -19,7 +19,7 @@ Build the image (use the same command to rebuild the image if you make any chang
 docker compose build --no-cache
 ```
 
-Start the spark container:
+Start the Jupyter + PySpark container:
 
 ```bash
 docker compose up -d && docker compose logs -f
