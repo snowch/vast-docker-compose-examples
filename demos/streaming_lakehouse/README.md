@@ -152,6 +152,24 @@ This should output:
 (1 row)
 ```
 
+### Superset
+
+```bash
+cd superset
+docker compose up -d
+```
+
+Verify URL:
+
+```bash
+if [ -f .env-local ]; then
+  source .env-local
+elif [ -f ../.env-local ]; then
+  source ../.env-local
+fi
+
+echo "Superset URL: $DOCKER_HOST_OR_IP:8088"
+```
 
 ### More coming soon ...
 
