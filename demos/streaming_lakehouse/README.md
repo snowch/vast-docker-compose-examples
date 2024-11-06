@@ -159,7 +159,7 @@ cd superset
 docker compose up -d
 ```
 
-Verify URL:
+Open Superset URL:
 
 ```bash
 if [ -f .env-local ]; then
