@@ -39,11 +39,6 @@ You can run Hive Commands by connecting to the Hive beeline CLI:
 docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 ```
 
-> [!TIP]
-> If beeline is unable to connect:
->  - You may need to wait a minutes or two for the environment to start.
->  - You should be able to connect when the hiveserver2 logs (`docker compose logs -f hiveserver2`) have this output: `hive3-hiveserver2  | Hive Session ID = xxxxxxxx`
-
 ### Hive Beeline SQL Commands
 
 These example SQL commands can be run from the Hive beeline CLI.  Mofify to reflect your environment:
