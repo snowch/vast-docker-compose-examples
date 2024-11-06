@@ -27,7 +27,7 @@ This project aims to give you a quickstart way to try example integrations with 
 - Most sub-projects follow the pattern:
  
   ```bash
-  cd trino
+  cd trino # or other sub-project
   docker compose up -d && docker compose logs -f
   ```
 - The [demos](./demos) folder contains demos using these integrations.
