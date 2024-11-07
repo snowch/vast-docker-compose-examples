@@ -1,15 +1,17 @@
 services:
 
-  setup_jars:
+  setup:
     image: debian:stable-slim
     env_file:
-      - ./.env
-      - ../.env-local
+      - path: ../.env-local
+        required: true
+      - path: ./.env
+        required: true
     volumes:
       - nar_extensions:/mnt/jars
-      - ./setup_jars.sh:/workspace/setup_jars.sh
+      - ./setup.sh:/workspace/setup.sh
     command: >
-      bash /workspace/setup_jars.sh
+      bash /workspace/setup.sh
 
   nifi:
     image: apache/nifi:${NIFI_VERSION}
@@ -17,7 +19,7 @@ services:
     platform: linux/amd64
     container_name: nifi
     depends_on:
-      setup_jars:
+      setup:
         condition: service_completed_successfully
     env_file:
       - path: ../.env-local

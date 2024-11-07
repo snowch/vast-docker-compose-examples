@@ -1,5 +1,10 @@
 #!/bin/bash
-set -eaux
+set -eau
+
+if [[ "$DOCKER_HOST_OR_IP" == "CHANGE_ME" ]]; then
+    echo "DOCKER_HOST_OR_IP variable is set to CHANGE_ME. Please update it with the correct value."
+    exit 1
+fi
 
 # Install necessary packages
 apt-get update && apt-get install -y --no-install-recommends curl jq ca-certificates wget && rm -rf /var/lib/apt/lists/*
