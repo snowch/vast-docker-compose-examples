@@ -173,7 +173,9 @@ Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
 - username: admin
 - password: 123456123456
 
-After logging in to NiFi, create a ![Process Group](./assets/drag_process_group.png)
+After logging in to NiFi, create a new Process Group ![Process Group](./assets/drag_process_group.png)
+
+
 
 
 ## More coming soon ...
