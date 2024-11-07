@@ -158,6 +158,8 @@ http://DOCKER_HOST_OR_IP:28080
 
 ## NiFi
 
+Download the Nifi [Demo Flow Definition](./assets/NiFi_Flow.json)
+
 Run the NiFi container:
 
 ```bash
@@ -171,7 +173,8 @@ Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
 - username: admin
 - password: 123456123456
 
-Download the Nifi [Demo Flow Definition](./assets/NiFi_Flow.json)
+After logging in to NiFi, create a [Process Group](./assets/drag_process_group.png)
+
 
 
 
