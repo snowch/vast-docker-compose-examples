@@ -22,7 +22,8 @@ This is the name you will enter in your browser.
 Finally, run docker compose up to start up NiFi.
 
 ```bash
-docker compose up -d && docker compose logs -f
+docker compose up -d
+docker compose up --wait # wait for nifi to be healthy
 ```
 
 ## Stopping
