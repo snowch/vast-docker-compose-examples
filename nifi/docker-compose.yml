@@ -1,18 +1,7 @@
 services:
 
-  verify_required_env:
-    image: hairyhenderson/gomplate:latest
-    working_dir: /workspace
-    env_file:
-      - ./.env
-      - ../.env-local
-    command: "-i '{{env.Getenv \"DOCKER_HOST_OR_IP\" | required \"Mandatory DOCKER_HOST_OR_IP environment variable not found.\"}}'"
-
   setup_jars:
     image: debian:stable-slim
-    depends_on:
-      verify_required_env:
-        condition: service_completed_successfully
     env_file:
       - ./.env
       - ../.env-local
@@ -28,8 +17,6 @@ services:
     platform: linux/amd64
     container_name: nifi
     depends_on:
-      verify_required_env:
-        condition: service_completed_successfully
       setup_jars:
         condition: service_completed_successfully
     env_file:
