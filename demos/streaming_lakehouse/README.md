@@ -207,7 +207,7 @@ Run the NiFi container:
 ```bash
 cd nifi
 docker compose up -d
-docker compose up --wait nifi # wait for nifi to be ready 
+docker compose up --wait # wait for nifi to be healthy
 ```
 
 Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
