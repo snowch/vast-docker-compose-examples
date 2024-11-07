@@ -1,4 +1,4 @@
-# Detailed Setup Instructions
+# Setup Instructions
 
 > [!NOTE]
 > The approximate setup time for this demo is 30 mins.
@@ -170,6 +170,9 @@ Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
 
 - username: admin
 - password: 123456123456
+
+Download the Nifi [Demo Flow Definition](./assets/NiFi_Flow.json)
+
 
 
 ## More coming soon ...
