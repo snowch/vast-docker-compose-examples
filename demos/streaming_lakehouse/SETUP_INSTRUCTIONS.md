@@ -175,7 +175,9 @@ Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
 
 After logging in to NiFi, create a new Process Group ![Process Group](./assets/drag_process_group.png)
 
-Click on the icon to import your flow definition: ![Flow Definition](./assets/import_flow_definition.png)
+Click on the icon to import your flow definition: 
+
+<img src="./assets/import_flow_definition.png" width=500px style="float: left"/>
 
 
 ## More coming soon ...
