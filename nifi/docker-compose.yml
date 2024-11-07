@@ -35,6 +35,11 @@ services:
       - flowfile_repository:/opt/nifi/nifi-current/flowfile_repository:rw
       - content_repository:/opt/nifi/nifi-current/content_repository:rw
       - provenance_repository:/opt/nifi/nifi-current/provenance_repository:rw
+      - ./healthcheck.sh:/healthcheck.sh
+    healthcheck:
+      test: bash /healthcheck.sh
+      interval: 30s
+      retries: 10
 
 volumes:
   nar_extensions:
