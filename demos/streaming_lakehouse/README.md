@@ -32,7 +32,7 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 - Vast S3 Bucket
 - Vast Database
 
-## Getting Started
+## Setup Overview
 
 - Clone this git repository.
 - Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
@@ -46,6 +46,9 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
   - [superset](../../superset)
   
 ## Detailed Setup Instructions
+
+> [!NOTE]
+> The approximate setup time for this demo is 30 mins.
 
 ### Clone repo and configure
 
