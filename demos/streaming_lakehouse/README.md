@@ -187,6 +187,34 @@ Navigate to:
    
 Verify in SQL Lab that you are able to naviate the Iceberg and Vast DB databases.
 
+### Kafka
+
+Run the kafka container:
+
+```bash
+cd kafka
+docker compose up -d
+```
+
+Navigate to the Redpanda console:
+
+http://DOCKER_HOST_OR_IP:28080
+
+### NiFi
+
+Run the NiFi container:
+
+```bash
+cd nifi
+docker compose up -d
+```
+
+Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
+
+- username: admin
+- password: 123456123456
+
+
 ### More coming soon ...
 
 
