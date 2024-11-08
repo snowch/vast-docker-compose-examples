@@ -184,8 +184,22 @@ Double click on the imported Process Group Header and you will see two subflows:
  - Streaming
  - Bulk Import
 
-Double click on the Streaming subflow, then right click the Canvas and choose Controller Services.
+Right click the Canvas and choose Controller Services.
 
 <img src="./assets/configure_services.png" width=500px style="float: left"/>
+
+Edit these controller services:
+
+- S3A - AWSCredentialsProviderControllerService
+  - Access Key ID: `${S3A_ACCESS_KEY}`
+  - Secret Access Key : `${S3A_SECRET_KEY`
+- VastDB - AWSCredentialsProviderControllerService
+  - Access Key ID: `${VASTDB_ACCESS_KEY}`
+  - Secret Access Key : `${VASTDB_SECRET_KEY`
+ 
+> [!NOTE]
+> These environment variables are passed to the NiFi service by docker compose and will be resolved at runtime.
+
+Enable the services.
 
 ## More coming soon ...
