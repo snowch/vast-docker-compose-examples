@@ -179,5 +179,11 @@ Click on the icon to import the Flow Definition:
 
 <img src="./assets/import_flow_definition.png" width=500px style="float: left"/>
 
+Double click on the imported Process Group Header and you will see two subflows:
+
+ - Streaming
+ - Bulk Import
+
+Double click on the Streaming subflow and ...
 
 ## More coming soon ...
