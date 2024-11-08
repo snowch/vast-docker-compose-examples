@@ -184,6 +184,8 @@ Double click on the imported Process Group Header and you will see two subflows:
  - Streaming
  - Bulk Import
 
-Double click on the Streaming subflow and ...
+Double click on the Streaming subflow, then right click the Canvas and choose Controller Services.
+
+<img src="./assets/configure_services.png" width=500px style="float: left"/>
 
 ## More coming soon ...
