@@ -12,7 +12,8 @@ This project aims to give you a quickstart way to try example integrations with 
 - Mac OS or Linux Host
 
 > [!NOTE]  
-> This project has only been tested on Mac OS (Silicon) and Linux (AMD64)
+> - This project has been tested on Mac OS (Silicon) and Linux (AMD64)
+> - [Colima](https://github.com/abiosoft/colima) is used on Mac OS to provide docker compose. `docker compose` can be invoked with `docker-compose`.
 
 # Setup
 
