@@ -191,30 +191,37 @@ Right click the Canvas and choose Controller Services.
 Edit these controller services:
 
 - S3A - AWSCredentialsProviderControllerService
-  - Access Key ID: `${S3A_ACCESS_KEY}`
-  - Secret Access Key : `${S3A_SECRET_KEY`
+  - **Access Key ID**: `${S3A_ACCESS_KEY}`
+  - **Secret Access Key** : `${S3A_SECRET_KEY`
 - VastDB - AWSCredentialsProviderControllerService
-  - Access Key ID: `${VASTDB_ACCESS_KEY}`
-  - Secret Access Key : `${VASTDB_SECRET_KEY`
+  - **Access Key ID**: `${VASTDB_ACCESS_KEY}`
+  - **Secret Access Key** : `${VASTDB_SECRET_KEY`
  
 > [!NOTE]
 > These environment variables are passed to the NiFi service by docker compose and will be resolved at runtime.
 
-Enable the services by right clicking on the top level canvas and selecting **Enable All Services**
+Enable the services by right clicking on the top level canvas and selecting **Enable All Controller Services**
 
 Next configure these Process Controllers:
 
 - NiFi_Flow ⟫ Streaming ⟫ Consume From Kafka ⟫ PutVastDB Processor (x2)
-  - VastDB Endpoint: Hard code the value of VASTDB_ENDPOINT that you set in `../.env-local`
-  - VastDB Bucket: Your Database Bucket name
-  - VastDB Database Schema: Your Database Schema name
-  - VastDB Table Name:Your Database Table name
-  - Data Type: JSON
+  - **VastDB Endpoint**: Hard code the value of VASTDB_ENDPOINT that you set in `../.env-local`
+  - **VastDB Bucket**: Your Database Bucket name
+  - **VastDB Database Schema**: Your Database Schema name
+  - **VastDB Table Name**:Your Database Table name
+  - **Data Type**: JSON
 - NiFi_Flow ⟫ Bulk Import ⟫ ImportVastDB Processor
-  - VastDB Endpoint: Hard code the value of VASTDB_ENDPOINT that you set in `../.env-local`
-  - VastDB Bucket: Your Database Bucket name
-  - VastDB Database Schema: Your Database Schema name
-  - VastDB Table Name:Your Database Table name
-  - Schema Merge: Union
+  - **VastDB Endpoint**: Hard code the value of VASTDB_ENDPOINT that you set in `../.env-local`
+  - **VastDB Bucket**: Your Database Bucket name
+  - **VastDB Database Schema**: Your Database Schema name
+  - **VastDB Table Name**:Your Database Table name
+  - **Schema Merge**: Union
+
+Let's start running these processsors.
+
+- Right click: _NiFi_Flow ⟫ Streaming ⟫ Publish to Kafka_ Process Group
+  - Click enable
+  - Open the Redpanda console with your browser: http://DOCKER_HOST_OR_IP:28080
+  - Verify you have a `streaming-demo` topic that is getting a new stream of data
 
 ## More coming soon ...
