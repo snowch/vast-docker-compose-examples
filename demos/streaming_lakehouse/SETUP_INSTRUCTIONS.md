@@ -196,6 +196,8 @@ Edit these controller services:
 - VastDB - AWSCredentialsProviderControllerService
   - **Access Key ID**: `${VASTDB_ACCESS_KEY}`
   - **Secret Access Key** : `${VASTDB_SECRET_KEY`
+- Kafka3ConnectionService
+  - **Bootstrap Servers** : `DOCKER_HOST_OR_IP:19092` (replace `DOCKER_HOST_OR_IP` with the value you have set it to in `..\.env-local`.
  
 > [!NOTE]
 > These environment variables are passed to the NiFi service by docker compose and will be resolved at runtime.
