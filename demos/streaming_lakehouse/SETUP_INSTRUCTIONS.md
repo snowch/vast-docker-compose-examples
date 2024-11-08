@@ -200,6 +200,21 @@ Edit these controller services:
 > [!NOTE]
 > These environment variables are passed to the NiFi service by docker compose and will be resolved at runtime.
 
-Enable the services.
+Enable the services by right clicking on the top level canvas and selecting **Enable All Services**
+
+Next configure these Process Controllers:
+
+- NiFi_Flow ⟫ Streaming ⟫ Consume From Kafka ⟫ PutVastDB Processor (x2)
+  - VastDB Endpoint: Hard code the value of VASTDB_ENDPOINT that you set in `../.env-local`
+  - VastDB Bucket: Your Database Bucket name
+  - VastDB Database Schema: Your Database Schema name
+  - VastDB Table Name:Your Database Table name
+  - Data Type: JSON
+- NiFi_Flow ⟫ Bulk Import ⟫ ImportVastDB Processor
+  - VastDB Endpoint: Hard code the value of VASTDB_ENDPOINT that you set in `../.env-local`
+  - VastDB Bucket: Your Database Bucket name
+  - VastDB Database Schema: Your Database Schema name
+  - VastDB Table Name:Your Database Table name
+  - Schema Merge: Union
 
 ## More coming soon ...
