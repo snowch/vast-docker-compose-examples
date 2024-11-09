@@ -24,6 +24,7 @@ This project aims to give you a quickstart way to try example integrations with 
   - [jupyter-pyspark](./jupyter-pyspark)
   - [kafka](./kafka)
   - [nifi](./nifi)
+  - [querybook](./querybook) [coming soon...]
   - [superset](./superset)
   - [trino](./trino)
 - Most sub-projects follow the pattern:
