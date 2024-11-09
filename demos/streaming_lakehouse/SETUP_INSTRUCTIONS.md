@@ -219,11 +219,25 @@ Next configure these Process Controllers:
   - **VastDB Table Name**:Your Database Table name
   - **Schema Merge**: Union
 
+### Run: Publish to Kafka 
+
 Let's start running these processsors.
 
 - Right click: _NiFi_Flow ⟫ Streaming ⟫ Publish to Kafka_ Process Group
   - Click enable
   - Open the Redpanda console with your browser: http://DOCKER_HOST_OR_IP:28080
   - Verify you have a `streaming-demo` topic that is getting a new stream of data
+
+### Run: Consume from Kafka 
+
+The **Consumer from Kafka** flow has separate workflows for two kafka topic.  In this section we focus on the first topic `streaming-demo`.
+
+- Open the _NiFi_Flow ⟫ Streaming ⟫ Consume from Kafka_ Process Group
+- Right click and start the processor _ConsumeKafka - streaming-demo_.
+- Navigate to the Redpanda Kafka console
+  - Observe the consumers on the 'streaming-demo' topic, there should be one with an id `demogroup`
+  - The state of the consumer should be stable, if it isn't wait.  This can take [some time](https://www.redpanda.com/guides/kafka-performance-kafka-rebalancing)
+- 
+-  
 
 ## More coming soon ...
