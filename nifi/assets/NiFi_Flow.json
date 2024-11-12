@@ -102,7 +102,7 @@
                             "VastDB Database Schema": "users_import",
                             "VastDB Bucket": "csnowdb",
                             "Schema Merge": "Union",
-                            "VastDB Endpoint": "http://172.200.201.1:80",
+                            "VastDB Endpoint": "http://PLACEHOLDER:80",
                             "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                         },
                         "propertyDescriptors": {
@@ -191,7 +191,7 @@
                             "prefix": "import-files/",
                             "record-writer": "e42c496a-d5cf-3a6d-961d-04e28a054fe4",
                             "proxy-configuration-service": null,
-                            "Endpoint Override URL": "http://172.200.201.1:80",
+                            "Endpoint Override URL": "http://PLACEHOLDER:80",
                             "et-time-window": "3 hours",
                             "custom-signer-class-name": null,
                             "requester-pays": "false",
@@ -2004,7 +2004,7 @@
                                     "VastDB Database Schema": "twitter_import",
                                     "Data Type": "Json",
                                     "VastDB Bucket": "csnowdb",
-                                    "VastDB Endpoint": "http://172.200.201.1:80",
+                                    "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
                                 "propertyDescriptors": {
@@ -2092,7 +2092,7 @@
                                     "VastDB Database Schema": "twitter_import",
                                     "Data Type": "Json",
                                     "VastDB Bucket": "csnowdb",
-                                    "VastDB Endpoint": "http://172.200.201.1:80",
+                                    "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
                                 "propertyDescriptors": {

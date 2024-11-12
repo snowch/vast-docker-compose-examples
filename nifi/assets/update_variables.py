@@ -195,15 +195,183 @@ def update_controller(controller, update):
         )
     )
 
+def list_all_process_groups(pg_id='root'):
+    """
+    Returns a flattened list of all Process Groups on the canvas.
+    Potentially slow if you have a large canvas.
+
+    Note that the ProcessGroupsApi().get_process_groups(pg_id) command only
+    provides the first layer of pgs, whereas this trawls the entire canvas
+
+    Args:
+        pg_id (str): The UUID of the Process Group to start from, defaults to
+            the Canvas root
+
+    Returns:
+         list[ProcessGroupEntity]
+
+    """
+    assert isinstance(pg_id, six.string_types), "pg_id should be a string"
+
+    def flatten(parent_pg):
+        """
+        Recursively flattens the native datatypes into a generic list.
+        Note that the root is a special case as it has no parent
+
+        Args:
+            parent_pg (ProcessGroupEntity): object to flatten
+
+        Yields:
+            Generator for all ProcessGroupEntities, eventually
+        """
+        for child_pg in parent_pg.process_group_flow.flow.process_groups:
+            for sub in flatten(child_pg.nipyapi_extended):
+                yield sub
+            yield child_pg
+
+    # Recurse children
+    root_flow = recurse_flow(pg_id)
+    # Flatten list of children with extended detail
+    out = list(flatten(root_flow))
+    # update parent with flattened list of extended child detail
+    root_entity = get_process_group(pg_id, 'id')
+    root_entity.__setattr__('nipyapi_extended', root_flow)
+    out.append(root_entity)
+    return out
+
+
+    #
+    # if pg_id == 'root' or pg_id == get_root_pg_id():
+    #     # This duplicates the nipyapi_extended structure to the root case
+    #     root_entity = get_process_group('root', 'id')
+    #     root_entity.__setattr__('nipyapi_extended', root_flow)
+    #     out.append(root_entity)
+    # return out
+
+def get_processor(api_client, identifier, identifier_type='name', greedy=True):
+    """
+    Filters the list of all Processors against the given identifier string in
+    the given identifier_type field
+
+    Args:
+        identifier (str): The String to filter against
+        identifier_type (str): The field to apply the filter to. Set in
+            config.py
+        greedy (bool): Whether to exact match (False) or partial match (True)
+
+    Returns:
+        None for no matches, Single Object for unique match,
+        list(Objects) for multiple matches
+    """
+    assert isinstance(identifier, six.string_types)
+    assert identifier_type in ['name', 'id']
+    if identifier_type == 'id':
+        out = nipyapi.nifi.ProcessorsApi(api_client).get_processor(identifier)
+    else:
+        obj = list_all_processors()
+        out = nipyapi.utils.filter_obj(
+            obj, identifier, identifier_type, greedy=greedy
+        )
+    return out
+
+def list_all_processors(pg_id='root'):
+    """
+    Returns a flat list of all Processors under the provided Process Group
+
+    Args:
+        pg_id (str): The UUID of the Process Group to start from, defaults to
+            the Canvas root
+
+    Returns:
+         list[ProcessorEntity]
+    """
+    assert isinstance(pg_id, six.string_types), "pg_id should be a string"
+
+    if nipyapi.utils.check_version('1.7.0') <= 0:
+        # Case where NiFi > 1.7.0
+        targets = nipyapi.nifi.ProcessGroupsApi().get_processors(
+            id=pg_id,
+            include_descendant_groups=True
+        )
+        return targets.processors
+    # Handle older NiFi instances
+    out = []
+    # list of child process groups
+    pg_ids = [x.id for x in list_all_process_groups(pg_id)]
+    # process target list
+    for this_pg_id in pg_ids:
+        procs = nipyapi.nifi.ProcessGroupsApi().get_processors(this_pg_id)
+        if procs.processors:
+            out += procs.processors
+    return out
+
+def get_processor(api_client, identifier, identifier_type='name', greedy=True):
+    """
+    Filters the list of all Processors against the given identifier string in
+    the given identifier_type field
+
+    Args:
+        identifier (str): The String to filter against
+        identifier_type (str): The field to apply the filter to. Set in
+            config.py
+        greedy (bool): Whether to exact match (False) or partial match (True)
+
+    Returns:
+        None for no matches, Single Object for unique match,
+        list(Objects) for multiple matches
+    """
+    assert isinstance(identifier, six.string_types)
+    assert identifier_type in ['name', 'id']
+    if identifier_type == 'id':
+        out = nipyapi.nifi.ProcessorsApi(api_client).get_processor(identifier)
+    else:
+        obj = list_all_processors()
+        out = nipyapi.utils.filter_obj(
+            obj, identifier, identifier_type, greedy=greedy
+        )
+    return out
+
+def update_processor(api_client, processor, update, refresh=False):
+    """
+    Updates configuration parameters for a given Processor.
+
+    An example update would be:
+    nifi.ProcessorConfigDTO(scheduling_period='3s')
+
+    Args:
+        processor (ProcessorEntity): The Processor to target for update
+        update (ProcessorConfigDTO): The new configuration parameters
+        refresh (bool): Whether to refresh the Processor object state
+          before applying the update
+
+    Returns:
+        (ProcessorEntity): The updated ProcessorEntity
+
+    """
+    if not isinstance(update, nipyapi.nifi.ProcessorConfigDTO):
+        raise ValueError(
+            "update param is not an instance of nifi.ProcessorConfigDTO"
+        )
+    with nipyapi.utils.rest_exceptions():
+        if refresh:
+            processor = get_processor(processor.id, 'id')
+        return nipyapi.nifi.ProcessorsApi(api_client).update_processor(
+            id=processor.id,
+            body=nipyapi.nifi.ProcessorEntity(
+                component=nipyapi.nifi.ProcessorDTO(
+                    config=update,
+                    id=processor.id
+                ),
+                revision=processor.revision,
+            )
+        )
 
 def main():
-
 
     DOCKER_HOST_OR_IP = os.getenv("DOCKER_HOST_OR_IP")
     VASTDB_ENDPOINT = os.getenv("VASTDB_ENDPOINT")
     VASTDB_ACCESS_KEY = os.getenv("VASTDB_ACCESS_KEY")
     VASTDB_SECRET_KEY = os.getenv("VASTDB_SECRET_KEY")
-
     S3_ENDPOINT = os.getenv("S3A_ENDPOINT")
     S3_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
     S3_SECRET_KEY = os.getenv("S3A_SECRET_KEY")
@@ -215,7 +383,10 @@ def main():
     # Set up NiFi connection
     api_client = setup_nifi_connection(nifi_host, username, password)
 
+    ###############
     # S3 Controller
+    ###############
+
     update=nipyapi.nifi.ControllerServiceDTO(
                 properties={
                     'Access Key': S3_ACCESS_KEY,
@@ -225,7 +396,10 @@ def main():
     controller = get_controller(api_client, 'S3A - AWSCredentialsProviderControllerService')
     updated = update_controller(controller, update)
 
+    ###################
     # VastDB Controller
+    ###################
+
     update=nipyapi.nifi.ControllerServiceDTO(
                 properties={
                     'Access Key': VASTDB_ACCESS_KEY,
@@ -235,7 +409,10 @@ def main():
     controller = get_controller(api_client, 'VastDB - AWSCredentialsProviderControllerService')
     updated = update_controller(controller, update)
 
+    ##################
     # Kafka Controller
+    ##################
+
     update=nipyapi.nifi.ControllerServiceDTO(
                 properties={
                     'bootstrap.servers': f'{DOCKER_HOST_OR_IP}:19092'
@@ -243,7 +420,48 @@ def main():
             )
     controller = get_controller(api_client, 'Kafka3ConnectionService')
     updated = update_controller(controller, update)
-    
+
+    #####################
+    # PutVastDB Processor
+    #####################
+
+    update=nipyapi.nifi.ProcessorConfigDTO(
+                properties={
+                    'VastDB Endpoint': f'{VASTDB_ENDPOINT}'
+                }
+            )
+    processor = get_processor(api_client, 'PutVastDB')
+    for p in processor:
+        print(p.id)
+        updated = update_processor(api_client, p, update)
+
+    ########################
+    # ImportVastDB Processor
+    ########################
+
+    update=nipyapi.nifi.ProcessorConfigDTO(
+                properties={
+                    'VastDB Endpoint': f'{VASTDB_ENDPOINT}'
+                }
+            )
+    processor = get_processor(api_client, 'ImportVastDB')
+    for p in processor:
+        print(p.id)
+        updated = update_processor(api_client, p, update)
+
+    ##################
+    # ListS3 Processor
+    ##################
+
+    update=nipyapi.nifi.ProcessorConfigDTO(
+                properties={
+                    'Endpoint Override URL': f'{VASTDB_ENDPOINT}'
+                }
+            )
+    processor = get_processor(api_client, 'ListS3')
+    for p in processor:
+        print(p.id)
+        updated = update_processor(api_client, p, update)
 
 if __name__ == "__main__":
     main()
