@@ -96,22 +96,13 @@ def setup_nifi_connection(host_url, username, password):
         print(f"Authentication error: {str(e)}")
         raise
 
-def main():
-    """Main function to upload NiFi flow JSON file."""
-    nifi_host = f'https://{DOCKER_HOST_OR_IP}:18443/nifi-api'
-    username = 'admin'
-    password = '123456123456'
-
-    # Set up NiFi connection
-    api_client = setup_nifi_connection(nifi_host, username, password)
+def upload_flow_definition(nifi_host, api_client, file_path, pg_name):
 
     # File to upload
-    file_path = '/assets/NiFi_Flow.json'
     with open(file_path, 'rb') as f:
         file_data = f.read()
 
     # Set up form data and headers
-    pg_name = "Demo_Flow"
     files = {'file': ('NiFi_Flow.json', file_data, 'application/json')}
     headers = {
         'Accept': 'application/json, text/plain, */*',
@@ -133,6 +124,19 @@ def main():
     # Log response status
     print(response.status_code)
     # print(response.text)
+
+def main():
+
+    nifi_host = f'https://{DOCKER_HOST_OR_IP}:18443/nifi-api'
+    username = 'admin'
+    password = '123456123456'
+
+    # Set up NiFi connection
+    api_client = setup_nifi_connection(nifi_host, username, password)
+
+    pg_name = "Demo_Flow"
+    file_path = '/assets/NiFi_Flow.json'
+    upload_flow_definition(nifi_host, api_client, file_path, pg_name)
 
 if __name__ == "__main__":
     main()
