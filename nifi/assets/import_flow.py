@@ -15,8 +15,6 @@ from nipyapi.nifi.models.process_group_dto import ProcessGroupDTO
 from nipyapi.nifi.apis.process_groups_api import ProcessGroupsApi
 import six
 
-DOCKER_HOST_OR_IP = os.getenv("DOCKER_HOST_OR_IP")
-
 # Disable SSL warnings
 requests.packages.urllib3.disable_warnings()
 
@@ -126,6 +124,8 @@ def upload_flow_definition(nifi_host, api_client, file_path, pg_name):
     # print(response.text)
 
 def main():
+
+    DOCKER_HOST_OR_IP = os.getenv("DOCKER_HOST_OR_IP")
 
     nifi_host = f'https://{DOCKER_HOST_OR_IP}:18443/nifi-api'
     username = 'admin'

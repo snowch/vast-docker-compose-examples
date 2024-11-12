@@ -13,6 +13,7 @@ fi
 
 pip3 install --quiet requests nipyapi
 python3 /assets/import_flow.py
+python3 /assets/update_variables.py
 
 # Create a lock file to prevent re-running
 touch "$LOCK_FILE"
