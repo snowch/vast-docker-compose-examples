@@ -431,6 +431,8 @@ def main():
                 }
             )
     processor = get_processor(api_client, 'PutVastDB')
+
+    # there are multiple PutVastDB processors
     for p in processor:
         print(p.id)
         updated = update_processor(api_client, p, update)
@@ -445,9 +447,7 @@ def main():
                 }
             )
     processor = get_processor(api_client, 'ImportVastDB')
-    for p in processor:
-        print(p.id)
-        updated = update_processor(api_client, p, update)
+    updated = update_processor(api_client, p, update)
 
     ##################
     # ListS3 Processor
@@ -455,13 +455,11 @@ def main():
 
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
-                    'Endpoint Override URL': f'{VASTDB_ENDPOINT}'
+                    'Endpoint Override URL': f'{S3_ENDPOINT}'
                 }
             )
     processor = get_processor(api_client, 'ListS3')
-    for p in processor:
-        print(p.id)
-        updated = update_processor(api_client, p, update)
+    updated = update_processor(api_client, p, update)
 
 if __name__ == "__main__":
     main()

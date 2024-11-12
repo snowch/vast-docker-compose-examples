@@ -1,7 +1,7 @@
 {
     "flowContents": {
-        "identifier": "2fafdf59-2bdf-3e9d-87a0-fc25948a1931",
-        "instanceIdentifier": "2248942f-0193-1000-ea23-0889db6b51d8",
+        "identifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2",
+        "instanceIdentifier": "229e263e-0193-1000-56b1-0e95300af926",
         "name": "Demo_Flow",
         "comments": "",
         "position": {
@@ -11,7 +11,7 @@
         "processGroups": [
             {
                 "identifier": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
-                "instanceIdentifier": "f457842d-9805-3559-ca1d-5955d8454c2a",
+                "instanceIdentifier": "03438538-e2ef-3096-6d83-c9a94a050b45",
                 "name": "Bulk Import",
                 "comments": "",
                 "position": {
@@ -23,7 +23,7 @@
                 "processors": [
                     {
                         "identifier": "18562f78-aad3-3460-8587-c129fc2e149a",
-                        "instanceIdentifier": "2a642196-247b-31f0-cc21-894244a358d9",
+                        "instanceIdentifier": "ef34c977-01c9-3c10-f149-46d0d522b45b",
                         "name": "LogMessage",
                         "comments": "",
                         "position": {
@@ -84,7 +84,7 @@
                     },
                     {
                         "identifier": "5b17813e-f536-31bf-9980-0d708313d98e",
-                        "instanceIdentifier": "0950dcdc-18b9-3911-c5df-cb7d13f5dcc0",
+                        "instanceIdentifier": "c895dd02-aeea-3b34-fc33-e4073739b7e9",
                         "name": "ImportVastDB",
                         "comments": "",
                         "position": {
@@ -172,7 +172,7 @@
                     },
                     {
                         "identifier": "bd99598a-bc29-3d8e-b697-97330c47c59e",
-                        "instanceIdentifier": "e4ea8680-4653-3057-3c0d-be050722dda4",
+                        "instanceIdentifier": "655f3140-7879-3326-9f06-21c92a0b3ba6",
                         "name": "ListS3",
                         "comments": "",
                         "position": {
@@ -420,7 +420,7 @@
                 "connections": [
                     {
                         "identifier": "cc90e528-bc8f-3dd0-809e-31640145563c",
-                        "instanceIdentifier": "ed2cd2ee-7099-3a1f-1314-c3ef27acb3fb",
+                        "instanceIdentifier": "c5126acc-b536-3f96-f445-06518c3f7101",
                         "name": "",
                         "source": {
                             "id": "5b17813e-f536-31bf-9980-0d708313d98e",
@@ -428,7 +428,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "ImportVastDB",
                             "comments": "",
-                            "instanceIdentifier": "0950dcdc-18b9-3911-c5df-cb7d13f5dcc0"
+                            "instanceIdentifier": "c895dd02-aeea-3b34-fc33-e4073739b7e9"
                         },
                         "destination": {
                             "id": "18562f78-aad3-3460-8587-c129fc2e149a",
@@ -436,7 +436,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "LogMessage",
                             "comments": "",
-                            "instanceIdentifier": "2a642196-247b-31f0-cc21-894244a358d9"
+                            "instanceIdentifier": "ef34c977-01c9-3c10-f149-46d0d522b45b"
                         },
                         "labelIndex": 0,
                         "zIndex": 0,
@@ -456,7 +456,7 @@
                     },
                     {
                         "identifier": "c2224e5e-417e-3ead-826e-6ee58bcf0663",
-                        "instanceIdentifier": "546c5261-7d7c-38b5-6d3e-a1a75574a88f",
+                        "instanceIdentifier": "de06d843-9fcc-3057-fad4-71e031fe05db",
                         "name": "",
                         "source": {
                             "id": "bd99598a-bc29-3d8e-b697-97330c47c59e",
@@ -464,7 +464,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "ListS3",
                             "comments": "",
-                            "instanceIdentifier": "e4ea8680-4653-3057-3c0d-be050722dda4"
+                            "instanceIdentifier": "655f3140-7879-3326-9f06-21c92a0b3ba6"
                         },
                         "destination": {
                             "id": "5b17813e-f536-31bf-9980-0d708313d98e",
@@ -472,7 +472,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "ImportVastDB",
                             "comments": "",
-                            "instanceIdentifier": "0950dcdc-18b9-3911-c5df-cb7d13f5dcc0"
+                            "instanceIdentifier": "c895dd02-aeea-3b34-fc33-e4073739b7e9"
                         },
                         "labelIndex": 0,
                         "zIndex": 0,
@@ -496,7 +496,7 @@
                 "controllerServices": [
                     {
                         "identifier": "e42c496a-d5cf-3a6d-961d-04e28a054fe4",
-                        "instanceIdentifier": "d2d0dc4d-d7b8-323e-0ff0-2dcea52cd558",
+                        "instanceIdentifier": "6240373f-7ec9-3c4a-3011-a4ad27cbb20b",
                         "name": "JsonRecordSetWriter",
                         "comments": "",
                         "type": "org.apache.nifi.json.JsonRecordSetWriter",
@@ -687,11 +687,11 @@
                 "flowFileConcurrency": "UNBOUNDED",
                 "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
                 "componentType": "PROCESS_GROUP",
-                "groupIdentifier": "2fafdf59-2bdf-3e9d-87a0-fc25948a1931"
+                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
             },
             {
                 "identifier": "54239340-e7ca-316e-a55c-e09a42580445",
-                "instanceIdentifier": "aaf1c385-54a4-3ac8-18da-838e79b9c579",
+                "instanceIdentifier": "c402d184-5f29-36ff-41f7-d838220597f4",
                 "name": "Streaming",
                 "comments": "",
                 "position": {
@@ -701,7 +701,7 @@
                 "processGroups": [
                     {
                         "identifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
-                        "instanceIdentifier": "ab39629a-cf56-3e92-2077-99c8c48968b9",
+                        "instanceIdentifier": "880f591a-d08b-3dda-5b43-3d913966a763",
                         "name": "Publish to Kafka",
                         "comments": "",
                         "position": {
@@ -713,12 +713,12 @@
                         "processors": [
                             {
                                 "identifier": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
-                                "instanceIdentifier": "11184cb2-a0db-3891-bb7a-e918c6bbaa1d",
+                                "instanceIdentifier": "f75ee34d-17bb-362b-9535-77952c3e8521",
                                 "name": "PublishKafka",
                                 "comments": "",
                                 "position": {
                                     "x": 608.0,
-                                    "y": -584.0
+                                    "y": -408.0
                                 },
                                 "type": "org.apache.nifi.kafka.processors.PublishKafka",
                                 "bundle": {
@@ -744,7 +744,7 @@
                                     "Record Key Writer": null,
                                     "Failure Strategy": "Route to Failure",
                                     "partitioner.class": "org.apache.kafka.clients.producer.internals.DefaultPartitioner",
-                                    "Record Writer": null,
+                                    "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
                                     "Transactions Enabled": "true",
                                     "Message Key Field": null,
                                     "FlowFile Attribute Header Pattern": null
@@ -920,7 +920,7 @@
                             },
                             {
                                 "identifier": "cdeb0b7b-c4bd-3de0-a5e5-a43ebca1a240",
-                                "instanceIdentifier": "32a6bcdd-bf29-3ab7-0125-867f80097ffa",
+                                "instanceIdentifier": "482bb630-51db-33a9-f787-03130e0c1f81",
                                 "name": "Twitter Data Generator",
                                 "comments": "",
                                 "position": {
@@ -1009,13 +1009,74 @@
                                 "groupIdentifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4"
                             },
                             {
+                                "identifier": "37672283-19a4-3787-9ebc-396e3aa810be",
+                                "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd",
+                                "name": "ConvertRecord",
+                                "comments": "",
+                                "position": {
+                                    "x": 608.0,
+                                    "y": -592.0
+                                },
+                                "type": "org.apache.nifi.processors.standard.ConvertRecord",
+                                "bundle": {
+                                    "group": "org.apache.nifi",
+                                    "artifact": "nifi-standard-nar",
+                                    "version": "2.0.0-M4"
+                                },
+                                "properties": {
+                                    "Include Zero Record FlowFiles": "false",
+                                    "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
+                                    "Record Reader": "73ea1aeb-30ab-3580-933d-68093b4dc792"
+                                },
+                                "propertyDescriptors": {
+                                    "Include Zero Record FlowFiles": {
+                                        "name": "Include Zero Record FlowFiles",
+                                        "displayName": "Include Zero Record FlowFiles",
+                                        "identifiesControllerService": false,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    },
+                                    "Record Writer": {
+                                        "name": "Record Writer",
+                                        "displayName": "Record Writer",
+                                        "identifiesControllerService": true,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    },
+                                    "Record Reader": {
+                                        "name": "Record Reader",
+                                        "displayName": "Record Reader",
+                                        "identifiesControllerService": true,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    }
+                                },
+                                "style": {},
+                                "schedulingPeriod": "0 sec",
+                                "schedulingStrategy": "TIMER_DRIVEN",
+                                "executionNode": "ALL",
+                                "penaltyDuration": "30 sec",
+                                "yieldDuration": "1 sec",
+                                "bulletinLevel": "WARN",
+                                "runDurationMillis": 0,
+                                "concurrentlySchedulableTaskCount": 1,
+                                "autoTerminatedRelationships": [],
+                                "scheduledState": "ENABLED",
+                                "retryCount": 10,
+                                "retriedRelationships": [],
+                                "backoffMechanism": "PENALIZE_FLOWFILE",
+                                "maxBackoffPeriod": "10 mins",
+                                "componentType": "PROCESSOR",
+                                "groupIdentifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4"
+                            },
+                            {
                                 "identifier": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
-                                "instanceIdentifier": "2e80eb17-56e1-391e-a09c-534e7fcdc3ed",
+                                "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306",
                                 "name": "LogMessage",
                                 "comments": "",
                                 "position": {
-                                    "x": 1296.0,
-                                    "y": -576.0
+                                    "x": 1312.0,
+                                    "y": -408.0
                                 },
                                 "type": "org.apache.nifi.processors.standard.LogMessage",
                                 "bundle": {
@@ -1075,7 +1136,7 @@
                         "connections": [
                             {
                                 "identifier": "1becd583-ba40-356f-a810-1aef595b7c66",
-                                "instanceIdentifier": "aa2d70c2-9bd4-37f8-128c-2371d6956e43",
+                                "instanceIdentifier": "945931eb-5f1c-3795-d49f-3714ce19488a",
                                 "name": "",
                                 "source": {
                                     "id": "cdeb0b7b-c4bd-3de0-a5e5-a43ebca1a240",
@@ -1083,7 +1144,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "Twitter Data Generator",
                                     "comments": "",
-                                    "instanceIdentifier": "32a6bcdd-bf29-3ab7-0125-867f80097ffa"
+                                    "instanceIdentifier": "482bb630-51db-33a9-f787-03130e0c1f81"
                                 },
                                 "destination": {
                                     "id": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
@@ -1091,7 +1152,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "2e80eb17-56e1-391e-a09c-534e7fcdc3ed"
+                                    "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1115,8 +1176,44 @@
                                 "groupIdentifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4"
                             },
                             {
+                                "identifier": "db6eadec-16aa-36b8-8318-3b0fad105118",
+                                "instanceIdentifier": "22a25143-0193-1000-1fb4-618df9111497",
+                                "name": "",
+                                "source": {
+                                    "id": "37672283-19a4-3787-9ebc-396e3aa810be",
+                                    "type": "PROCESSOR",
+                                    "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
+                                    "name": "ConvertRecord",
+                                    "comments": "",
+                                    "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd"
+                                },
+                                "destination": {
+                                    "id": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
+                                    "type": "PROCESSOR",
+                                    "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
+                                    "name": "LogMessage",
+                                    "comments": "",
+                                    "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306"
+                                },
+                                "labelIndex": 0,
+                                "zIndex": 0,
+                                "selectedRelationships": [
+                                    "failure"
+                                ],
+                                "backPressureObjectThreshold": 10000,
+                                "backPressureDataSizeThreshold": "1 GB",
+                                "flowFileExpiration": "0 sec",
+                                "prioritizers": [],
+                                "bends": [],
+                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                                "partitioningAttribute": "",
+                                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                                "componentType": "CONNECTION",
+                                "groupIdentifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4"
+                            },
+                            {
                                 "identifier": "f72861f9-ee76-3232-b841-10cd273238ce",
-                                "instanceIdentifier": "a3dfc9a9-ba04-378e-047f-3abb62a343fe",
+                                "instanceIdentifier": "9e3069ec-4822-3646-b45c-651a0cdd5e19",
                                 "name": "",
                                 "source": {
                                     "id": "cdeb0b7b-c4bd-3de0-a5e5-a43ebca1a240",
@@ -1124,15 +1221,15 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "Twitter Data Generator",
                                     "comments": "",
-                                    "instanceIdentifier": "32a6bcdd-bf29-3ab7-0125-867f80097ffa"
+                                    "instanceIdentifier": "482bb630-51db-33a9-f787-03130e0c1f81"
                                 },
                                 "destination": {
-                                    "id": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
+                                    "id": "37672283-19a4-3787-9ebc-396e3aa810be",
                                     "type": "PROCESSOR",
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
-                                    "name": "PublishKafka",
+                                    "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "11184cb2-a0db-3891-bb7a-e918c6bbaa1d"
+                                    "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1152,7 +1249,7 @@
                             },
                             {
                                 "identifier": "d21cfdb2-29fe-3918-8e82-0fc2e3219f64",
-                                "instanceIdentifier": "6a95688d-be29-3360-1021-dbecc28cb97c",
+                                "instanceIdentifier": "10bc2c84-d1b5-36de-f516-afd952c0240b",
                                 "name": "",
                                 "source": {
                                     "id": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
@@ -1160,7 +1257,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "PublishKafka",
                                     "comments": "",
-                                    "instanceIdentifier": "11184cb2-a0db-3891-bb7a-e918c6bbaa1d"
+                                    "instanceIdentifier": "f75ee34d-17bb-362b-9535-77952c3e8521"
                                 },
                                 "destination": {
                                     "id": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
@@ -1168,12 +1265,48 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "2e80eb17-56e1-391e-a09c-534e7fcdc3ed"
+                                    "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
                                 "selectedRelationships": [
                                     "failure"
+                                ],
+                                "backPressureObjectThreshold": 10000,
+                                "backPressureDataSizeThreshold": "1 GB",
+                                "flowFileExpiration": "0 sec",
+                                "prioritizers": [],
+                                "bends": [],
+                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                                "partitioningAttribute": "",
+                                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                                "componentType": "CONNECTION",
+                                "groupIdentifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4"
+                            },
+                            {
+                                "identifier": "0bf86c6a-20e9-3744-9e22-acf17a78cb17",
+                                "instanceIdentifier": "22a23f1b-0193-1000-181d-3a4f2f4a9d21",
+                                "name": "",
+                                "source": {
+                                    "id": "37672283-19a4-3787-9ebc-396e3aa810be",
+                                    "type": "PROCESSOR",
+                                    "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
+                                    "name": "ConvertRecord",
+                                    "comments": "",
+                                    "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd"
+                                },
+                                "destination": {
+                                    "id": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
+                                    "type": "PROCESSOR",
+                                    "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
+                                    "name": "PublishKafka",
+                                    "comments": "",
+                                    "instanceIdentifier": "f75ee34d-17bb-362b-9535-77952c3e8521"
+                                },
+                                "labelIndex": 0,
+                                "zIndex": 0,
+                                "selectedRelationships": [
+                                    "success"
                                 ],
                                 "backPressureObjectThreshold": 10000,
                                 "backPressureDataSizeThreshold": "1 GB",
@@ -1204,7 +1337,7 @@
                     },
                     {
                         "identifier": "d195df89-2426-3212-8498-fc0cf8c70940",
-                        "instanceIdentifier": "a8513945-a195-3197-96cb-f1d5f2055e86",
+                        "instanceIdentifier": "b970dbd7-4178-33b0-442c-d4e1f96cd570",
                         "name": "Consume from Kafka",
                         "comments": "",
                         "position": {
@@ -1215,8 +1348,69 @@
                         "remoteProcessGroups": [],
                         "processors": [
                             {
+                                "identifier": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
+                                "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f",
+                                "name": "ConvertRecord",
+                                "comments": "",
+                                "position": {
+                                    "x": 1048.0,
+                                    "y": 224.0
+                                },
+                                "type": "org.apache.nifi.processors.standard.ConvertRecord",
+                                "bundle": {
+                                    "group": "org.apache.nifi",
+                                    "artifact": "nifi-standard-nar",
+                                    "version": "2.0.0-M4"
+                                },
+                                "properties": {
+                                    "Include Zero Record FlowFiles": "true",
+                                    "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
+                                    "Record Reader": "73ea1aeb-30ab-3580-933d-68093b4dc792"
+                                },
+                                "propertyDescriptors": {
+                                    "Include Zero Record FlowFiles": {
+                                        "name": "Include Zero Record FlowFiles",
+                                        "displayName": "Include Zero Record FlowFiles",
+                                        "identifiesControllerService": false,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    },
+                                    "Record Writer": {
+                                        "name": "Record Writer",
+                                        "displayName": "Record Writer",
+                                        "identifiesControllerService": true,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    },
+                                    "Record Reader": {
+                                        "name": "Record Reader",
+                                        "displayName": "Record Reader",
+                                        "identifiesControllerService": true,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    }
+                                },
+                                "style": {},
+                                "schedulingPeriod": "0 sec",
+                                "schedulingStrategy": "TIMER_DRIVEN",
+                                "executionNode": "ALL",
+                                "penaltyDuration": "30 sec",
+                                "yieldDuration": "1 sec",
+                                "bulletinLevel": "WARN",
+                                "runDurationMillis": 0,
+                                "concurrentlySchedulableTaskCount": 1,
+                                "autoTerminatedRelationships": [],
+                                "scheduledState": "ENABLED",
+                                "retryCount": 10,
+                                "retriedRelationships": [],
+                                "backoffMechanism": "PENALIZE_FLOWFILE",
+                                "maxBackoffPeriod": "10 mins",
+                                "componentType": "PROCESSOR",
+                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
+                            },
+                            {
                                 "identifier": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
-                                "instanceIdentifier": "278db536-88b9-3a1b-8bae-64079b19ff43",
+                                "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1",
                                 "name": "ExecuteScript - extract key fields",
                                 "comments": "",
                                 "position": {
@@ -1297,69 +1491,8 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
-                                "instanceIdentifier": "62e5f4a6-f7e6-3200-a3c3-842115f11552",
-                                "name": "ConvertRecord",
-                                "comments": "",
-                                "position": {
-                                    "x": 1048.0,
-                                    "y": 224.0
-                                },
-                                "type": "org.apache.nifi.processors.standard.ConvertRecord",
-                                "bundle": {
-                                    "group": "org.apache.nifi",
-                                    "artifact": "nifi-standard-nar",
-                                    "version": "2.0.0-M4"
-                                },
-                                "properties": {
-                                    "Include Zero Record FlowFiles": "true",
-                                    "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
-                                    "Record Reader": "73ea1aeb-30ab-3580-933d-68093b4dc792"
-                                },
-                                "propertyDescriptors": {
-                                    "Include Zero Record FlowFiles": {
-                                        "name": "Include Zero Record FlowFiles",
-                                        "displayName": "Include Zero Record FlowFiles",
-                                        "identifiesControllerService": false,
-                                        "sensitive": false,
-                                        "dynamic": false
-                                    },
-                                    "Record Writer": {
-                                        "name": "Record Writer",
-                                        "displayName": "Record Writer",
-                                        "identifiesControllerService": true,
-                                        "sensitive": false,
-                                        "dynamic": false
-                                    },
-                                    "Record Reader": {
-                                        "name": "Record Reader",
-                                        "displayName": "Record Reader",
-                                        "identifiesControllerService": true,
-                                        "sensitive": false,
-                                        "dynamic": false
-                                    }
-                                },
-                                "style": {},
-                                "schedulingPeriod": "0 sec",
-                                "schedulingStrategy": "TIMER_DRIVEN",
-                                "executionNode": "ALL",
-                                "penaltyDuration": "30 sec",
-                                "yieldDuration": "1 sec",
-                                "bulletinLevel": "WARN",
-                                "runDurationMillis": 0,
-                                "concurrentlySchedulableTaskCount": 1,
-                                "autoTerminatedRelationships": [],
-                                "scheduledState": "ENABLED",
-                                "retryCount": 10,
-                                "retriedRelationships": [],
-                                "backoffMechanism": "PENALIZE_FLOWFILE",
-                                "maxBackoffPeriod": "10 mins",
-                                "componentType": "PROCESSOR",
-                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
-                            },
-                            {
                                 "identifier": "5c812da7-66a4-32cc-af69-999068405853",
-                                "instanceIdentifier": "437c75fe-f062-31a9-5fcf-ea44bb573bbb",
+                                "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3",
                                 "name": "LogMessage",
                                 "comments": "",
                                 "position": {
@@ -1420,7 +1553,7 @@
                             },
                             {
                                 "identifier": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
-                                "instanceIdentifier": "cbf15999-36ca-3eea-a523-a566536efd12",
+                                "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07",
                                 "name": "LogMessage",
                                 "comments": "",
                                 "position": {
@@ -1481,7 +1614,7 @@
                             },
                             {
                                 "identifier": "4694ed33-f95a-36c3-945a-bc146f74ca91",
-                                "instanceIdentifier": "b5a13cf8-9c52-37ea-e55f-dfd85d28ec46",
+                                "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902",
                                 "name": "ExecuteScript - extract key fields",
                                 "comments": "",
                                 "position": {
@@ -1563,7 +1696,7 @@
                             },
                             {
                                 "identifier": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
-                                "instanceIdentifier": "19f222f6-dd9b-345d-9983-ebadd0f05dad",
+                                "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42",
                                 "name": "ConvertRecord",
                                 "comments": "",
                                 "position": {
@@ -1624,7 +1757,7 @@
                             },
                             {
                                 "identifier": "0b4341ca-6592-3d2c-84d9-289995ae1ffa",
-                                "instanceIdentifier": "7663d107-13a4-3d4f-b8fb-288eb5de3ce8",
+                                "instanceIdentifier": "7da8b0ca-1fa6-3718-936d-84e85daebf44",
                                 "name": "ConsumeKafka - streaming-demo-2",
                                 "comments": "",
                                 "position": {
@@ -1805,7 +1938,7 @@
                             },
                             {
                                 "identifier": "67dbe0c7-92b6-3a54-8ae7-07de718122d4",
-                                "instanceIdentifier": "bfd9d6d2-d2f0-3e34-e209-c6bb565dd555",
+                                "instanceIdentifier": "0866903f-19ad-3146-2a9c-a8c15ad1ea46",
                                 "name": "ConsumeKafka - streaming-demo",
                                 "comments": "",
                                 "position": {
@@ -1986,7 +2119,7 @@
                             },
                             {
                                 "identifier": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
-                                "instanceIdentifier": "72f7deba-820d-3a66-2024-00f80838484b",
+                                "instanceIdentifier": "8049b120-dbb8-33f9-3dea-1f7bdf66c6c6",
                                 "name": "PutVastDB",
                                 "comments": "",
                                 "position": {
@@ -2004,7 +2137,7 @@
                                     "VastDB Database Schema": "twitter_import",
                                     "Data Type": "Json",
                                     "VastDB Bucket": "csnowdb",
-                                    "VastDB Endpoint": "http://PLACEHOLDER:80",
+                                    "VastDB Endpoint": "http://172.200.201.1:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
                                 "propertyDescriptors": {
@@ -2074,7 +2207,7 @@
                             },
                             {
                                 "identifier": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
-                                "instanceIdentifier": "df3d0697-ea0d-3986-e958-019d45ecad47",
+                                "instanceIdentifier": "b7cc60c5-06e5-30a0-4507-5aa392599292",
                                 "name": "PutVastDB",
                                 "comments": "",
                                 "position": {
@@ -2092,7 +2225,7 @@
                                     "VastDB Database Schema": "twitter_import",
                                     "Data Type": "Json",
                                     "VastDB Bucket": "csnowdb",
-                                    "VastDB Endpoint": "http://PLACEHOLDER:80",
+                                    "VastDB Endpoint": "http://172.200.201.1:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
                                 "propertyDescriptors": {
@@ -2165,44 +2298,8 @@
                         "outputPorts": [],
                         "connections": [
                             {
-                                "identifier": "7aea9945-b5d8-3737-8937-b99c3d6fbe91",
-                                "instanceIdentifier": "3790381a-4d5d-34f3-d047-5b026bf444ad",
-                                "name": "",
-                                "source": {
-                                    "id": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
-                                    "type": "PROCESSOR",
-                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "PutVastDB",
-                                    "comments": "",
-                                    "instanceIdentifier": "72f7deba-820d-3a66-2024-00f80838484b"
-                                },
-                                "destination": {
-                                    "id": "5c812da7-66a4-32cc-af69-999068405853",
-                                    "type": "PROCESSOR",
-                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "LogMessage",
-                                    "comments": "",
-                                    "instanceIdentifier": "437c75fe-f062-31a9-5fcf-ea44bb573bbb"
-                                },
-                                "labelIndex": 0,
-                                "zIndex": 0,
-                                "selectedRelationships": [
-                                    "failure"
-                                ],
-                                "backPressureObjectThreshold": 10000,
-                                "backPressureDataSizeThreshold": "1 GB",
-                                "flowFileExpiration": "0 sec",
-                                "prioritizers": [],
-                                "bends": [],
-                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
-                                "partitioningAttribute": "",
-                                "loadBalanceCompression": "DO_NOT_COMPRESS",
-                                "componentType": "CONNECTION",
-                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
-                            },
-                            {
                                 "identifier": "2c6b0ef8-67a9-31f0-89f7-4fc281bd7718",
-                                "instanceIdentifier": "bd60531a-ea9a-3b86-4dd7-122992815438",
+                                "instanceIdentifier": "3baf9020-b667-30cd-6576-7512aca8fa10",
                                 "name": "",
                                 "source": {
                                     "id": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
@@ -2210,7 +2307,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "62e5f4a6-f7e6-3200-a3c3-842115f11552"
+                                    "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f"
                                 },
                                 "destination": {
                                     "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
@@ -2218,7 +2315,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "cbf15999-36ca-3eea-a523-a566536efd12"
+                                    "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2242,8 +2339,44 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
+                                "identifier": "7aea9945-b5d8-3737-8937-b99c3d6fbe91",
+                                "instanceIdentifier": "a39fd3ab-9151-3ea9-5f59-0628fcb63f75",
+                                "name": "",
+                                "source": {
+                                    "id": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
+                                    "type": "PROCESSOR",
+                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
+                                    "name": "PutVastDB",
+                                    "comments": "",
+                                    "instanceIdentifier": "8049b120-dbb8-33f9-3dea-1f7bdf66c6c6"
+                                },
+                                "destination": {
+                                    "id": "5c812da7-66a4-32cc-af69-999068405853",
+                                    "type": "PROCESSOR",
+                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
+                                    "name": "LogMessage",
+                                    "comments": "",
+                                    "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3"
+                                },
+                                "labelIndex": 0,
+                                "zIndex": 0,
+                                "selectedRelationships": [
+                                    "failure"
+                                ],
+                                "backPressureObjectThreshold": 10000,
+                                "backPressureDataSizeThreshold": "1 GB",
+                                "flowFileExpiration": "0 sec",
+                                "prioritizers": [],
+                                "bends": [],
+                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                                "partitioningAttribute": "",
+                                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                                "componentType": "CONNECTION",
+                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
+                            },
+                            {
                                 "identifier": "529a48ec-ee49-3f7a-925f-f5d7ebf48ab3",
-                                "instanceIdentifier": "4ff8ac26-a20f-3a5c-457f-23e308bb0c22",
+                                "instanceIdentifier": "65d42101-f646-34d4-2f26-3b5410fcce8b",
                                 "name": "",
                                 "source": {
                                     "id": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
@@ -2251,7 +2384,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "62e5f4a6-f7e6-3200-a3c3-842115f11552"
+                                    "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f"
                                 },
                                 "destination": {
                                     "id": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
@@ -2259,7 +2392,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "PutVastDB",
                                     "comments": "",
-                                    "instanceIdentifier": "df3d0697-ea0d-3986-e958-019d45ecad47"
+                                    "instanceIdentifier": "b7cc60c5-06e5-30a0-4507-5aa392599292"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2279,7 +2412,7 @@
                             },
                             {
                                 "identifier": "3d55464f-fdcb-3fb4-8300-11bc39a4ab69",
-                                "instanceIdentifier": "b823d172-dbe2-36a3-c632-273b581f4b33",
+                                "instanceIdentifier": "cec9c193-3dac-3783-e8fb-def73d665868",
                                 "name": "",
                                 "source": {
                                     "id": "0b4341ca-6592-3d2c-84d9-289995ae1ffa",
@@ -2287,7 +2420,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConsumeKafka - streaming-demo-2",
                                     "comments": "",
-                                    "instanceIdentifier": "7663d107-13a4-3d4f-b8fb-288eb5de3ce8"
+                                    "instanceIdentifier": "7da8b0ca-1fa6-3718-936d-84e85daebf44"
                                 },
                                 "destination": {
                                     "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
@@ -2295,7 +2428,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "278db536-88b9-3a1b-8bae-64079b19ff43"
+                                    "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1"
                                 },
                                 "labelIndex": 1,
                                 "zIndex": 0,
@@ -2315,7 +2448,7 @@
                             },
                             {
                                 "identifier": "8cfb91e5-2c39-3ac4-94ab-59104cf7e837",
-                                "instanceIdentifier": "d34aabcd-d76c-3973-2419-a9833591d58b",
+                                "instanceIdentifier": "4436b849-9366-3c39-0e19-af924d39056a",
                                 "name": "",
                                 "source": {
                                     "id": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
@@ -2323,7 +2456,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "19f222f6-dd9b-345d-9983-ebadd0f05dad"
+                                    "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42"
                                 },
                                 "destination": {
                                     "id": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
@@ -2331,7 +2464,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "PutVastDB",
                                     "comments": "",
-                                    "instanceIdentifier": "72f7deba-820d-3a66-2024-00f80838484b"
+                                    "instanceIdentifier": "8049b120-dbb8-33f9-3dea-1f7bdf66c6c6"
                                 },
                                 "labelIndex": 1,
                                 "zIndex": 0,
@@ -2351,7 +2484,7 @@
                             },
                             {
                                 "identifier": "e7d6f42e-d0f4-34c5-a287-f36dfda27cc0",
-                                "instanceIdentifier": "1fe2b18d-5ba8-31e2-da36-d9c79dc12a95",
+                                "instanceIdentifier": "478afe7a-0859-3b91-8826-7a09f0dc9abe",
                                 "name": "",
                                 "source": {
                                     "id": "67dbe0c7-92b6-3a54-8ae7-07de718122d4",
@@ -2359,7 +2492,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConsumeKafka - streaming-demo",
                                     "comments": "",
-                                    "instanceIdentifier": "bfd9d6d2-d2f0-3e34-e209-c6bb565dd555"
+                                    "instanceIdentifier": "0866903f-19ad-3146-2a9c-a8c15ad1ea46"
                                 },
                                 "destination": {
                                     "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
@@ -2367,7 +2500,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "b5a13cf8-9c52-37ea-e55f-dfd85d28ec46"
+                                    "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2387,7 +2520,7 @@
                             },
                             {
                                 "identifier": "5254e7fe-d7b8-3ac1-b0f5-3a09f7c26376",
-                                "instanceIdentifier": "5d67170a-7262-3242-e4af-5acb7c3f6318",
+                                "instanceIdentifier": "c7748f12-8aff-3649-9fa7-db5ccd0ecf11",
                                 "name": "",
                                 "source": {
                                     "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
@@ -2395,7 +2528,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "b5a13cf8-9c52-37ea-e55f-dfd85d28ec46"
+                                    "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902"
                                 },
                                 "destination": {
                                     "id": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
@@ -2403,7 +2536,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "62e5f4a6-f7e6-3200-a3c3-842115f11552"
+                                    "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2423,7 +2556,7 @@
                             },
                             {
                                 "identifier": "52f80e00-cb41-3a7b-95d8-284b085925b5",
-                                "instanceIdentifier": "3f23f3fd-8535-3e48-ca1e-1c537571dc3b",
+                                "instanceIdentifier": "33e35ca8-79dd-3438-9d59-501b6595c30b",
                                 "name": "",
                                 "source": {
                                     "id": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
@@ -2431,7 +2564,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "19f222f6-dd9b-345d-9983-ebadd0f05dad"
+                                    "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42"
                                 },
                                 "destination": {
                                     "id": "5c812da7-66a4-32cc-af69-999068405853",
@@ -2439,7 +2572,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "437c75fe-f062-31a9-5fcf-ea44bb573bbb"
+                                    "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2463,24 +2596,24 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "2a1d6871-26ad-3d06-bf7c-179528ed0505",
-                                "instanceIdentifier": "1393bec5-6369-35a9-6912-86e6e3ce15a5",
+                                "identifier": "241daf40-6e17-311c-88ae-a5d27028d8ca",
+                                "instanceIdentifier": "d3ddbf8e-6fa1-3296-998b-af1866011db1",
                                 "name": "",
                                 "source": {
-                                    "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
+                                    "id": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
                                     "type": "PROCESSOR",
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "ExecuteScript - extract key fields",
+                                    "name": "PutVastDB",
                                     "comments": "",
-                                    "instanceIdentifier": "278db536-88b9-3a1b-8bae-64079b19ff43"
+                                    "instanceIdentifier": "b7cc60c5-06e5-30a0-4507-5aa392599292"
                                 },
                                 "destination": {
-                                    "id": "5c812da7-66a4-32cc-af69-999068405853",
+                                    "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
                                     "type": "PROCESSOR",
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "437c75fe-f062-31a9-5fcf-ea44bb573bbb"
+                                    "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2491,12 +2624,7 @@
                                 "backPressureDataSizeThreshold": "1 GB",
                                 "flowFileExpiration": "0 sec",
                                 "prioritizers": [],
-                                "bends": [
-                                    {
-                                        "x": -32.0,
-                                        "y": 72.0
-                                    }
-                                ],
+                                "bends": [],
                                 "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
                                 "partitioningAttribute": "",
                                 "loadBalanceCompression": "DO_NOT_COMPRESS",
@@ -2505,7 +2633,7 @@
                             },
                             {
                                 "identifier": "9c8aebe3-b151-3cd7-ab8d-89ef3f6977b2",
-                                "instanceIdentifier": "5f62ef2d-e23c-346d-8c6f-673bd8daee3d",
+                                "instanceIdentifier": "4af26ffc-1528-3aba-089f-9574b52fd213",
                                 "name": "",
                                 "source": {
                                     "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
@@ -2513,7 +2641,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "b5a13cf8-9c52-37ea-e55f-dfd85d28ec46"
+                                    "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902"
                                 },
                                 "destination": {
                                     "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
@@ -2521,7 +2649,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "cbf15999-36ca-3eea-a523-a566536efd12"
+                                    "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2545,24 +2673,24 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "241daf40-6e17-311c-88ae-a5d27028d8ca",
-                                "instanceIdentifier": "dfeef9d9-1f88-3e3b-ddaa-5e1e54242061",
+                                "identifier": "2a1d6871-26ad-3d06-bf7c-179528ed0505",
+                                "instanceIdentifier": "10121df9-bfd5-3388-7210-daf44a00dac4",
                                 "name": "",
                                 "source": {
-                                    "id": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
+                                    "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
                                     "type": "PROCESSOR",
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "PutVastDB",
+                                    "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "df3d0697-ea0d-3986-e958-019d45ecad47"
+                                    "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1"
                                 },
                                 "destination": {
-                                    "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
+                                    "id": "5c812da7-66a4-32cc-af69-999068405853",
                                     "type": "PROCESSOR",
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "cbf15999-36ca-3eea-a523-a566536efd12"
+                                    "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2573,7 +2701,12 @@
                                 "backPressureDataSizeThreshold": "1 GB",
                                 "flowFileExpiration": "0 sec",
                                 "prioritizers": [],
-                                "bends": [],
+                                "bends": [
+                                    {
+                                        "x": -32.0,
+                                        "y": 72.0
+                                    }
+                                ],
                                 "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
                                 "partitioningAttribute": "",
                                 "loadBalanceCompression": "DO_NOT_COMPRESS",
@@ -2582,7 +2715,7 @@
                             },
                             {
                                 "identifier": "703b181f-f920-3039-84c8-7b848366b709",
-                                "instanceIdentifier": "c7693780-4b53-39af-237c-bba71bbd0387",
+                                "instanceIdentifier": "a98a6e8a-bf86-3950-a125-16a0556b273f",
                                 "name": "",
                                 "source": {
                                     "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
@@ -2590,7 +2723,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "278db536-88b9-3a1b-8bae-64079b19ff43"
+                                    "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1"
                                 },
                                 "destination": {
                                     "id": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
@@ -2598,7 +2731,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "19f222f6-dd9b-345d-9983-ebadd0f05dad"
+                                    "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42"
                                 },
                                 "labelIndex": 1,
                                 "zIndex": 0,
@@ -2643,7 +2776,7 @@
                 "controllerServices": [
                     {
                         "identifier": "73ea1aeb-30ab-3580-933d-68093b4dc792",
-                        "instanceIdentifier": "611feeef-5e9c-3d1c-9cbb-425e940372ea",
+                        "instanceIdentifier": "0df87bab-fd00-3ee0-6536-6cc4166ccd58",
                         "name": "JsonTreeReader",
                         "comments": "",
                         "type": "org.apache.nifi.json.JsonTreeReader",
@@ -2801,7 +2934,7 @@
                     },
                     {
                         "identifier": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
-                        "instanceIdentifier": "d23f3bc7-315d-3d24-5702-602eb8b19eea",
+                        "instanceIdentifier": "00b1c716-d97d-371f-aa8e-6a735b67dbeb",
                         "name": "JsonRecordSetWriter",
                         "comments": "",
                         "type": "org.apache.nifi.json.JsonRecordSetWriter",
@@ -2992,7 +3125,7 @@
                 "flowFileConcurrency": "UNBOUNDED",
                 "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
                 "componentType": "PROCESS_GROUP",
-                "groupIdentifier": "2fafdf59-2bdf-3e9d-87a0-fc25948a1931"
+                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
             }
         ],
         "remoteProcessGroups": [],
@@ -3005,7 +3138,7 @@
         "controllerServices": [
             {
                 "identifier": "0b191af6-4220-30fa-ab4f-b2b2a0bf84e2",
-                "instanceIdentifier": "26bab345-9ab3-3fe8-3914-a1bb860c8c96",
+                "instanceIdentifier": "16d10342-c944-335b-81f1-8f647705c150",
                 "name": "Kafka3ConnectionService",
                 "comments": "",
                 "type": "org.apache.nifi.kafka.service.Kafka3ConnectionService",
@@ -3118,11 +3251,11 @@
                 "scheduledState": "DISABLED",
                 "bulletinLevel": "WARN",
                 "componentType": "CONTROLLER_SERVICE",
-                "groupIdentifier": "2fafdf59-2bdf-3e9d-87a0-fc25948a1931"
+                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
             },
             {
                 "identifier": "43fb3340-a307-360c-869b-68ce6ca06b53",
-                "instanceIdentifier": "d4e3c91a-6a39-3e1d-649f-daf1c91cba6e",
+                "instanceIdentifier": "29e49ede-753a-3ec4-cf2d-170080228379",
                 "name": "VastDB - AWSCredentialsProviderControllerService",
                 "comments": "",
                 "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderControllerService",
@@ -3292,7 +3425,7 @@
                 },
                 "controllerServiceApis": [
                     {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
                         "bundle": {
                             "group": "org.apache.nifi",
                             "artifact": "nifi-aws-service-api-nar",
@@ -3300,7 +3433,7 @@
                         }
                     },
                     {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
                         "bundle": {
                             "group": "org.apache.nifi",
                             "artifact": "nifi-aws-service-api-nar",
@@ -3311,11 +3444,11 @@
                 "scheduledState": "DISABLED",
                 "bulletinLevel": "WARN",
                 "componentType": "CONTROLLER_SERVICE",
-                "groupIdentifier": "2fafdf59-2bdf-3e9d-87a0-fc25948a1931"
+                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
             },
             {
                 "identifier": "f4d5318a-367a-32d1-b434-62928d73ea58",
-                "instanceIdentifier": "d4629356-2b4d-3328-3030-ea77e20b071f",
+                "instanceIdentifier": "3d167a06-7505-31d6-65c4-959bc9e70746",
                 "name": "S3A - AWSCredentialsProviderControllerService",
                 "comments": "",
                 "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderControllerService",
@@ -3485,7 +3618,7 @@
                 },
                 "controllerServiceApis": [
                     {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
                         "bundle": {
                             "group": "org.apache.nifi",
                             "artifact": "nifi-aws-service-api-nar",
@@ -3493,7 +3626,7 @@
                         }
                     },
                     {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
                         "bundle": {
                             "group": "org.apache.nifi",
                             "artifact": "nifi-aws-service-api-nar",
@@ -3504,7 +3637,7 @@
                 "scheduledState": "DISABLED",
                 "bulletinLevel": "WARN",
                 "componentType": "CONTROLLER_SERVICE",
-                "groupIdentifier": "2fafdf59-2bdf-3e9d-87a0-fc25948a1931"
+                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
             }
         ],
         "defaultFlowFileExpiration": "0 sec",
