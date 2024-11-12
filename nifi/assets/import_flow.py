@@ -1,9 +1,9 @@
 import ssl
 import logging
+import os
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.poolmanager import PoolManager
-import nipyapi
 from nipyapi.nifi import ParameterProviderEntity, ParameterProviderDTO
 from nipyapi.nifi.api_client import ApiClient
 from nipyapi.nifi.apis.controller_api import ControllerApi
@@ -14,6 +14,8 @@ from nipyapi.nifi.models.process_group_entity import ProcessGroupEntity
 from nipyapi.nifi.models.process_group_dto import ProcessGroupDTO
 from nipyapi.nifi.apis.process_groups_api import ProcessGroupsApi
 import six
+
+DOCKER_HOST_OR_IP = os.getenv("DOCKER_HOST_OR_IP")
 
 # Disable SSL warnings
 requests.packages.urllib3.disable_warnings()
@@ -40,9 +42,7 @@ class SSLAdapter(HTTPAdapter):
         )
 
 def setup_nifi_connection(host_url, username, password):
-    """
-    Set up NiFi connection with proper SSL configuration and authentication.
-    """
+
     adapter = SSLAdapter()
 
     # Create custom session with SSL adapter
@@ -98,7 +98,7 @@ def setup_nifi_connection(host_url, username, password):
 
 def main():
     """Main function to upload NiFi flow JSON file."""
-    nifi_host = 'https://se-var-vastdb-ingest:18443/nifi-api'
+    nifi_host = f'https://{DOCKER_HOST_OR_IP}:18443/nifi-api'
     username = 'admin'
     password = '123456123456'
 
@@ -106,7 +106,7 @@ def main():
     api_client = setup_nifi_connection(nifi_host, username, password)
 
     # File to upload
-    file_path = '/Users/chris.snow/Downloads/NiFi_Flow(3).json'
+    file_path = '/assets/NiFi_Flow.json'
     with open(file_path, 'rb') as f:
         file_data = f.read()
 
@@ -132,7 +132,6 @@ def main():
 
     # Log response status
     print(response.status_code)
-    # Uncomment to print full response if needed
     # print(response.text)
 
 if __name__ == "__main__":

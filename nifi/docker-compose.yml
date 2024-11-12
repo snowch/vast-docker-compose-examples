@@ -36,6 +36,7 @@ services:
       - content_repository:/opt/nifi/nifi-current/content_repository:rw
       - provenance_repository:/opt/nifi/nifi-current/provenance_repository:rw
       - ./healthcheck.sh:/healthcheck.sh
+      - ./assets:/assets/
     healthcheck:
       test: bash /healthcheck.sh
       interval: 30s
