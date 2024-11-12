@@ -235,5 +235,15 @@ def main():
     controller = get_controller(api_client, 'VastDB - AWSCredentialsProviderControllerService')
     updated = update_controller(controller, update)
 
+    # Kafka Controller
+    update=nipyapi.nifi.ControllerServiceDTO(
+                properties={
+                    'bootstrap.servers': f'{DOCKER_HOST_OR_IP}:19092'
+                }
+            )
+    controller = get_controller(api_client, 'Kafka3ConnectionService')
+    updated = update_controller(controller, update)
+    
+
 if __name__ == "__main__":
     main()
