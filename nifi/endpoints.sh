@@ -8,4 +8,6 @@ source .env
 
 echo "NiFi:"
 echo "https://${DOCKER_HOST_OR_IP}:${EXT_NIFI_PORT}"
+echo "Username: admin"
+echo "Password: 123456123456"
 echo ""
