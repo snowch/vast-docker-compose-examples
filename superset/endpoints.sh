@@ -7,4 +7,6 @@ source ../.env-local
 
 echo "Superset:"
 echo "http://${DOCKER_HOST_OR_IP}:8088"
+echo "Username: admin"
+echo "Password: admin"
 echo ""
