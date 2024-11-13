@@ -15,37 +15,8 @@ Run the following scripts from the repo root folder:
 ```bash
 ./scripts/start_all.sh
 ./trino/setup_iceberg.sh
+./superset/setup_db_connections.sh
 ```
-
-## Configure Superset
-
-Open Superset URL:
-
-```bash
-if [ -f .env-local ]; then
-  source .env-local
-elif [ -f ../.env-local ]; then
-  source ../.env-local
-fi
-
-echo "Superset URL: $DOCKER_HOST_OR_IP:8088"
-```
-
-Navigate to:
-
-- Settings -> Database Connections
-  - +Database -> Trino
-    - Display Name: `Trino Vast DB`
-    - SQLAlchemy URI: `trino://admin@DOCKER_HOST_OR_IP:8443/vast?verify=false`
-      - replace DOCKER_HOST_OR_IP with your host or ip as set in `..\.env-local`
-    - Advanced -> Other -> Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
-  - +Database -> Trino
-    - Display Name: `Trino Vast Iceberg`
-    - SQLAlchemy URI: `trino://admin@DOCKER_HOST_OR_IP:8443/iceberg?verify=false`
-      - replace DOCKER_HOST_OR_IP with your host or ip as set in `..\.env-local`
-    - Advanced -> Other -> Engine Parameters: `{"connect_args":{"http_scheme":"https"}}`
-   
-Verify in SQL Lab that you are able to naviate the Iceberg and Vast DB databases.
 
 ## View Endpoints
 
