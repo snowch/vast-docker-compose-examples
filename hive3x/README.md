@@ -41,16 +41,14 @@ docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
 
 ### Hive Beeline SQL Commands
 
-These example SQL commands can be run from the Hive beeline CLI.  Mofify to reflect your environment:
+These example SQL commands can be run from the Hive beeline CLI.
 
 ```sql
 SET iceberg.catalog.vast_iceberg.type=hive;
 SET iceberg.catalog.vast_iceberg.uri=thrift://localhost:9083;
 SET iceberg.catalog.vast_iceberg.clients=10;
 
--- NOTE: The following doesn't seem to be needed
--- SET iceberg.catalog.vast_iceberg.warehouse=s3://csnow-bucket/iceberg;
-
+-- Mofify the S3 URI to reflect your environment
 CREATE DATABASE vast_iceberg
 LOCATION 's3a://csnow-bucket/iceberg';
 
@@ -58,34 +56,6 @@ CREATE EXTERNAL TABLE vast_iceberg.x (i int)
 STORED BY 'org.apache.iceberg.mr.hive.HiveIcebergStorageHandler';
 
 DESCRIBE EXTENDED vast_iceberg.x;
-```
-
-
-### Trino SQL
-
-These SQL commands can be run from the Trino [quickstart](../trino). Mofify to reflect your environment:
-
-```sql
--- TRINO ICEBERG CONNECTION
-
-CREATE SCHEMA iceberg.social_media
-WITH (location = 's3a://csnow-bucket/iceberg/');
-
-CREATE TABLE iceberg.social_media.twitter_data (
-    created_at VARCHAR,
-    id INT,
-    id_str VARCHAR,
-    text VARCHAR
-);
--- STORED BY ICEBERG;
-
-show create table iceberg.social_media.twitter_data;
-
-INSERT INTO iceberg.social_media.twitter_data
-(created_at, id, id_str, text)
-VALUES('1', 1, '1', 'Yay!');
-
-SELECT * FROM iceberg.social_media.twitter_data;
 ```
 
 ### Web UI
