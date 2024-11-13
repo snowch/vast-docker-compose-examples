@@ -40,4 +40,4 @@ Alternatively, you can use the components individually, e.g. for example "I woul
   cd trino # or other sub-project
   docker compose up -d
   ```
-  - view the sub-project README for usage instructions.
+  View the sub-project README for usage instructions.
