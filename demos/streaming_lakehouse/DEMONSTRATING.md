@@ -125,4 +125,19 @@ Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
 - Open the **Spark.ipynb** notebook
 - Run all the cells in the notebook 
 
-## More coming soon ...
+## Publish to Kafka from Spark
+
+In this section we use Spark to write data to Kafka.
+
+Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
+
+- Navigate to the **examples** folder
+- Open the **Spark.ipynb** notebook
+- Run all the cells in the notebook
+
+This publishes a tweet to a new topic `streaming-demo-2` with the topic about `SPARK`.
+
+It is left as an exercise for the user to figure out how to consume this tweet.
+
+> [!TIP]
+> Look at the **Consume from Kafka** NiFi flow - there is a set of processors you haven't run yet.
