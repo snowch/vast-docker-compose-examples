@@ -117,6 +117,31 @@ Finally, rerun `SELECT * ...` to verify records have been written to iceberg.
 
 ## Querying with Spark
 
+In this section we use Spark to query the data in Iceberg and Vast DB.
 
+Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
 
-## More coming soon ...
+- Navigate to the **examples** folder
+- Open the **Spark.ipynb** notebook
+- Run all the cells in the notebook 
+
+## Publish to Kafka from Spark
+
+In this section we use Spark to write data to Kafka.
+
+Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
+
+- Navigate to the **examples** folder
+- Open the **Kafka.ipynb** notebook
+- Run all the cells in the notebook
+
+This publishes a tweet to a new topic `streaming-demo-2` with the topic about `SPARK`.
+
+It is left as an exercise for the user to figure out how to consume this tweet.
+
+> [!TIP]
+> Look at the **Consume from Kafka** NiFi flow - there is a set of processors you haven't run yet.
+
+## Stop publishing tweets
+
+When you have finished demonstrating, stop the **Produce to Kafka** processors to prevent filling your environment up with data.

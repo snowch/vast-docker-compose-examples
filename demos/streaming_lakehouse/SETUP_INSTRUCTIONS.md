@@ -24,7 +24,9 @@ Run the following from the repo root folder:
 ./scripts/endpoints_all.sh
 ```
 
-## Stop containers
+# Stopping containers
+
+You can stop the running containers without removing them with these instructions.
 
 > [!CAUTION]
 > Manually backup any data that you need to keep in the event the containers do not restart.
@@ -42,7 +44,9 @@ Run the following from the repo root folder:
 > ```
 
 
-## Teardown the environment
+# Teardown Instructions
+
+Follow these instructions to stop and removes containers, networks, volumes, and images created by the setup scripts.
 
 > [!CAUTION]
 > All data will be deleted. Manually backup any data that you need to keep.
