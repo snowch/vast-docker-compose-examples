@@ -6,114 +6,18 @@
 ## Clone repo and configure
 
 - Clone this git repository.
-- Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment:
-  - DOCKER_HOST_OR_IP
-  - S3A_ACCESS_KEY
-  - S3A_SECRET_KEY
-  - S3A_ENDPOINT
-  - VASTDB_ACCESS_KEY
-  - VASTDB_SECRET_KEY
-  - VASTDB_ENDPOINT
+- Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
 
-## Hive3x 
+## Start the containers
 
-Start metastore and hiveserver2:
+Run the following scripts from the repo root folder:
 
 ```bash
-cd hive3x
-docker compose up -d
+./scripts/start_all.sh
+./trino/setup_iceberg.sh
 ```
 
-Run beeline:
-
-```bash
-docker exec -it hive3-hiveserver2 beeline -u 'jdbc:hive2://localhost:10000/'
-```
-
-Create your hive iceberg database:
-
-```sql
-SET iceberg.catalog.vast_iceberg.type=hive;
-SET iceberg.catalog.vast_iceberg.uri=thrift://localhost:9083;
-SET iceberg.catalog.vast_iceberg.clients=10;
-
--- ## Change the s3a location to a bucket on your S3A_ENDPOINT ##
-CREATE DATABASE vast_iceberg
-LOCATION 's3a://csnow-bucket/iceberg';
-
-CREATE TABLE vast_iceberg.twitter_data (
-  created_at BIGINT,
-  id BIGINT,
-  id_str STRING,
-  text STRING
-)
-STORED BY 'org.apache.iceberg.mr.hive.HiveIcebergStorageHandler';
-
-DESCRIBE EXTENDED vast_iceberg.twitter_data;
-```
-
-## Install and Configure s3cmd
-
-- Install: https://github.com/s3tools/s3cmd/blob/master/INSTALL.md
-- Configure: `s3cmd --configure`
-
-## Verify Iceberg on S3
-
-```bash
-## Change the s3a location to a bucket on your S3A_ENDPOINT ###
-s3cmd ls s3://csnow-bucket/iceberg/ -r
-```
-
-Example output:
-
-```bash
-$ s3cmd ls s3://csnow-bucket/iceberg/ -r
-2024-11-06 22:00         1599  s3://csnow-bucket/iceberg/twitter_data/metadata/00000-d098452f-a8ac-4b8d-bfd4-2d25fa5c17bd.metadata.json
-```
-
-## Trino
-
-Start trino:
-
-```bash
-cd trino
-docker compose up -d
-```
-
-Connect to trino:
-
-```bash
-if [ -f .env-local ]; then
-  source .env-local
-elif [ -f ../.env-local ]; then
-  source ../.env-local
-fi
-
-echo "Connecting to: $DOCKER_HOST_OR_IP"
-docker exec -it trino trino --server https://${DOCKER_HOST_OR_IP}:8443 --insecure
-```
-
-Verify iceberg table exists:
-
-```bash
-trino> show tables in iceberg.vast_iceberg;
-```
-
-This should output:
-
-```bash
-    Table
---------------
- twitter_data
-(1 row)
-```
-
-## Superset
-
-```bash
-cd superset
-docker compose up -d
-```
+## Configure Superset
 
 Open Superset URL:
 
@@ -143,32 +47,41 @@ Navigate to:
    
 Verify in SQL Lab that you are able to naviate the Iceberg and Vast DB databases.
 
-## Kafka
+## View Endpoints
 
-Run the kafka container:
-
-```bash
-cd kafka
-docker compose up -d
-```
-
-Navigate to the Redpanda console:
-
-http://DOCKER_HOST_OR_IP:28080
-
-## NiFi
-
-Run the NiFi container:
+Run the following from the repo root folder:
 
 ```bash
-cd nifi
-docker compose up -d
-docker compose up --wait # wait for nifi to be healthy
+./scripts/endpoints_all.sh
 ```
 
-Wait a few minutes, then open the URL: https://DOCKER_HOST_OR_IP:18443
+## Stop containers
 
-- username: admin
-- password: 123456123456
+> [!CAUTION]
+> Manually backup any data that you need to keep in the event the containers do not restart.
 
-## More coming soon ...
+Run the following from the repo root folder:
+
+```bash
+./scripts/stop_all.sh
+```
+
+> [!TIP]
+> Start the environment again with:
+> ```bash
+> ./scripts/start_all.sh
+> ```
+
+
+## Teardown the environment
+
+> [!CAUTION]
+> All data will be deleted. Manually backup any data that you need to keep.
+
+Run the following from the repo root folder:
+
+```bash
+./scripts/destroy_all.sh
+```
+
+
