@@ -11,7 +11,7 @@ CREATE SCHEMA IF NOT EXISTS iceberg.social_media
 WITH (location = '${S3A_ICEBERG_URI}');
 
 CREATE TABLE IF NOT EXISTS iceberg.social_media.twitter_data (
-    created_at VARCHAR,
+    created_at BIGINT,
     id BIGINT,
     id_str VARCHAR,
     text VARCHAR
