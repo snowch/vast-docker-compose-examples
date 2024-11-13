@@ -57,16 +57,26 @@ Run the following from the repo root folder:
 
 ## Stop containers
 
+> [!CAUTION]
+> Manually backup any data that you need to keep in the event the containers do not restart.
+
 Run the following from the repo root folder:
 
 ```bash
 ./scripts/stop_all.sh
 ```
 
-> [!CAUTION]
-> Manually backup any data you need persisted.
+> [!TIP]
+> Start the environment again with:
+> ```bash
+> ./scripts/start_all.sh
+> ```
+
 
 ## Teardown the environment
+
+> [!CAUTION]
+> All data will be deleted. Manually backup any data that you need to keep.
 
 Run the following from the repo root folder:
 
@@ -74,5 +84,4 @@ Run the following from the repo root folder:
 ./scripts/destroy_all.sh
 ```
 
-> [!CAUTION]
-> Manually backup any data you need persisted.
+
