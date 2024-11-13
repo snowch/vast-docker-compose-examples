@@ -117,6 +117,12 @@ Finally, rerun `SELECT * ...` to verify records have been written to iceberg.
 
 ## Querying with Spark
 
+In this section we use Spark to query the data in Iceberg and Vast DB.
 
+Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
+
+- Navigate to the **examples** folder
+- Open the **Spark.ipynb** notebook
+- Run all the cells in the notebook 
 
 ## More coming soon ...
