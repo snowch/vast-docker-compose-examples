@@ -369,6 +369,7 @@ def update_processor(api_client, processor, update, refresh=False):
 def main():
 
     DOCKER_HOST_OR_IP = os.getenv("DOCKER_HOST_OR_IP")
+    
     VASTDB_ENDPOINT = os.getenv("VASTDB_ENDPOINT")
     VASTDB_ACCESS_KEY = os.getenv("VASTDB_ACCESS_KEY")
     VASTDB_SECRET_KEY = os.getenv("VASTDB_SECRET_KEY")
