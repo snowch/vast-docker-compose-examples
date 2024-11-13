@@ -82,6 +82,9 @@ LIMIT 5
 
 In this section, we perform a federated query to populate Iceberg on Vast S3 with data from Vast DB.
 
+> [!NOTE]
+> We limit records to around 100 so we don't overwhelm the (small) infrastructure used for the demo services.
+
 - On left side of page, set the following options:
   - **Database**: Trino Vast Iceberg
   - **Schema**: social_media
@@ -109,6 +112,10 @@ INSERT INTO iceberg.social_media.twitter_data
   LIMIT 100
 )
 ```
+
+Finally, rerun `SELECT * ...` to verify records have been written to iceberg.
+
+## Querying with Spark
 
 
 
