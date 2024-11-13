@@ -22,7 +22,16 @@ docker compose build --no-cache
 Start the Jupyter + PySpark container:
 
 ```bash
-docker compose up -d && docker compose logs -f
+docker compose up -d
+```
+
+## NFS
+
+You can mount nfs inside the container by opening a terminal, e.g.
+
+```bash
+mkdir nfs
+sudo mount -t nfs 172.200.201.1:./ ./nfs
 ```
 
 ## Persistence

@@ -14,6 +14,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
+# Install sudo and add jovyan to sudoers with no-password permissions
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends sudo nfs-common && \
+    echo "jovyan ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Spark dependencies
 # Default values can be overridden at build time
 # (ARGS are in lowercase to distinguish them from ENV)

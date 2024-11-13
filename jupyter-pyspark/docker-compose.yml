@@ -17,8 +17,10 @@ services:
         spark_version: "3.4.4"
         scala_version: "2.13"
     restart: unless-stopped
+    privileged: true
     env_file:
       - ../.env-local
+      - .env
     depends_on:
       setup_config:
         condition: service_completed_successfully
