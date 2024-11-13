@@ -461,7 +461,7 @@ def main():
                 }
             )
     processor = get_processor(api_client, 'ImportVastDB')
-    updated = update_processor(api_client, p, update)
+    updated = update_processor(api_client, processor, update)
 
     ##################
     # ListS3 Processor
@@ -473,7 +473,7 @@ def main():
                 }
             )
     processor = get_processor(api_client, 'ListS3')
-    updated = update_processor(api_client, p, update)
+    updated = update_processor(api_client, processor, update)
 
 if __name__ == "__main__":
     main()
