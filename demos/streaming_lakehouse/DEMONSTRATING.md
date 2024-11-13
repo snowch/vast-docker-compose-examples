@@ -38,6 +38,21 @@ Open the Kafka console url (see [endpoints](#endpoints), above).
 
 In this section we start consuming the tweets that were sent to Kafka and we save them in the Vast DB.
 
+Open the NiFi url (see [endpoints](#endpoints), above).
 
+- Right Click on the Canvas background and click **Enable All Controller Services**
+- Double Click on **Demo_Flow** to open it
+- Double Click on **Streaming** to open it
+- Double Click on **Consume from Kafka** to open it
+- Right Click on **ConsumeKafka - streaming-demo** Processor and Click **Start**
+  - Wait until you have some records in the **success queue**
+- Work down the connecting flows and start all of the connected processors except **Log Message**
+  - Wait until the **PutVastDB** processor has non-zero counters
+  - Double Click on the **PutVastDB** processor to verify where the data is getting saved.
+- Navigate to your Vast VMS.  Verify that the row count is increasing
+
+<img src="./assets/vms_row_count.png" width=40%/>
+ 
+ 
 
 ## More coming soon ...
