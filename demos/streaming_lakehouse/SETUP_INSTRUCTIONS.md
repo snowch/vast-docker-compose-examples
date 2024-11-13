@@ -5,7 +5,7 @@
 
 ## Clone repo and configure
 
-- Clone this git repository.
+- Clone this git repository `git clone https://github.com/snowch/vast-docker-compose-examples.git`
 - Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
 
 ## Start the containers
