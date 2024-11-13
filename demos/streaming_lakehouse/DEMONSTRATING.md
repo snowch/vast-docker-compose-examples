@@ -132,7 +132,7 @@ In this section we use Spark to write data to Kafka.
 Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
 
 - Navigate to the **examples** folder
-- Open the **Spark.ipynb** notebook
+- Open the **Kafka.ipynb** notebook
 - Run all the cells in the notebook
 
 This publishes a tweet to a new topic `streaming-demo-2` with the topic about `SPARK`.
