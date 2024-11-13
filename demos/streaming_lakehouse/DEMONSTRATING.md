@@ -141,3 +141,7 @@ It is left as an exercise for the user to figure out how to consume this tweet.
 
 > [!TIP]
 > Look at the **Consume from Kafka** NiFi flow - there is a set of processors you haven't run yet.
+
+## Stop publishing tweets
+
+When you have finished demonstrating, stop the **Produce to Kafka** processors to prevent filling your environment up with data.
