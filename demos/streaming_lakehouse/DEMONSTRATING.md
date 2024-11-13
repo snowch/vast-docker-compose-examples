@@ -1,5 +1,8 @@
 # Demonstrating the Streaming Lakehouse
 
+> [!NOTE]
+> The demo environment is running small docker instances.  Don't expect snappy response times.
+
 ## Endpoints
 
 From the root project repo, run:
@@ -75,5 +78,38 @@ FROM "csnowdb|social_media".tweets
 ORDER BY created_at DESC
 LIMIT 5
 ```
+## Copy tweets to Iceberg
+
+In this section, we perform a federated query to populate Iceberg on Vast S3 with data from Vast DB.
+
+- On left side of page, set the following options:
+  - **Database**: Trino Vast Iceberg
+  - **Schema**: social_media
+  - **Table**: twitter_data
+- Ignore the Superset error, this is a Superset [bug](https://github.com/apache/superset/issues/25307)
+
+```sql
+SELECT *
+FROM iceberg.social_media.twitter_data
+LIMIT 100
+```
+This should return no records.
+
+Now run:
+
+```sql
+INSERT INTO iceberg.social_media.twitter_data
+(
+  SELECT
+    created_at as VARCHAR,
+    id,
+    id_str,
+    text
+  FROM vast."csnowdb|social_media".tweets
+  LIMIT 100
+)
+```
+
+
 
 ## More coming soon ...
