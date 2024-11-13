@@ -41,4 +41,7 @@ Finally, a Spark Kafka notebook demonstrates how spark can be used to write to K
 
 See [here](./SETUP_INSTRUCTIONS.md).
 
+## Demonstrating this workflow
+
+See [here](./DEMONSTRATING.md).
 
