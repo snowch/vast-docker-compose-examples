@@ -67,8 +67,7 @@ services:
       - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     healthcheck:
-      # test port 8080 is available
-      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/localhost/8080"]
+      test: ["CMD", "curl", "--silent", "http://localhost:8080/v1/info | grep -q '\"starting\": *false'"]
       interval: 30s
       retries: 10
     labels:

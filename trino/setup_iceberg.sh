@@ -22,7 +22,7 @@ SHOW CREATE TABLE iceberg.social_media.twitter_data;
 
 -- Insert data into the table
 INSERT INTO iceberg.social_media.twitter_data (created_at, id, id_str, text)
-VALUES('1', 1, '1', 'Test tweet');
+VALUES(1, 1, '1', 'Test tweet');
 
 -- Select data from the table
 SELECT * FROM iceberg.social_media.twitter_data;
