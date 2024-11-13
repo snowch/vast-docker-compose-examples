@@ -40,4 +40,6 @@ Alternatively, you can use the components individually, e.g. for example "I woul
   cd trino # or other sub-project
   docker compose up -d
   ```
-  View the sub-project README for usage instructions.
+
+> [!TIP]
+> Your environment may use `docker-compose` instead of `docker compose`.
