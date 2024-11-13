@@ -15,22 +15,29 @@ This project aims to give you a quickstart way to try example integrations with 
 > - This project has been tested on Mac OS (Silicon) and Linux (AMD64)
 > - [Colima](https://github.com/abiosoft/colima) is used on Mac OS to provide docker compose. `docker compose` can be invoked with `docker-compose`.
 
-# Setup
+# End-to-end demo setup
+
+- The [demos](./demos) folder contains end-to-end demos.
+
+# Individual integrations setup
+
+You don't have to use the end-to-end demos.  
+
+Alternatively, you can use the components individually, e.g. for example "I would like to just demonstrate how to connect Trino to VastDB.
 
 - Clone this repo.
 - Copy `.env-example` to `.env-local` and update to reflect your environment
-- See the readme of each integration sub-project for usage instructions:
+- See the README of each integration sub-project for usage instructions:
   - [hive3x](./hive3x)
   - [jupyter-pyspark](./jupyter-pyspark)
   - [kafka](./kafka)
   - [nifi](./nifi)
-  - [querybook](./querybook) [coming soon...]
   - [superset](./superset)
   - [trino](./trino)
 - Most sub-projects follow the pattern:
  
   ```bash
   cd trino # or other sub-project
-  docker compose up -d && docker compose logs -f
+  docker compose up -d
   ```
-- The [demos](./demos) folder contains demos using these integrations.
+  - view the sub-project README for usage instructions.
