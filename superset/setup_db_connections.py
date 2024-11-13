@@ -25,7 +25,11 @@ base_data = {
     },
     "sqlalchemy_uri_placeholder": "engine+driver://user:password@host:port/dbname[?key=value&key=value...]",
     "extra": "{\"allows_virtual_table_explore\":true,\"engine_params\":{\"connect_args\":{\"http_scheme\":\"https\"}}}",
-    "expose_in_sqllab": True
+    "expose_in_sqllab": True,
+    "allow_ctas": True,
+    "allow_cvas": True,
+    "allow_dml": True,
+    "allow_file_upload": True,
 }
 
 # Data for the "Trino VastDB" database
