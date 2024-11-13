@@ -10,7 +10,7 @@
 
 ## Start the containers
 
-Run the following scripts:
+Run the following scripts from the repo root folder:
 
 ```bash
 ./scripts/start_all.sh
@@ -49,10 +49,30 @@ Verify in SQL Lab that you are able to naviate the Iceberg and Vast DB databases
 
 ## View Endpoints
 
-Run the following:
+Run the following from the repo root folder:
 
 ```bash
 ./scripts/endpoints_all.sh
 ```
 
-## More coming soon ...
+## Stop containers
+
+Run the following from the repo root folder:
+
+```bash
+./scripts/stop_all.sh
+```
+
+> [!CAUTION]
+> Manually backup any data you need persisted.
+
+## Teardown the environment
+
+Run the following from the repo root folder:
+
+```bash
+./scripts/destroy_all.sh
+```
+
+> [!CAUTION]
+> Manually backup any data you need persisted.
