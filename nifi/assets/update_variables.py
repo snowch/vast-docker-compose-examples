@@ -372,6 +372,13 @@ def main():
     VASTDB_ENDPOINT = os.getenv("VASTDB_ENDPOINT")
     VASTDB_ACCESS_KEY = os.getenv("VASTDB_ACCESS_KEY")
     VASTDB_SECRET_KEY = os.getenv("VASTDB_SECRET_KEY")
+    VASTDB_TWITTER_INGEST_BUCKET = os.getenv("VASTDB_TWITTER_INGEST_BUCKET")
+    VASTDB_TWITTER_INGEST_SCHEMA = os.getenv("VASTDB_TWITTER_INGEST_SCHEMA")
+    VASTDB_TWITTER_INGEST_TABLE = os.getenv("VASTDB_TWITTER_INGEST_TABLE")
+    VASTDB_BULK_IMPORT_BUCKET = os.getenv("VASTDB_BULK_IMPORT_BUCKET")
+    VASTDB_BULK_IMPORT_SCHEMA = os.getenv("VASTDB_BULK_IMPORT_SCHEMA")
+    VASTDB_BULK_IMPORT_TABLE = os.getenv("VASTDB_BULK_IMPORT_TABLE")
+    
     S3_ENDPOINT = os.getenv("S3A_ENDPOINT")
     S3_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
     S3_SECRET_KEY = os.getenv("S3A_SECRET_KEY")
@@ -427,7 +434,10 @@ def main():
 
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
-                    'VastDB Endpoint': f'{VASTDB_ENDPOINT}'
+                    'VastDB Endpoint': VASTDB_ENDPOINT,
+                    'VastDB Bucket': VASTDB_TWITTER_INGEST_BUCKET,
+                    'VastDB Database Schema': VASTDB_TWITTER_INGEST_SCHEMA,
+                    'VastDB Table Name': VASTDB_TWITTER_INGEST_TABLE
                 }
             )
     processor = get_processor(api_client, 'PutVastDB')
@@ -443,7 +453,10 @@ def main():
 
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
-                    'VastDB Endpoint': f'{VASTDB_ENDPOINT}'
+                    'VastDB Endpoint': f'{VASTDB_ENDPOINT}',
+                    'VastDB Bucket': VASTDB_BULK_IMPORT_BUCKET,
+                    'VastDB Database Schema': VASTDB_BULK_IMPORT_SCHEMA,
+                    'VastDB Table Name': VASTDB_BULK_IMPORT_TABLE
                 }
             )
     processor = get_processor(api_client, 'ImportVastDB')
