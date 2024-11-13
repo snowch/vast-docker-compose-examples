@@ -53,6 +53,13 @@ Open the NiFi url (see [endpoints](#endpoints), above).
 
 <img src="./assets/vms_row_count.png" width=40%/>
  
- 
+## View Tweets in Superset
+
+In  this section, we query the tweets in real-time using Apache Superset.
+
+Open the Superset url (see [endpoints](#endpoints), above).
+
+- In the Superset toolbar, click on **SQL** >> **SQL Lab**
+- 
 
 ## More coming soon ...
