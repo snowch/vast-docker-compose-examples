@@ -60,6 +60,20 @@ In  this section, we query the tweets in real-time using Apache Superset.
 Open the Superset url (see [endpoints](#endpoints), above).
 
 - In the Superset toolbar, click on **SQL** >> **SQL Lab**
-- 
+- On left side of page, set the following options:
+  - **Database**: Trino VastDB
+  - **Schema**: Your Schema
+  - **Table**: Your Table
+- Run the following query a few times (replace `csnowdb|social_media".tweets` with your details):
+
+```sql
+SELECT
+  format_datetime(from_unixtime(CAST(created_at / 1000 AS bigint)), 'yyyy/MM/dd HH:mm:ss') AS formatted_time,
+  id,
+  text
+FROM "csnowdb|social_media".tweets
+ORDER BY created_at DESC
+LIMIT 5
+```
 
 ## More coming soon ...
