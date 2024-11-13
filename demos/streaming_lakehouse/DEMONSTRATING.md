@@ -98,7 +98,7 @@ LIMIT 100
 ```
 This should return no records.
 
-Now run:
+Now run a federated query joining Iceberg and Vast DB:
 
 ```sql
 INSERT INTO iceberg.social_media.twitter_data
