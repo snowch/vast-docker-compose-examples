@@ -20,7 +20,8 @@ Finally, a Spark Kafka notebook demonstrates how spark can be used to write to K
 - Docker Compose
 - Host with:
   - approx. 24GB Memory
-  - approx. 8 cores
+  - approx. 8 Cores
+  - approx. 300GB Storage free
 - Vast S3 Bucket
 - Vast Database
   
