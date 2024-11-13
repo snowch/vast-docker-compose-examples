@@ -1,6 +1,4 @@
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Modified BSD License.
-
+# Base Jupyter image setup
 ARG REGISTRY=quay.io
 ARG OWNER=jupyter
 ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook
@@ -8,21 +6,26 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
-# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
-# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
+# Configure shell for script compatibility
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install sudo and add jovyan to sudoers with no-password permissions
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends sudo nfs-common && \
-    echo "jovyan ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Enable repositories and install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    sudo fuse libfuse2 nfs-common && \
+    rm -rf /var/lib/apt/lists/*
 
-# Spark dependencies
-# Default values can be overridden at build time
-# (ARGS are in lowercase to distinguish them from ENV)
+# Set up sudo for jovyan user
+RUN echo "jovyan ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Download and install mount-s3
+RUN wget https://s3.amazonaws.com/mountpoint-s3-release/latest/x86_64/mount-s3.deb && \
+    apt-get install -y ./mount-s3.deb && \
+    rm ./mount-s3.deb
+
+# Java installation for Spark dependencies
 ARG openjdk_version="17"
 
 RUN apt-get update --yes && \
@@ -45,29 +48,25 @@ ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info"
 
+# Install Spark and dependencies
 COPY setup_spark.py /opt/setup-scripts/
-#RUN wget -O  /opt/setup-scripts/setup_spark.py https://raw.githubusercontent.com/jupyter/docker-stacks/main/images/pyspark-notebook/setup_spark.py
 RUN chmod a+x /opt/setup-scripts/setup_spark.py
-
-# Setup Spark
 RUN /opt/setup-scripts/setup_spark.py \
     --spark-version="${spark_version}" \
     --hadoop-version="${hadoop_version}" \
     --scala-version="${scala_version}" \
     --spark-download-url="${spark_download_url}"
 
-### v Add support for S3
+# Download necessary JARs for S3 and Spark compatibility
 RUN wget -c -O ${SPARK_HOME}/jars/aws-java-sdk.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.12.742/aws-java-sdk-1.12.742.jar && \
-     wget -c -O ${SPARK_HOME}/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar && \
-     wget -c -O ${SPARK_HOME}/jars/hadoop-client.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client/3.3.4/hadoop-client-3.3.4.jar && \
-     wget -c -O ${SPARK_HOME}/jars/aws-java-sdk-dynamodb.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-dynamodb/1.12.742/aws-java-sdk-dynamodb-1.12.742.jar && \
-     wget -c -O ${SPARK_HOME}/jars/iceberg-spark-runtime.jar https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.4_2.13/1.6.1/iceberg-spark-runtime-3.4_2.13-1.6.1.jar
-### ^ Add support for S3
+    wget -c -O ${SPARK_HOME}/jars/hadoop-aws.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar && \
+    wget -c -O ${SPARK_HOME}/jars/hadoop-client.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client/3.3.4/hadoop-client-3.3.4.jar && \
+    wget -c -O ${SPARK_HOME}/jars/aws-java-sdk-dynamodb.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-dynamodb/1.12.742/aws-java-sdk-dynamodb-1.12.742.jar && \
+    wget -c -O ${SPARK_HOME}/jars/iceberg-spark-runtime.jar https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.4_2.13/1.6.1/iceberg-spark-runtime-3.4_2.13-1.6.1.jar
 
-# Configure IPython system-wide
-#COPY ipython_kernel_config.py "/etc/ipython/"
-RUN mkdir /etc/ipython
-RUN wget -O /etc/ipython/ipython_kernel_config.py https://raw.githubusercontent.com/jupyter/docker-stacks/main/images/pyspark-notebook/ipython_kernel_config.py
+# Configure IPython
+RUN mkdir /etc/ipython && \
+    wget -O /etc/ipython/ipython_kernel_config.py https://raw.githubusercontent.com/jupyter/docker-stacks/main/images/pyspark-notebook/ipython_kernel_config.py
 RUN fix-permissions "/etc/ipython/"
 
 # \/ Vast Database configuration \/
@@ -85,15 +84,12 @@ RUN rm -f .wget-hsts
 #
 # /\ Vast Database configuration /\
 
-USER ${NB_UID}
+# Create the mount script
+COPY mount_s3.sh /usr/local/bin/mount_s3.sh
+RUN chmod +x /usr/local/bin/mount_s3.sh
 
-# Install pyarrow
-# NOTE: It's important to ensure compatibility between Pandas versions.
-# The pandas version in this Dockerfile should match the version
-# on which the Pandas API for Spark is built.
-# To find the right version:
-# 1. Check out the Spark branch you are on: <https://github.com/apache/spark>
-# 2. Find the pandas version in the file `dev/infra/Dockerfile`.
+USER ${NB_UID}
+# Install pyarrow and pandas
 RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
@@ -103,6 +99,15 @@ RUN mamba install --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+# Copy configuration files for Spark
+COPY spark-defaults.conf /usr/local/spark/conf/
+COPY spark-env.sh /usr/local/spark/conf/
+COPY log4j2.properties /usr/local/spark/conf/
+
+USER ${NB_UID}
+
+# Set the startup command to run the mount script and then start Jupyter
+CMD ["/bin/bash", "-c", "/usr/local/bin/mount_s3.sh && start-notebook.sh"]
+
 WORKDIR "${HOME}"
 EXPOSE 4040
-

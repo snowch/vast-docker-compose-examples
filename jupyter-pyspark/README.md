@@ -31,7 +31,7 @@ You can mount nfs inside the container by opening a terminal, e.g.
 
 ```bash
 mkdir nfs
-sudo mount -t nfs 172.200.201.1:./ ./nfs
+sudo mount -t nfs NFS_SERVER_IP:./ ./nfs
 ```
 
 ## Persistence
