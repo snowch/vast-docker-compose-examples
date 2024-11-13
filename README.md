@@ -5,6 +5,7 @@ This project aims to give you a quickstart way to try example integrations with 
 > [!CAUTION]
 > - Since docker compose is primarily designed to run a set of containers on a single host and can't support requirements for high availability, we do not support nor recommend using our docker compose constructs to support production-type use-cases. 
 > - Some of the images do NOT yet persist data when shutdown.  Ensure you regularly save any data that you need to keep.
+> - These demos have NOT been secured, do not use them for sensitive data and do NOT host them on publicly accessible hosts.
 
 # Prerequisites
 
