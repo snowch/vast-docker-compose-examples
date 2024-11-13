@@ -20,7 +20,7 @@ docker run --rm \
   -v $(pwd):/app \
   $IMAGE_NAME /bin/bash -c "
     # Install necessary dependencies
-    pip install --no-cache-dir superset-api-client && \
+    pip install --no-cache-dir --quiet superset-api-client && \
 
     # Run the Python script to set up the database connections
     python /app/setup_db_connections.py

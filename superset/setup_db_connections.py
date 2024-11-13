@@ -46,6 +46,13 @@ iceberg_data = {
     "sqlalchemy_uri": "trino://admin@se-var-vastdb-ingest:8443/iceberg?verify=false"
 }
 
+# Data for the "Trino Vast Hive" database
+hive_data = {
+    **base_data,
+    "database_name": "Trino Vast Hive",
+    "sqlalchemy_uri": "trino://admin@se-var-vastdb-ingest:8443/iceberg?verify=false"
+}
+
 def delete_database_if_exists(database_name):
     # Fetch list of databases
     response = client.get(f"http://{DOCKER_HOST_OR_IP}:8088/api/v1/database/")
@@ -70,6 +77,7 @@ def delete_database_if_exists(database_name):
 # Delete the databases if they exist
 delete_database_if_exists("Trino VastDB")
 delete_database_if_exists("Trino Vast Iceberg")
+delete_database_if_exists("Trino Vast Hive")
 
 # Post requests to create databases
 response_vastdb = client.post(
@@ -82,6 +90,12 @@ response_iceberg = client.post(
     json=iceberg_data
 )
 
+response_hive = client.post(
+    url=f"http://{DOCKER_HOST_OR_IP}:8088/api/v1/database/",
+    json=hive_data
+)
+
 # Print the response for both database creation requests
 print("VastDB Response:", response_vastdb.text)
 print("Iceberg Response:", response_iceberg.text)
+print("Hive Response:", response_hive.text)

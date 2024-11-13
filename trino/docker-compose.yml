@@ -63,7 +63,7 @@ services:
       - path: ./.env-aws-creds
     volumes:
       - ./generated/vast.properties:/etc/trino/catalog/vast.properties:ro
-      # - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
+      - ./generated/hive.properties:/etc/trino/catalog/hive.properties:ro
       - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     healthcheck:
