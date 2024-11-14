@@ -1,5 +1,7 @@
 # Demonstrating Bulk Loading
 
+In this section we demonstrate bulk loading parquet files into Vast DB from Vast S3.  We use NiFi, but bulk loading can be performed using the VastDB Python SDK, Trino, and Spark.  Under the hood, the NiFi Bulk Load (ImportVastDB) processor uses the VastDB Python SDK.
+
 > [!NOTE]
 > The demo environment is running small docker instances.  Don't expect snappy response times.
 
@@ -13,7 +15,7 @@ From the root project repo, run:
 
 Make a note of your project endpoints.
 
-## Start Tweet Simulator
+## Start Bulk Load processors
 
 In this section we start producing tweets that are sent to Kafka.
 
