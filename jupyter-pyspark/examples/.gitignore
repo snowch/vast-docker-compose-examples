@@ -5,3 +5,4 @@ dotenv
 ${sys:SPARK_LOGS_DIR}/
 metastore_db/
 derby.log
+*.parquet*
