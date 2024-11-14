@@ -17,10 +17,11 @@ for dir in $(ls -d */ | grep -v "^demos/" | grep -v "^scripts/"); do
 done
 
 echo "======================================"
-echo "    Compose Installation Finished     "
+echo "         Compose Up Finished          "
 echo "======================================"
 echo ""
-echo "Run the following post-install script:"
+echo "If this is the first time running compose
+echo "up, run the following post-install scripts:"
 echo ""
 echo "./trino/setup_iceberg.sh"
 echo "./superset/setup_db_connections.sh"
