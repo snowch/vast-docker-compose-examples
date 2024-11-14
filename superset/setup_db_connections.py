@@ -15,6 +15,8 @@ client = SupersetClient(
     password="admin",
 )
 
+print("Connected.")
+
 # Common database details template
 base_data = {
     "engine": "trino",
@@ -78,6 +80,8 @@ def delete_database_if_exists(database_name):
 delete_database_if_exists("Trino VastDB")
 delete_database_if_exists("Trino Vast Iceberg")
 delete_database_if_exists("Trino Vast Hive")
+
+print(vastdb_data)
 
 # Post requests to create databases
 response_vastdb = client.post(
