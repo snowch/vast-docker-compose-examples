@@ -88,7 +88,11 @@ RUN rm -f .wget-hsts
 COPY mount_s3.sh /usr/local/bin/mount_s3.sh
 RUN chmod +x /usr/local/bin/mount_s3.sh
 
+COPY s3cmd_configure.sh /usr/local/bin/s3cmd_configure.sh
+RUN chmod +x /usr/local/bin/s3cmd_configure.sh
+
 USER ${NB_UID}
+
 # Install pyarrow and pandas
 RUN mamba install --yes \
     'grpcio-status' \
@@ -98,6 +102,8 @@ RUN mamba install --yes \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+RUN pip3 install s3cmd==2.4.0
 
 # Copy configuration files for Spark
 COPY spark-defaults.conf /usr/local/spark/conf/
