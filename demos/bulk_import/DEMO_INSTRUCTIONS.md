@@ -29,18 +29,16 @@ Open the NiFi url (see [endpoints](#endpoints), above).
   - The **ListS3** processeor polls this location and send the list of new files it finds to the **ImportVastDB** processor
   - Start the **ListS3** processor
 
- - Right Click on the **ImportVastDB** processor
-   - Note the Database Bucket, Schema and Table name
-   - Imported Parquet files will get saved to this table
-   - The table will get created if it doesn't exist beforehand.
+ - Double Click on the **ImportVastDB** processor
+   - Note the Database properties such as Endpoint, Bucket, Schema and Table name
+   - Parquet files will get bulk loaded to this table
+   - The table will get created if it doesn't exist beforehand
   
-## Add a Parquet file
+## Add a Parquet file to S3
 
-- Open the **Jupyter-Spark** url (see [endpoints](#endpoints), above).
-- Open the **Jupyter_Spark** notebook 
-- Run the **BulkImport.ipynb** in the **examples** folder (coming soon)
-- This notebook
-   - Downloads the [userdata/](./assets/userdata/) files
+- Open the **Jupyter-Spark** url (see [endpoints](#endpoints), above)
+- Run the **BulkImport.ipynb** in the **examples** folder (coming soon).  The notebook:
+   - Downloads the [userdata/](./assets/userdata/) files (userdata1.parquet ... userdata5.parquet)
    - Uses s3cmd to upload each file to the s3 bucket being monitored by the NiFi **ListS3** processor
  
 ## View Imported Data in Superset
