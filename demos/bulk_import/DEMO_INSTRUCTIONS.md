@@ -36,7 +36,8 @@ Open the NiFi url (see [endpoints](#endpoints), above).
   
 ## Add a Parquet file
 
-- Open the Jupyter_Spark notebook (Open the Jupyter_Spark url (see [endpoints](#endpoints), above).
+- Open the **Jupyter-Spark** url (see [endpoints](#endpoints), above).
+- Open the **Jupyter_Spark** notebook 
 - Run the **BulkImport.ipynb** in the **examples** folder (coming soon)
 - This notebook
    - Downloads the [userdata/](./assets/userdata/) files
