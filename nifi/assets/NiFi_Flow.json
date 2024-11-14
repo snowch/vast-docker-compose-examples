@@ -2137,7 +2137,7 @@
                                     "VastDB Database Schema": "twitter_import",
                                     "Data Type": "Json",
                                     "VastDB Bucket": "csnowdb",
-                                    "VastDB Endpoint": "http://172.200.201.1:80",
+                                    "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
                                 "propertyDescriptors": {
@@ -2225,7 +2225,7 @@
                                     "VastDB Database Schema": "twitter_import",
                                     "Data Type": "Json",
                                     "VastDB Bucket": "csnowdb",
-                                    "VastDB Endpoint": "http://172.200.201.1:80",
+                                    "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
                                 "propertyDescriptors": {
@@ -3156,7 +3156,7 @@
                     "sasl.mechanism": "GSSAPI",
                     "isolation.level": "read_committed",
                     "max.block.ms": "5 s",
-                    "bootstrap.servers": "se-var-vastdb-ingest:19092",
+                    "bootstrap.servers": "PLACEHOLDER:19092",
                     "default.api.timeout.ms": "60 s"
                 },
                 "propertyDescriptors": {

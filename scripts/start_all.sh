@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eau
+
 # Check if 'docker compose' (Docker v2) or 'docker-compose' (Docker v1) is available
 if docker compose version &> /dev/null; then
   DOCKER_COMPOSE_CMD="docker compose"
@@ -15,15 +17,12 @@ for dir in $(ls -d */ | grep -v "^demos/" | grep -v "^scripts/"); do
 done
 
 echo "======================================"
-echo "        Starting Trino Setup          "
+echo "    Compose Installation Finished     "
 echo "======================================"
-./trino/setup_iceberg.sh
+echo ""
+echo "Run the following post-install script:"
+echo ""
+echo "./trino/setup_iceberg.sh"
+echo "./superset/setup_db_connections.sh"
+echo "./nifi/postinstall.sh"
 
-echo "======================================"
-echo "       Starting Superset Setup        "
-echo "======================================"
-./superset/setup_db_connections.sh
-
-echo "======================================"
-echo "       All Setup Tasks Complete       "
-echo "======================================"

@@ -380,9 +380,9 @@ def main():
     VASTDB_BULK_IMPORT_SCHEMA = os.getenv("VASTDB_BULK_IMPORT_SCHEMA")
     VASTDB_BULK_IMPORT_TABLE = os.getenv("VASTDB_BULK_IMPORT_TABLE")
     
-    S3_ENDPOINT = os.getenv("S3A_ENDPOINT")
-    S3_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
-    S3_SECRET_KEY = os.getenv("S3A_SECRET_KEY")
+    S3A_ENDPOINT = os.getenv("S3A_ENDPOINT")
+    S3A_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
+    S3A_SECRET_KEY = os.getenv("S3A_SECRET_KEY")
 
     nifi_host = f'https://{DOCKER_HOST_OR_IP}:18443/nifi-api'
     username = 'admin'
@@ -397,12 +397,18 @@ def main():
 
     update=nipyapi.nifi.ControllerServiceDTO(
                 properties={
-                    'Access Key': S3_ACCESS_KEY,
-                    'Secret Key': S3_SECRET_KEY
+                    'Access Key': S3A_ACCESS_KEY,
+                    'Secret Key': S3A_SECRET_KEY
                 }
             )
     controller = get_controller(api_client, 'S3A - AWSCredentialsProviderControllerService')
-    updated = update_controller(controller, update)
+    if isinstance(controller, list):
+        for c in controller:
+            print(f'Updating S3A - AWSCredentialsProviderControllerService controller {c.id} {update}')
+            updated = update_controller(c, update)
+    else:
+        print(f'Updating S3A - AWSCredentialsProviderControllerService controller {controller.id} {update}')
+        updated = update_controller(controller, update)
 
     ###################
     # VastDB Controller
@@ -415,7 +421,14 @@ def main():
                 }
             )
     controller = get_controller(api_client, 'VastDB - AWSCredentialsProviderControllerService')
-    updated = update_controller(controller, update)
+    if isinstance(controller, list):
+        for c in controller:
+            print(f'Updating VastDB - AWSCredentialsProviderControllerService controller {c.id} {update}')
+            updated = update_controller(c, update)
+    else:
+        print(f'Updating S3A - VastDB - AWSCredentialsProviderControllerService controller {controller.id} {update}')
+        updated = update_controller(controller, update)
+
 
     ##################
     # Kafka Controller
@@ -427,7 +440,14 @@ def main():
                 }
             )
     controller = get_controller(api_client, 'Kafka3ConnectionService')
-    updated = update_controller(controller, update)
+    if isinstance(controller, list):
+        for c in controller:
+            print(f'Updating Kafka3ConnectionService process {c.id} {update}')
+            updated = update_controller(c, update)
+    else:
+        print(f'Updating Kafka3ConnectionService process {controller.id} {update}')
+        updated = update_controller(controller, update)
+
 
     #####################
     # PutVastDB Processor
@@ -442,10 +462,9 @@ def main():
                 }
             )
     processor = get_processor(api_client, 'PutVastDB')
-
     # there are multiple PutVastDB processors
     for p in processor:
-        print(p.id)
+        print(f'Updating PutVasDB process {p.id} {update}')
         updated = update_processor(api_client, p, update)
 
     ########################
@@ -461,7 +480,13 @@ def main():
                 }
             )
     processor = get_processor(api_client, 'ImportVastDB')
-    updated = update_processor(api_client, processor, update)
+    if isinstance(processor, list):
+        for p in processor:
+            print(f'Updating ImportVastDB process {p.id} {update}')
+            updated = update_processor(api_client, p, update)
+    else:
+        print(f'Updating ImportVastDB process {processor.id} {update}')
+        updated = update_processor(api_client, processor, update)
 
     ##################
     # ListS3 Processor
@@ -469,11 +494,17 @@ def main():
 
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
-                    'Endpoint Override URL': f'{S3_ENDPOINT}'
+                    'Endpoint Override URL': f'{S3A_ENDPOINT}'
                 }
             )
     processor = get_processor(api_client, 'ListS3')
-    updated = update_processor(api_client, processor, update)
+    if isinstance(processor, list):
+        for p in processor:
+            print(f'Updating ListS3 process {p.id} {update}')
+            updated = update_processor(api_client, p, update)
+    else:
+        print(f'Updating ListS3 process {processor.id} {update}')
+        updated = update_processor(api_client, processor, update)
 
 if __name__ == "__main__":
     main()
