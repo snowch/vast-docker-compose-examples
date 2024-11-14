@@ -67,7 +67,7 @@ services:
       - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     healthcheck:
-      test: ["CMD", "curl", "--silent", "http://localhost:8080/v1/info | grep -q '\"starting\": *false'"]
+      test: ["CMD", "trino", "--execute", "SELECT 'success'"]
       interval: 30s
       retries: 10
     labels:
