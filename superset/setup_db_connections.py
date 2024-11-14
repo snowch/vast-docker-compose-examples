@@ -3,6 +3,11 @@ import json
 import argparse
 from supersetapiclient.client import SupersetClient
 
+# ANSI escape code for red text
+RED = "\033[91m"
+# Reset color to default
+RESET = "\033[0m"
+
 # Set environment variable for insecure OAuth transport
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -65,8 +70,8 @@ def delete_database_if_exists(database_name, force_delete):
     for db in databases:
         if db.get("database_name") == database_name:
             if not force_delete:
-                print(f"\nDatabase '{database_name}' exists, but deletion was not forced.")
-                print("To delete this database, rerun the script with the --force-delete flag.")
+                print(f"{RED}\nDatabase '{database_name}' exists, but deletion was not forced.")
+                print(f"To delete this database, rerun the script with the --force-delete flag.\n{RESET}")
                 return False
 
             db_id = db.get("id")
