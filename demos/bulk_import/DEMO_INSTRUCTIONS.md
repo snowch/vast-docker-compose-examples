@@ -36,7 +36,7 @@ In this section we start the bulk loader Nifi processors
 ## Add a Parquet file to S3
 
 - Open the **Jupyter-Spark** url (see [endpoints](#endpoints), above)
-- Run the **NiFi_Bulk_Load.ipynb** in the **examples** folder (coming soon).  The notebook:
+- Run the **NiFi_Bulk_Load.ipynb** in the **examples** folder.  The notebook:
    - Downloads the [userdata/](./assets/userdata/) files (userdata1.parquet ... userdata5.parquet)
    - Uses s3cmd to upload each file to the s3 bucket being monitored by the NiFi **ListS3** processor
  
