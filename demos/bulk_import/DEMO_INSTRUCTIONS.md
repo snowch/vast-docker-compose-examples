@@ -17,10 +17,9 @@ Make a note of your project endpoints.
 
 ## Start Bulk Load processors
 
-In this section we start producing tweets that are sent to Kafka.
+In this section we start the bulk loader Nifi processors
 
-Open the NiFi url (see [endpoints](#endpoints), above).
-
+- Open the NiFi url (see [endpoints](#endpoints), above).
 - Right Click on the Canvas background and click **Enable All Controller Services**
 - Double Click on **Demo_Flow** to open it
 - Double Click on **Bulk Import** to open it
@@ -37,7 +36,7 @@ Open the NiFi url (see [endpoints](#endpoints), above).
 ## Add a Parquet file to S3
 
 - Open the **Jupyter-Spark** url (see [endpoints](#endpoints), above)
-- Run the **BulkImport.ipynb** in the **examples** folder (coming soon).  The notebook:
+- Run the **NiFi_Bulk_Load.ipynb** in the **examples** folder (coming soon).  The notebook:
    - Downloads the [userdata/](./assets/userdata/) files (userdata1.parquet ... userdata5.parquet)
    - Uses s3cmd to upload each file to the s3 bucket being monitored by the NiFi **ListS3** processor
  
