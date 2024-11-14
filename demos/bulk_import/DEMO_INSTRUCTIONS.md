@@ -33,6 +33,10 @@ In this section we start the bulk loader Nifi processors
    - Parquet files will get bulk loaded to this table
    - The table will get created if it doesn't exist beforehand
   
+> [!TIP]
+> If your files aren't getting imported, check the state of the **ListS3** processor by right clicking and **View State**.
+> Reset state if required by first stopping the processor.
+  
 ## Add a Parquet file to S3
 
 - Open the **Jupyter-Spark** url (see [endpoints](#endpoints), above)
