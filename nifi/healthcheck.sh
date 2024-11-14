@@ -2,4 +2,8 @@
 
 set -x
 
-curl --fail -k https://${NIFI_WEB_PROXY_HOST}:8443
+python3 -c "import nipyapi" 2>/dev/null || pip3 install nipyapi
+
+python3 /healthcheck.py
+
+
