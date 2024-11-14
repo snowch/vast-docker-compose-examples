@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eaux
+set -eau
 
 for dir in $(ls -d */ | grep -v "^demos/" | grep -v "^scripts/"); do
   if [[ -f "$dir/endpoints.sh" ]]; then
