@@ -1,5 +1,6 @@
 import os
 import json
+import argparse
 from supersetapiclient.client import SupersetClient
 
 # Set environment variable for insecure OAuth transport
@@ -55,7 +56,7 @@ hive_data = {
     "sqlalchemy_uri": f"trino://admin@{DOCKER_HOST_OR_IP}:8443/iceberg?verify=false"
 }
 
-def delete_database_if_exists(database_name):
+def delete_database_if_exists(database_name, force_delete):
     # Fetch list of databases
     response = client.get(f"http://{DOCKER_HOST_OR_IP}:8088/api/v1/database/")
     databases = response.json().get("result", [])
@@ -63,6 +64,11 @@ def delete_database_if_exists(database_name):
     # Find the database ID by name
     for db in databases:
         if db.get("database_name") == database_name:
+            if not force_delete:
+                print(f"\nDatabase '{database_name}' exists, but deletion was not forced.")
+                print("To delete this database, rerun the script with the --force-delete flag.")
+                return False
+
             db_id = db.get("id")
             print(f"Database '{database_name}' found, deleting...")
             # Delete the database
@@ -72,16 +78,25 @@ def delete_database_if_exists(database_name):
             else:
                 print(f"Failed to delete database '{database_name}'")
             return True
-    
+
     print(f"Database '{database_name}' does not exist.")
     return False
 
-# Delete the databases if they exist
-delete_database_if_exists("Trino VastDB")
-delete_database_if_exists("Trino Vast Iceberg")
-delete_database_if_exists("Trino Vast Hive")
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description="Database connection manager.")
+parser.add_argument("--force-delete", action="store_true", help="Force delete existing databases")
+args = parser.parse_args()
 
-print(vastdb_data)
+# Delete the databases if they exist
+delete_database_if_exists("Trino VastDB", args.force_delete)
+delete_database_if_exists("Trino Vast Iceberg", args.force_delete)
+delete_database_if_exists("Trino Vast Hive", args.force_delete)
+
+print("""
+#########################################
+Attempting to create database connection.
+#########################################
+""")
 
 # Post requests to create databases
 response_vastdb = client.post(
