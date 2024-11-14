@@ -19,21 +19,11 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 - Vast S3 Bucket
 - Vast Database
 
-## Setup Overview
-
-- Clone this git repository.
-- Copy `.env-example` to `.env-local` in the repo root folder and update it to reflect your environment
-- Run the following projects:
-  - [hive3x](../../hive3x)
-  - [kafka](../../kafka)
-  - [nifi](../../nifi)
-    - Upload the [NiFi Flow File](./assets/NiFi_Flow.json) 
-  - [jupyter-pyspark](../../jupyter-pyspark)
-  - [trino](../../trino)
-  - [superset](../../superset)
-  
-## Detailed Setup Instructions
+## Setup Instructions
 
 See [here](./SETUP_INSTRUCTIONS.md).
 
+## Demonstration Instructions
+
+See [here](./DEMO_INSTRUCTIONS.md).
 
