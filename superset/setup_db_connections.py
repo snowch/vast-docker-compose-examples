@@ -38,21 +38,21 @@ base_data = {
 vastdb_data = {
     **base_data,
     "database_name": "Trino VastDB",
-    "sqlalchemy_uri": "trino://admin@se-var-vastdb-ingest:8443/vast?verify=false"
+    "sqlalchemy_uri": f"trino://admin@{DOCKER_HOST_OR_IP}:8443/vast?verify=false"
 }
 
 # Data for the "Trino Vast Iceberg" database
 iceberg_data = {
     **base_data,
     "database_name": "Trino Vast Iceberg",
-    "sqlalchemy_uri": "trino://admin@se-var-vastdb-ingest:8443/iceberg?verify=false"
+    "sqlalchemy_uri": f"trino://admin@{DOCKER_HOST_OR_IP}:8443/iceberg?verify=false"
 }
 
 # Data for the "Trino Vast Hive" database
 hive_data = {
     **base_data,
     "database_name": "Trino Vast Hive",
-    "sqlalchemy_uri": "trino://admin@se-var-vastdb-ingest:8443/iceberg?verify=false"
+    "sqlalchemy_uri": f"trino://admin@{DOCKER_HOST_OR_IP}:8443/iceberg?verify=false"
 }
 
 def delete_database_if_exists(database_name):
