@@ -12,18 +12,26 @@ else
   exit 1
 fi
 
+# Loop through directories and bring up each service
 for dir in $(ls -d */ | grep -v "^demos/" | grep -v "^scripts/"); do
-  (cd $dir && $DOCKER_COMPOSE_CMD up -d && $DOCKER_COMPOSE_CMD up --wait)
+  echo "Starting services in $dir..."
+  cd "$dir"
+  if ! $DOCKER_COMPOSE_CMD up -d; then
+    echo "Error starting services in $dir" >&2
+  fi
+  if ! $DOCKER_COMPOSE_CMD up --wait; then
+    echo "Error waiting for services in $dir" >&2
+  fi
+  cd ..
 done
 
 echo "======================================"
 echo "         Compose Up Finished          "
 echo "======================================"
-echo ""
-echo "If this is the first time running compose
-echo "up, run the following post-install scripts:"
-echo ""
-echo "./trino/setup_iceberg.sh"
-echo "./superset/setup_db_connections.sh"
-echo "./nifi/postinstall.sh"
-
+echo
+echo "If this is the first time running compose up,"
+echo "please run the following post-install scripts:"
+echo
+echo "  ./trino/setup_iceberg.sh"
+echo "  ./superset/setup_db_connections.sh"
+echo "  ./nifi/postinstall.sh"
