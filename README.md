@@ -10,7 +10,7 @@ This project aims to give you a quickstart way to try example integrations with 
 # Prerequisites
 
 - Docker Compose
-- Mac OS or Linux Host
+- Mac OS or Linux Host with Internet access
 - Vast Cluster 5.1+
 
 > [!NOTE]  
