@@ -11,6 +11,7 @@ This project aims to give you a quickstart way to try example integrations with 
 
 - Docker Compose
 - Mac OS or Linux Host
+- Vast Cluster 5.1+
 
 > [!NOTE]  
 > - This project has been tested on Mac OS (Silicon) and Linux (AMD64)
