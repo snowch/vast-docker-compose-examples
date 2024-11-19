@@ -1,5 +1,7 @@
 import os
 import ssl
+import sys
+import json
 import logging
 import requests
 from requests.adapters import HTTPAdapter
@@ -366,6 +368,110 @@ def update_processor(api_client, processor, update, refresh=False):
             )
         )
 
+def get_process_group(identifier, identifier_type='name', greedy=True):
+    """
+    Filters the list of all process groups against a given identifier string
+    occurring in a given identifier_type field.
+
+    Args:
+        identifier (str): the string to filter the list for
+        identifier_type (str): the field to filter on, set in config.py
+        greedy (bool): True for partial match, False for exact match
+
+    Returns:
+        None for no matches, Single Object for unique match,
+        list(Objects) for multiple matches
+
+    """
+    assert isinstance(identifier, six.string_types)
+    assert identifier_type in ['name', 'id']
+    with nipyapi.utils.rest_exceptions():
+        if identifier_type == 'id' or identifier == 'root':
+            # assuming unique fetch of pg id, 'root' is special case
+            # implementing separately to avoid recursing entire canvas
+            out = nipyapi.nifi.ProcessGroupsApi().get_process_group(identifier)
+        else:
+            obj = list_all_process_groups()
+            out = nipyapi.utils.filter_obj(
+                obj, identifier, identifier_type, greedy=greedy)
+    return out
+
+
+def get_flow(pg_id='root'):
+    """
+    Returns information about a Process Group and flow.
+
+    This surfaces the native implementation, for the recursed implementation
+    see 'recurse_flow'
+
+    Args:
+        pg_id (str): id of the Process Group to retrieve, defaults to the root
+            process group if not set
+
+    Returns:
+         (ProcessGroupFlowEntity): The Process Group object
+    """
+    assert isinstance(pg_id, six.string_types), "pg_id should be a string"
+    with nipyapi.utils.rest_exceptions():
+        return nipyapi.nifi.FlowApi().get_flow(pg_id)
+
+
+def recurse_flow(pg_id='root'):
+    """
+    Returns information about a Process Group and all its Child Flows.
+    Recurses the child flows by appending each process group with a
+    'nipyapi_extended' parameter which contains the child process groups, etc.
+    Note: This previously used actual recursion which broke on large NiFi
+        environments, we now use a task/list update approach
+
+    Args:
+        pg_id (str): The Process Group UUID
+
+    Returns:
+         (ProcessGroupFlowEntity): enriched NiFi Flow object
+    """
+    assert isinstance(pg_id, six.string_types), "pg_id should be a string"
+
+    out = get_flow(pg_id)
+    tasks = [(x.id, x) for x in out.process_group_flow.flow.process_groups]
+    while tasks:
+        this_pg_id, this_parent_obj = tasks.pop()
+        this_flow = get_flow(this_pg_id)
+        this_parent_obj.__setattr__(
+            'nipyapi_extended',
+            this_flow
+        )
+        tasks += [(x.id, x) for x in
+                  this_flow.process_group_flow.flow.process_groups]
+    return out
+
+def enable_controller_services(nifi_host, api_client, pg_id):
+
+    # Set up form data and headers
+    headers = {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': api_client.default_headers['Authorization'],
+        'Content-Type': 'application/json'
+    }
+    form_data = {
+        "id": pg_id,
+        "state":"ENABLED",
+        "disconnectedNodeAcknowledged":False
+    }
+
+    url = f'{nifi_host}/flow/process-groups/{pg_id}/controller-services'
+    response = requests.put(url, headers=headers, data=json.dumps(form_data), verify=False)
+
+    # Log response status
+    print(response.status_code)
+    if response.status_code in [200, 201]:
+        print("Controller services enabled.")
+    else:
+        print("Could not enable controller services.")
+        print(url)
+        print(response.text)
+        sys.exit(1)
+
 def main():
 
     DOCKER_HOST_OR_IP = os.getenv("DOCKER_HOST_OR_IP")
@@ -506,5 +612,14 @@ def main():
         print(f'Updating ListS3 process {processor.id} {update}')
         updated = update_processor(api_client, processor, update)
 
+    ################################
+    # Enable all controller services
+    ################################
+
+    pg_name = "Demo_Flow"
+    process_group = get_process_group(pg_name)
+
+    enable_controller_services(nifi_host, api_client, process_group.id)
+        
 if __name__ == "__main__":
     main()
