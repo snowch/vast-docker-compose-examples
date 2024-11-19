@@ -16,6 +16,14 @@ fi
 for dir in $(ls -d */ | grep -v "^demos/" | grep -v "^scripts/"); do
   echo "Starting services in $dir..."
   cd "$dir"
+
+  # Check if the directory name is 'jupyter-pyspark'
+  if [[ "$dir" == "jupyter-pyspark/" ]]; then
+    # Build the docker image (without cache) before starting services
+    echo "Building docker image for $dir..."
+    $DOCKER_COMPOSE_CMD build --no-cache
+  fi
+
   if ! $DOCKER_COMPOSE_CMD up -d; then
     echo "Error starting services in $dir" >&2
   fi
