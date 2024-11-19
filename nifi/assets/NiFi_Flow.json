@@ -1,7 +1,7 @@
 {
     "flowContents": {
-        "identifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2",
-        "instanceIdentifier": "229e263e-0193-1000-56b1-0e95300af926",
+        "identifier": "f778b8c2-1cba-3b50-ade8-26c1450d0f4d",
+        "instanceIdentifier": "2dfbf0eb-0193-1000-6834-f0478221f4a2",
         "name": "Demo_Flow",
         "comments": "",
         "position": {
@@ -11,7 +11,7 @@
         "processGroups": [
             {
                 "identifier": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
-                "instanceIdentifier": "03438538-e2ef-3096-6d83-c9a94a050b45",
+                "instanceIdentifier": "82e23507-0c22-35fa-daa3-ea2c3a401913",
                 "name": "Bulk Import",
                 "comments": "",
                 "position": {
@@ -23,7 +23,7 @@
                 "processors": [
                     {
                         "identifier": "18562f78-aad3-3460-8587-c129fc2e149a",
-                        "instanceIdentifier": "ef34c977-01c9-3c10-f149-46d0d522b45b",
+                        "instanceIdentifier": "1bab72c3-8e21-37a9-c156-b66184ece3a2",
                         "name": "LogMessage",
                         "comments": "",
                         "position": {
@@ -84,7 +84,7 @@
                     },
                     {
                         "identifier": "5b17813e-f536-31bf-9980-0d708313d98e",
-                        "instanceIdentifier": "c895dd02-aeea-3b34-fc33-e4073739b7e9",
+                        "instanceIdentifier": "17289f4d-8a5e-3eff-fc6c-0a5a6127b495",
                         "name": "ImportVastDB",
                         "comments": "",
                         "position": {
@@ -98,9 +98,9 @@
                             "version": "1.0.8"
                         },
                         "properties": {
-                            "VastDB Table Name": "userdata",
-                            "VastDB Database Schema": "users_import",
-                            "VastDB Bucket": "csnowdb",
+                            "VastDB Table Name": "PLACEHOLDER",
+                            "VastDB Database Schema": "PLACEHOLDER",
+                            "VastDB Bucket": "PLACEHOLDER",
                             "Schema Merge": "Union",
                             "VastDB Endpoint": "http://PLACEHOLDER:80",
                             "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
@@ -172,7 +172,7 @@
                     },
                     {
                         "identifier": "bd99598a-bc29-3d8e-b697-97330c47c59e",
-                        "instanceIdentifier": "655f3140-7879-3326-9f06-21c92a0b3ba6",
+                        "instanceIdentifier": "3877948f-cc18-354e-dcf7-7a055be3c535",
                         "name": "ListS3",
                         "comments": "",
                         "position": {
@@ -206,7 +206,7 @@
                             "Listing Batch Size": "100",
                             "SSL Context Service": null,
                             "write-s3-object-tags": "false",
-                            "Bucket": "csnow-bucket",
+                            "Bucket": "PLACEHOLDER",
                             "Communications Timeout": "30 secs",
                             "Region": "us-west-2",
                             "et-state-cache": null,
@@ -285,8 +285,8 @@
                                 "resourceDefinition": {
                                     "cardinality": "MULTIPLE",
                                     "resourceTypes": [
-                                        "FILE",
-                                        "DIRECTORY"
+                                        "DIRECTORY",
+                                        "FILE"
                                     ]
                                 }
                             },
@@ -420,7 +420,7 @@
                 "connections": [
                     {
                         "identifier": "cc90e528-bc8f-3dd0-809e-31640145563c",
-                        "instanceIdentifier": "c5126acc-b536-3f96-f445-06518c3f7101",
+                        "instanceIdentifier": "f46b7acc-0a29-3a1c-6b8b-6bd28eedd926",
                         "name": "",
                         "source": {
                             "id": "5b17813e-f536-31bf-9980-0d708313d98e",
@@ -428,7 +428,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "ImportVastDB",
                             "comments": "",
-                            "instanceIdentifier": "c895dd02-aeea-3b34-fc33-e4073739b7e9"
+                            "instanceIdentifier": "17289f4d-8a5e-3eff-fc6c-0a5a6127b495"
                         },
                         "destination": {
                             "id": "18562f78-aad3-3460-8587-c129fc2e149a",
@@ -436,7 +436,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "LogMessage",
                             "comments": "",
-                            "instanceIdentifier": "ef34c977-01c9-3c10-f149-46d0d522b45b"
+                            "instanceIdentifier": "1bab72c3-8e21-37a9-c156-b66184ece3a2"
                         },
                         "labelIndex": 0,
                         "zIndex": 0,
@@ -456,7 +456,7 @@
                     },
                     {
                         "identifier": "c2224e5e-417e-3ead-826e-6ee58bcf0663",
-                        "instanceIdentifier": "de06d843-9fcc-3057-fad4-71e031fe05db",
+                        "instanceIdentifier": "50e7c60c-4a13-3455-8d38-b8e038168d54",
                         "name": "",
                         "source": {
                             "id": "bd99598a-bc29-3d8e-b697-97330c47c59e",
@@ -464,7 +464,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "ListS3",
                             "comments": "",
-                            "instanceIdentifier": "655f3140-7879-3326-9f06-21c92a0b3ba6"
+                            "instanceIdentifier": "3877948f-cc18-354e-dcf7-7a055be3c535"
                         },
                         "destination": {
                             "id": "5b17813e-f536-31bf-9980-0d708313d98e",
@@ -472,7 +472,7 @@
                             "groupId": "4c15a130-fd25-3b87-b66a-8b2f5701c384",
                             "name": "ImportVastDB",
                             "comments": "",
-                            "instanceIdentifier": "c895dd02-aeea-3b34-fc33-e4073739b7e9"
+                            "instanceIdentifier": "17289f4d-8a5e-3eff-fc6c-0a5a6127b495"
                         },
                         "labelIndex": 0,
                         "zIndex": 0,
@@ -496,7 +496,7 @@
                 "controllerServices": [
                     {
                         "identifier": "e42c496a-d5cf-3a6d-961d-04e28a054fe4",
-                        "instanceIdentifier": "6240373f-7ec9-3c4a-3011-a4ad27cbb20b",
+                        "instanceIdentifier": "b7207509-9bd5-3cfc-eb50-b581e50060f9",
                         "name": "JsonRecordSetWriter",
                         "comments": "",
                         "type": "org.apache.nifi.json.JsonRecordSetWriter",
@@ -687,11 +687,11 @@
                 "flowFileConcurrency": "UNBOUNDED",
                 "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
                 "componentType": "PROCESS_GROUP",
-                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
+                "groupIdentifier": "f778b8c2-1cba-3b50-ade8-26c1450d0f4d"
             },
             {
                 "identifier": "54239340-e7ca-316e-a55c-e09a42580445",
-                "instanceIdentifier": "c402d184-5f29-36ff-41f7-d838220597f4",
+                "instanceIdentifier": "55dd42ed-73bb-3ce6-3bfa-1955089e5e1a",
                 "name": "Streaming",
                 "comments": "",
                 "position": {
@@ -701,7 +701,7 @@
                 "processGroups": [
                     {
                         "identifier": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
-                        "instanceIdentifier": "880f591a-d08b-3dda-5b43-3d913966a763",
+                        "instanceIdentifier": "4434a811-4bd0-3103-d95b-2019112be69a",
                         "name": "Publish to Kafka",
                         "comments": "",
                         "position": {
@@ -713,7 +713,7 @@
                         "processors": [
                             {
                                 "identifier": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
-                                "instanceIdentifier": "f75ee34d-17bb-362b-9535-77952c3e8521",
+                                "instanceIdentifier": "acefb6f3-c1df-31c0-16bd-86c482778062",
                                 "name": "PublishKafka",
                                 "comments": "",
                                 "position": {
@@ -920,7 +920,7 @@
                             },
                             {
                                 "identifier": "cdeb0b7b-c4bd-3de0-a5e5-a43ebca1a240",
-                                "instanceIdentifier": "482bb630-51db-33a9-f787-03130e0c1f81",
+                                "instanceIdentifier": "cd0fa5f4-e47a-34c7-3100-5bb8dc265d39",
                                 "name": "Twitter Data Generator",
                                 "comments": "",
                                 "position": {
@@ -984,8 +984,8 @@
                                         "resourceDefinition": {
                                             "cardinality": "MULTIPLE",
                                             "resourceTypes": [
-                                                "FILE",
-                                                "DIRECTORY"
+                                                "DIRECTORY",
+                                                "FILE"
                                             ]
                                         }
                                     }
@@ -1010,7 +1010,7 @@
                             },
                             {
                                 "identifier": "37672283-19a4-3787-9ebc-396e3aa810be",
-                                "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd",
+                                "instanceIdentifier": "f3979568-f1ae-3e59-a185-6db9f803a519",
                                 "name": "ConvertRecord",
                                 "comments": "",
                                 "position": {
@@ -1071,7 +1071,7 @@
                             },
                             {
                                 "identifier": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
-                                "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306",
+                                "instanceIdentifier": "d4d8619f-29e9-3cfb-5ea5-72ee00917aa0",
                                 "name": "LogMessage",
                                 "comments": "",
                                 "position": {
@@ -1136,7 +1136,7 @@
                         "connections": [
                             {
                                 "identifier": "1becd583-ba40-356f-a810-1aef595b7c66",
-                                "instanceIdentifier": "945931eb-5f1c-3795-d49f-3714ce19488a",
+                                "instanceIdentifier": "8a4a50ad-d823-3a53-94c4-c2a2e2070e2d",
                                 "name": "",
                                 "source": {
                                     "id": "cdeb0b7b-c4bd-3de0-a5e5-a43ebca1a240",
@@ -1144,7 +1144,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "Twitter Data Generator",
                                     "comments": "",
-                                    "instanceIdentifier": "482bb630-51db-33a9-f787-03130e0c1f81"
+                                    "instanceIdentifier": "cd0fa5f4-e47a-34c7-3100-5bb8dc265d39"
                                 },
                                 "destination": {
                                     "id": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
@@ -1152,7 +1152,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306"
+                                    "instanceIdentifier": "d4d8619f-29e9-3cfb-5ea5-72ee00917aa0"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1165,7 +1165,7 @@
                                 "prioritizers": [],
                                 "bends": [
                                     {
-                                        "x": 1472.0,
+                                        "x": 1488.0,
                                         "y": -712.0
                                     }
                                 ],
@@ -1177,7 +1177,7 @@
                             },
                             {
                                 "identifier": "db6eadec-16aa-36b8-8318-3b0fad105118",
-                                "instanceIdentifier": "22a25143-0193-1000-1fb4-618df9111497",
+                                "instanceIdentifier": "a959e9bb-b586-3b9e-9748-816654c1996d",
                                 "name": "",
                                 "source": {
                                     "id": "37672283-19a4-3787-9ebc-396e3aa810be",
@@ -1185,7 +1185,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd"
+                                    "instanceIdentifier": "f3979568-f1ae-3e59-a185-6db9f803a519"
                                 },
                                 "destination": {
                                     "id": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
@@ -1193,7 +1193,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306"
+                                    "instanceIdentifier": "d4d8619f-29e9-3cfb-5ea5-72ee00917aa0"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1204,7 +1204,12 @@
                                 "backPressureDataSizeThreshold": "1 GB",
                                 "flowFileExpiration": "0 sec",
                                 "prioritizers": [],
-                                "bends": [],
+                                "bends": [
+                                    {
+                                        "x": 1264.0,
+                                        "y": -528.0
+                                    }
+                                ],
                                 "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
                                 "partitioningAttribute": "",
                                 "loadBalanceCompression": "DO_NOT_COMPRESS",
@@ -1213,7 +1218,7 @@
                             },
                             {
                                 "identifier": "f72861f9-ee76-3232-b841-10cd273238ce",
-                                "instanceIdentifier": "9e3069ec-4822-3646-b45c-651a0cdd5e19",
+                                "instanceIdentifier": "630477dd-bbd2-3edc-4389-09980c1f8a09",
                                 "name": "",
                                 "source": {
                                     "id": "cdeb0b7b-c4bd-3de0-a5e5-a43ebca1a240",
@@ -1221,7 +1226,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "Twitter Data Generator",
                                     "comments": "",
-                                    "instanceIdentifier": "482bb630-51db-33a9-f787-03130e0c1f81"
+                                    "instanceIdentifier": "cd0fa5f4-e47a-34c7-3100-5bb8dc265d39"
                                 },
                                 "destination": {
                                     "id": "37672283-19a4-3787-9ebc-396e3aa810be",
@@ -1229,7 +1234,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd"
+                                    "instanceIdentifier": "f3979568-f1ae-3e59-a185-6db9f803a519"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1249,7 +1254,7 @@
                             },
                             {
                                 "identifier": "d21cfdb2-29fe-3918-8e82-0fc2e3219f64",
-                                "instanceIdentifier": "10bc2c84-d1b5-36de-f516-afd952c0240b",
+                                "instanceIdentifier": "4d10aa57-d06e-3f9b-0ce7-bf1075f0f6ef",
                                 "name": "",
                                 "source": {
                                     "id": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
@@ -1257,7 +1262,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "PublishKafka",
                                     "comments": "",
-                                    "instanceIdentifier": "f75ee34d-17bb-362b-9535-77952c3e8521"
+                                    "instanceIdentifier": "acefb6f3-c1df-31c0-16bd-86c482778062"
                                 },
                                 "destination": {
                                     "id": "11c078fe-a7aa-3c81-909d-5b713d7a9d47",
@@ -1265,7 +1270,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "9df93dc3-79de-3e44-d30d-13c9224bb306"
+                                    "instanceIdentifier": "d4d8619f-29e9-3cfb-5ea5-72ee00917aa0"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1285,7 +1290,7 @@
                             },
                             {
                                 "identifier": "0bf86c6a-20e9-3744-9e22-acf17a78cb17",
-                                "instanceIdentifier": "22a23f1b-0193-1000-181d-3a4f2f4a9d21",
+                                "instanceIdentifier": "e05001c9-da8d-33be-ff99-67488aa0d836",
                                 "name": "",
                                 "source": {
                                     "id": "37672283-19a4-3787-9ebc-396e3aa810be",
@@ -1293,7 +1298,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "22a14502-0193-1000-65ee-8983589cbffd"
+                                    "instanceIdentifier": "f3979568-f1ae-3e59-a185-6db9f803a519"
                                 },
                                 "destination": {
                                     "id": "d59c0e18-6505-33e4-8223-a81a1ac7f2f1",
@@ -1301,7 +1306,7 @@
                                     "groupId": "2ba33062-0e41-38b3-ab0a-cb9d328099d4",
                                     "name": "PublishKafka",
                                     "comments": "",
-                                    "instanceIdentifier": "f75ee34d-17bb-362b-9535-77952c3e8521"
+                                    "instanceIdentifier": "acefb6f3-c1df-31c0-16bd-86c482778062"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -1337,7 +1342,7 @@
                     },
                     {
                         "identifier": "d195df89-2426-3212-8498-fc0cf8c70940",
-                        "instanceIdentifier": "b970dbd7-4178-33b0-442c-d4e1f96cd570",
+                        "instanceIdentifier": "a5462f9d-1e75-3adf-2f7a-5ae6eae8800a",
                         "name": "Consume from Kafka",
                         "comments": "",
                         "position": {
@@ -1349,7 +1354,7 @@
                         "processors": [
                             {
                                 "identifier": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
-                                "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f",
+                                "instanceIdentifier": "de470113-a25a-3797-5343-51dede2eff8a",
                                 "name": "ConvertRecord",
                                 "comments": "",
                                 "position": {
@@ -1410,7 +1415,7 @@
                             },
                             {
                                 "identifier": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
-                                "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1",
+                                "instanceIdentifier": "b728b946-4203-3d69-172d-0433d0597122",
                                 "name": "ExecuteScript - extract key fields",
                                 "comments": "",
                                 "position": {
@@ -1466,8 +1471,8 @@
                                         "resourceDefinition": {
                                             "cardinality": "MULTIPLE",
                                             "resourceTypes": [
-                                                "FILE",
-                                                "DIRECTORY"
+                                                "DIRECTORY",
+                                                "FILE"
                                             ]
                                         }
                                     }
@@ -1492,7 +1497,7 @@
                             },
                             {
                                 "identifier": "5c812da7-66a4-32cc-af69-999068405853",
-                                "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3",
+                                "instanceIdentifier": "f66325af-9aff-396b-25b7-e092c0e6e351",
                                 "name": "LogMessage",
                                 "comments": "",
                                 "position": {
@@ -1553,7 +1558,7 @@
                             },
                             {
                                 "identifier": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
-                                "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07",
+                                "instanceIdentifier": "cecbf4fc-c0d7-327a-c157-df0b6b6d8f7c",
                                 "name": "LogMessage",
                                 "comments": "",
                                 "position": {
@@ -1614,7 +1619,7 @@
                             },
                             {
                                 "identifier": "4694ed33-f95a-36c3-945a-bc146f74ca91",
-                                "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902",
+                                "instanceIdentifier": "a71ecf5e-95dc-33a9-83d0-92909bb23143",
                                 "name": "ExecuteScript - extract key fields",
                                 "comments": "",
                                 "position": {
@@ -1670,8 +1675,8 @@
                                         "resourceDefinition": {
                                             "cardinality": "MULTIPLE",
                                             "resourceTypes": [
-                                                "FILE",
-                                                "DIRECTORY"
+                                                "DIRECTORY",
+                                                "FILE"
                                             ]
                                         }
                                     }
@@ -1695,69 +1700,8 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
-                                "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42",
-                                "name": "ConvertRecord",
-                                "comments": "",
-                                "position": {
-                                    "x": 208.0,
-                                    "y": 224.0
-                                },
-                                "type": "org.apache.nifi.processors.standard.ConvertRecord",
-                                "bundle": {
-                                    "group": "org.apache.nifi",
-                                    "artifact": "nifi-standard-nar",
-                                    "version": "2.0.0-M4"
-                                },
-                                "properties": {
-                                    "Include Zero Record FlowFiles": "true",
-                                    "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
-                                    "Record Reader": "73ea1aeb-30ab-3580-933d-68093b4dc792"
-                                },
-                                "propertyDescriptors": {
-                                    "Include Zero Record FlowFiles": {
-                                        "name": "Include Zero Record FlowFiles",
-                                        "displayName": "Include Zero Record FlowFiles",
-                                        "identifiesControllerService": false,
-                                        "sensitive": false,
-                                        "dynamic": false
-                                    },
-                                    "Record Writer": {
-                                        "name": "Record Writer",
-                                        "displayName": "Record Writer",
-                                        "identifiesControllerService": true,
-                                        "sensitive": false,
-                                        "dynamic": false
-                                    },
-                                    "Record Reader": {
-                                        "name": "Record Reader",
-                                        "displayName": "Record Reader",
-                                        "identifiesControllerService": true,
-                                        "sensitive": false,
-                                        "dynamic": false
-                                    }
-                                },
-                                "style": {},
-                                "schedulingPeriod": "0 sec",
-                                "schedulingStrategy": "TIMER_DRIVEN",
-                                "executionNode": "ALL",
-                                "penaltyDuration": "30 sec",
-                                "yieldDuration": "1 sec",
-                                "bulletinLevel": "WARN",
-                                "runDurationMillis": 0,
-                                "concurrentlySchedulableTaskCount": 1,
-                                "autoTerminatedRelationships": [],
-                                "scheduledState": "ENABLED",
-                                "retryCount": 10,
-                                "retriedRelationships": [],
-                                "backoffMechanism": "PENALIZE_FLOWFILE",
-                                "maxBackoffPeriod": "10 mins",
-                                "componentType": "PROCESSOR",
-                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
-                            },
-                            {
                                 "identifier": "0b4341ca-6592-3d2c-84d9-289995ae1ffa",
-                                "instanceIdentifier": "7da8b0ca-1fa6-3718-936d-84e85daebf44",
+                                "instanceIdentifier": "ab29dbd3-7a1c-3c5f-0649-7c030c4a0ae1",
                                 "name": "ConsumeKafka - streaming-demo-2",
                                 "comments": "",
                                 "position": {
@@ -1937,8 +1881,69 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
+                                "identifier": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
+                                "instanceIdentifier": "fdaed846-0f9b-3462-3cc3-f10efc8c8f1c",
+                                "name": "ConvertRecord",
+                                "comments": "",
+                                "position": {
+                                    "x": 208.0,
+                                    "y": 224.0
+                                },
+                                "type": "org.apache.nifi.processors.standard.ConvertRecord",
+                                "bundle": {
+                                    "group": "org.apache.nifi",
+                                    "artifact": "nifi-standard-nar",
+                                    "version": "2.0.0-M4"
+                                },
+                                "properties": {
+                                    "Include Zero Record FlowFiles": "true",
+                                    "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
+                                    "Record Reader": "73ea1aeb-30ab-3580-933d-68093b4dc792"
+                                },
+                                "propertyDescriptors": {
+                                    "Include Zero Record FlowFiles": {
+                                        "name": "Include Zero Record FlowFiles",
+                                        "displayName": "Include Zero Record FlowFiles",
+                                        "identifiesControllerService": false,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    },
+                                    "Record Writer": {
+                                        "name": "Record Writer",
+                                        "displayName": "Record Writer",
+                                        "identifiesControllerService": true,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    },
+                                    "Record Reader": {
+                                        "name": "Record Reader",
+                                        "displayName": "Record Reader",
+                                        "identifiesControllerService": true,
+                                        "sensitive": false,
+                                        "dynamic": false
+                                    }
+                                },
+                                "style": {},
+                                "schedulingPeriod": "0 sec",
+                                "schedulingStrategy": "TIMER_DRIVEN",
+                                "executionNode": "ALL",
+                                "penaltyDuration": "30 sec",
+                                "yieldDuration": "1 sec",
+                                "bulletinLevel": "WARN",
+                                "runDurationMillis": 0,
+                                "concurrentlySchedulableTaskCount": 1,
+                                "autoTerminatedRelationships": [],
+                                "scheduledState": "ENABLED",
+                                "retryCount": 10,
+                                "retriedRelationships": [],
+                                "backoffMechanism": "PENALIZE_FLOWFILE",
+                                "maxBackoffPeriod": "10 mins",
+                                "componentType": "PROCESSOR",
+                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
+                            },
+                            {
                                 "identifier": "67dbe0c7-92b6-3a54-8ae7-07de718122d4",
-                                "instanceIdentifier": "0866903f-19ad-3146-2a9c-a8c15ad1ea46",
+                                "instanceIdentifier": "f88eae6f-e746-3d66-8e7a-9bd4ab152619",
                                 "name": "ConsumeKafka - streaming-demo",
                                 "comments": "",
                                 "position": {
@@ -2118,12 +2123,12 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
-                                "instanceIdentifier": "8049b120-dbb8-33f9-3dea-1f7bdf66c6c6",
+                                "identifier": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
+                                "instanceIdentifier": "186b3f2a-96d4-37f1-4919-855a6934a3d0",
                                 "name": "PutVastDB",
                                 "comments": "",
                                 "position": {
-                                    "x": 208.0,
+                                    "x": 1048.0,
                                     "y": 432.0
                                 },
                                 "type": "python.PutVastDB",
@@ -2133,10 +2138,10 @@
                                     "version": "1.0.8"
                                 },
                                 "properties": {
-                                    "VastDB Table Name": "twitter_data",
-                                    "VastDB Database Schema": "twitter_import",
+                                    "VastDB Table Name": "tweets",
+                                    "VastDB Database Schema": "PLACEHOLDER",
                                     "Data Type": "Json",
-                                    "VastDB Bucket": "csnowdb",
+                                    "VastDB Bucket": "PLACEHOLDER",
                                     "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
@@ -2206,12 +2211,12 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
-                                "instanceIdentifier": "b7cc60c5-06e5-30a0-4507-5aa392599292",
+                                "identifier": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
+                                "instanceIdentifier": "0d7714a1-749f-3d97-5704-f1318a87c4e5",
                                 "name": "PutVastDB",
                                 "comments": "",
                                 "position": {
-                                    "x": 1048.0,
+                                    "x": 208.0,
                                     "y": 432.0
                                 },
                                 "type": "python.PutVastDB",
@@ -2221,10 +2226,10 @@
                                     "version": "1.0.8"
                                 },
                                 "properties": {
-                                    "VastDB Table Name": "twitter_data",
-                                    "VastDB Database Schema": "twitter_import",
+                                    "VastDB Table Name": "tweets",
+                                    "VastDB Database Schema": "PLACEHOLDER",
                                     "Data Type": "Json",
-                                    "VastDB Bucket": "csnowdb",
+                                    "VastDB Bucket": "PLACEHOLDER",
                                     "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
                                 },
@@ -2299,7 +2304,7 @@
                         "connections": [
                             {
                                 "identifier": "2c6b0ef8-67a9-31f0-89f7-4fc281bd7718",
-                                "instanceIdentifier": "3baf9020-b667-30cd-6576-7512aca8fa10",
+                                "instanceIdentifier": "f58f120c-8a6c-30e9-c870-b997a26034c9",
                                 "name": "",
                                 "source": {
                                     "id": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
@@ -2307,7 +2312,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f"
+                                    "instanceIdentifier": "de470113-a25a-3797-5343-51dede2eff8a"
                                 },
                                 "destination": {
                                     "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
@@ -2315,7 +2320,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07"
+                                    "instanceIdentifier": "cecbf4fc-c0d7-327a-c157-df0b6b6d8f7c"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2340,7 +2345,7 @@
                             },
                             {
                                 "identifier": "7aea9945-b5d8-3737-8937-b99c3d6fbe91",
-                                "instanceIdentifier": "a39fd3ab-9151-3ea9-5f59-0628fcb63f75",
+                                "instanceIdentifier": "261fdb0e-7e76-3461-0262-b19e15572ac6",
                                 "name": "",
                                 "source": {
                                     "id": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
@@ -2348,7 +2353,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "PutVastDB",
                                     "comments": "",
-                                    "instanceIdentifier": "8049b120-dbb8-33f9-3dea-1f7bdf66c6c6"
+                                    "instanceIdentifier": "0d7714a1-749f-3d97-5704-f1318a87c4e5"
                                 },
                                 "destination": {
                                     "id": "5c812da7-66a4-32cc-af69-999068405853",
@@ -2356,7 +2361,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3"
+                                    "instanceIdentifier": "f66325af-9aff-396b-25b7-e092c0e6e351"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2376,7 +2381,7 @@
                             },
                             {
                                 "identifier": "529a48ec-ee49-3f7a-925f-f5d7ebf48ab3",
-                                "instanceIdentifier": "65d42101-f646-34d4-2f26-3b5410fcce8b",
+                                "instanceIdentifier": "ccab8030-325b-3742-eeb8-08f0739343c3",
                                 "name": "",
                                 "source": {
                                     "id": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
@@ -2384,7 +2389,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f"
+                                    "instanceIdentifier": "de470113-a25a-3797-5343-51dede2eff8a"
                                 },
                                 "destination": {
                                     "id": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
@@ -2392,7 +2397,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "PutVastDB",
                                     "comments": "",
-                                    "instanceIdentifier": "b7cc60c5-06e5-30a0-4507-5aa392599292"
+                                    "instanceIdentifier": "186b3f2a-96d4-37f1-4919-855a6934a3d0"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2412,7 +2417,7 @@
                             },
                             {
                                 "identifier": "3d55464f-fdcb-3fb4-8300-11bc39a4ab69",
-                                "instanceIdentifier": "cec9c193-3dac-3783-e8fb-def73d665868",
+                                "instanceIdentifier": "3703f214-92f0-3729-0e86-ef1447093fa5",
                                 "name": "",
                                 "source": {
                                     "id": "0b4341ca-6592-3d2c-84d9-289995ae1ffa",
@@ -2420,7 +2425,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConsumeKafka - streaming-demo-2",
                                     "comments": "",
-                                    "instanceIdentifier": "7da8b0ca-1fa6-3718-936d-84e85daebf44"
+                                    "instanceIdentifier": "ab29dbd3-7a1c-3c5f-0649-7c030c4a0ae1"
                                 },
                                 "destination": {
                                     "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
@@ -2428,7 +2433,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1"
+                                    "instanceIdentifier": "b728b946-4203-3d69-172d-0433d0597122"
                                 },
                                 "labelIndex": 1,
                                 "zIndex": 0,
@@ -2448,7 +2453,7 @@
                             },
                             {
                                 "identifier": "8cfb91e5-2c39-3ac4-94ab-59104cf7e837",
-                                "instanceIdentifier": "4436b849-9366-3c39-0e19-af924d39056a",
+                                "instanceIdentifier": "76a44378-3d52-39ee-cf05-b5c895d46f41",
                                 "name": "",
                                 "source": {
                                     "id": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
@@ -2456,7 +2461,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42"
+                                    "instanceIdentifier": "fdaed846-0f9b-3462-3cc3-f10efc8c8f1c"
                                 },
                                 "destination": {
                                     "id": "88a73d4f-1fac-37f8-b237-16ea11e25ded",
@@ -2464,7 +2469,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "PutVastDB",
                                     "comments": "",
-                                    "instanceIdentifier": "8049b120-dbb8-33f9-3dea-1f7bdf66c6c6"
+                                    "instanceIdentifier": "0d7714a1-749f-3d97-5704-f1318a87c4e5"
                                 },
                                 "labelIndex": 1,
                                 "zIndex": 0,
@@ -2484,7 +2489,7 @@
                             },
                             {
                                 "identifier": "e7d6f42e-d0f4-34c5-a287-f36dfda27cc0",
-                                "instanceIdentifier": "478afe7a-0859-3b91-8826-7a09f0dc9abe",
+                                "instanceIdentifier": "5bcd9858-8022-3cd0-d78f-46107da1ecee",
                                 "name": "",
                                 "source": {
                                     "id": "67dbe0c7-92b6-3a54-8ae7-07de718122d4",
@@ -2492,7 +2497,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConsumeKafka - streaming-demo",
                                     "comments": "",
-                                    "instanceIdentifier": "0866903f-19ad-3146-2a9c-a8c15ad1ea46"
+                                    "instanceIdentifier": "f88eae6f-e746-3d66-8e7a-9bd4ab152619"
                                 },
                                 "destination": {
                                     "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
@@ -2500,7 +2505,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902"
+                                    "instanceIdentifier": "a71ecf5e-95dc-33a9-83d0-92909bb23143"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2520,7 +2525,7 @@
                             },
                             {
                                 "identifier": "5254e7fe-d7b8-3ac1-b0f5-3a09f7c26376",
-                                "instanceIdentifier": "c7748f12-8aff-3649-9fa7-db5ccd0ecf11",
+                                "instanceIdentifier": "ab7413b0-271c-3640-665e-49fa255313a6",
                                 "name": "",
                                 "source": {
                                     "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
@@ -2528,7 +2533,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902"
+                                    "instanceIdentifier": "a71ecf5e-95dc-33a9-83d0-92909bb23143"
                                 },
                                 "destination": {
                                     "id": "5bf95f85-6bee-3502-a643-c5bb399d7f63",
@@ -2536,7 +2541,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "4edad290-5232-3bbf-500c-3ca3c7995f6f"
+                                    "instanceIdentifier": "de470113-a25a-3797-5343-51dede2eff8a"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2556,7 +2561,7 @@
                             },
                             {
                                 "identifier": "52f80e00-cb41-3a7b-95d8-284b085925b5",
-                                "instanceIdentifier": "33e35ca8-79dd-3438-9d59-501b6595c30b",
+                                "instanceIdentifier": "5e8fe5c0-4cc0-38d9-51f8-3066fea98e42",
                                 "name": "",
                                 "source": {
                                     "id": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
@@ -2564,7 +2569,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42"
+                                    "instanceIdentifier": "fdaed846-0f9b-3462-3cc3-f10efc8c8f1c"
                                 },
                                 "destination": {
                                     "id": "5c812da7-66a4-32cc-af69-999068405853",
@@ -2572,7 +2577,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3"
+                                    "instanceIdentifier": "f66325af-9aff-396b-25b7-e092c0e6e351"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2596,85 +2601,8 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
-                                "identifier": "241daf40-6e17-311c-88ae-a5d27028d8ca",
-                                "instanceIdentifier": "d3ddbf8e-6fa1-3296-998b-af1866011db1",
-                                "name": "",
-                                "source": {
-                                    "id": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
-                                    "type": "PROCESSOR",
-                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "PutVastDB",
-                                    "comments": "",
-                                    "instanceIdentifier": "b7cc60c5-06e5-30a0-4507-5aa392599292"
-                                },
-                                "destination": {
-                                    "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
-                                    "type": "PROCESSOR",
-                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "LogMessage",
-                                    "comments": "",
-                                    "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07"
-                                },
-                                "labelIndex": 0,
-                                "zIndex": 0,
-                                "selectedRelationships": [
-                                    "failure"
-                                ],
-                                "backPressureObjectThreshold": 10000,
-                                "backPressureDataSizeThreshold": "1 GB",
-                                "flowFileExpiration": "0 sec",
-                                "prioritizers": [],
-                                "bends": [],
-                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
-                                "partitioningAttribute": "",
-                                "loadBalanceCompression": "DO_NOT_COMPRESS",
-                                "componentType": "CONNECTION",
-                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
-                            },
-                            {
-                                "identifier": "9c8aebe3-b151-3cd7-ab8d-89ef3f6977b2",
-                                "instanceIdentifier": "4af26ffc-1528-3aba-089f-9574b52fd213",
-                                "name": "",
-                                "source": {
-                                    "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
-                                    "type": "PROCESSOR",
-                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "ExecuteScript - extract key fields",
-                                    "comments": "",
-                                    "instanceIdentifier": "23693cc3-4fa3-30ed-6d5b-a726e64a4902"
-                                },
-                                "destination": {
-                                    "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
-                                    "type": "PROCESSOR",
-                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
-                                    "name": "LogMessage",
-                                    "comments": "",
-                                    "instanceIdentifier": "00fa7a01-92da-34f9-5052-b44dab607a07"
-                                },
-                                "labelIndex": 0,
-                                "zIndex": 0,
-                                "selectedRelationships": [
-                                    "failure"
-                                ],
-                                "backPressureObjectThreshold": 10000,
-                                "backPressureDataSizeThreshold": "1 GB",
-                                "flowFileExpiration": "0 sec",
-                                "prioritizers": [],
-                                "bends": [
-                                    {
-                                        "x": 1594.7529296875,
-                                        "y": 72.0
-                                    }
-                                ],
-                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
-                                "partitioningAttribute": "",
-                                "loadBalanceCompression": "DO_NOT_COMPRESS",
-                                "componentType": "CONNECTION",
-                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
-                            },
-                            {
                                 "identifier": "2a1d6871-26ad-3d06-bf7c-179528ed0505",
-                                "instanceIdentifier": "10121df9-bfd5-3388-7210-daf44a00dac4",
+                                "instanceIdentifier": "9ec333b9-3b4a-33da-f4be-4174969640b3",
                                 "name": "",
                                 "source": {
                                     "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
@@ -2682,7 +2610,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1"
+                                    "instanceIdentifier": "b728b946-4203-3d69-172d-0433d0597122"
                                 },
                                 "destination": {
                                     "id": "5c812da7-66a4-32cc-af69-999068405853",
@@ -2690,7 +2618,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "LogMessage",
                                     "comments": "",
-                                    "instanceIdentifier": "940ec051-e7ed-3582-dbf5-8ba5f9995de3"
+                                    "instanceIdentifier": "f66325af-9aff-396b-25b7-e092c0e6e351"
                                 },
                                 "labelIndex": 0,
                                 "zIndex": 0,
@@ -2714,8 +2642,85 @@
                                 "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
                             },
                             {
+                                "identifier": "241daf40-6e17-311c-88ae-a5d27028d8ca",
+                                "instanceIdentifier": "9635fbcf-58f2-3d62-cd2f-cfcf16dfb7fc",
+                                "name": "",
+                                "source": {
+                                    "id": "111314f3-1df4-3f21-bfc8-59c5a1cab504",
+                                    "type": "PROCESSOR",
+                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
+                                    "name": "PutVastDB",
+                                    "comments": "",
+                                    "instanceIdentifier": "186b3f2a-96d4-37f1-4919-855a6934a3d0"
+                                },
+                                "destination": {
+                                    "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
+                                    "type": "PROCESSOR",
+                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
+                                    "name": "LogMessage",
+                                    "comments": "",
+                                    "instanceIdentifier": "cecbf4fc-c0d7-327a-c157-df0b6b6d8f7c"
+                                },
+                                "labelIndex": 0,
+                                "zIndex": 0,
+                                "selectedRelationships": [
+                                    "failure"
+                                ],
+                                "backPressureObjectThreshold": 10000,
+                                "backPressureDataSizeThreshold": "1 GB",
+                                "flowFileExpiration": "0 sec",
+                                "prioritizers": [],
+                                "bends": [],
+                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                                "partitioningAttribute": "",
+                                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                                "componentType": "CONNECTION",
+                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
+                            },
+                            {
+                                "identifier": "9c8aebe3-b151-3cd7-ab8d-89ef3f6977b2",
+                                "instanceIdentifier": "2ef3237a-af4d-36eb-3cd2-1532ae375fbf",
+                                "name": "",
+                                "source": {
+                                    "id": "4694ed33-f95a-36c3-945a-bc146f74ca91",
+                                    "type": "PROCESSOR",
+                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
+                                    "name": "ExecuteScript - extract key fields",
+                                    "comments": "",
+                                    "instanceIdentifier": "a71ecf5e-95dc-33a9-83d0-92909bb23143"
+                                },
+                                "destination": {
+                                    "id": "b0d43b08-d346-37f7-b8c4-e563cf8a037c",
+                                    "type": "PROCESSOR",
+                                    "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
+                                    "name": "LogMessage",
+                                    "comments": "",
+                                    "instanceIdentifier": "cecbf4fc-c0d7-327a-c157-df0b6b6d8f7c"
+                                },
+                                "labelIndex": 0,
+                                "zIndex": 0,
+                                "selectedRelationships": [
+                                    "failure"
+                                ],
+                                "backPressureObjectThreshold": 10000,
+                                "backPressureDataSizeThreshold": "1 GB",
+                                "flowFileExpiration": "0 sec",
+                                "prioritizers": [],
+                                "bends": [
+                                    {
+                                        "x": 1594.7529296875,
+                                        "y": 72.0
+                                    }
+                                ],
+                                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                                "partitioningAttribute": "",
+                                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                                "componentType": "CONNECTION",
+                                "groupIdentifier": "d195df89-2426-3212-8498-fc0cf8c70940"
+                            },
+                            {
                                 "identifier": "703b181f-f920-3039-84c8-7b848366b709",
-                                "instanceIdentifier": "a98a6e8a-bf86-3950-a125-16a0556b273f",
+                                "instanceIdentifier": "78ea6868-50a3-3514-da9b-ed73e081fb13",
                                 "name": "",
                                 "source": {
                                     "id": "92afc7cb-642f-3f4b-9b3c-6ef49af3a400",
@@ -2723,7 +2728,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ExecuteScript - extract key fields",
                                     "comments": "",
-                                    "instanceIdentifier": "40136675-e210-3a07-5e02-6d8fa6aa71e1"
+                                    "instanceIdentifier": "b728b946-4203-3d69-172d-0433d0597122"
                                 },
                                 "destination": {
                                     "id": "fe269459-3a8f-3a1d-95ba-595878d0ad1e",
@@ -2731,7 +2736,7 @@
                                     "groupId": "d195df89-2426-3212-8498-fc0cf8c70940",
                                     "name": "ConvertRecord",
                                     "comments": "",
-                                    "instanceIdentifier": "8ca9d223-89c3-323f-b2a4-030817f00f42"
+                                    "instanceIdentifier": "fdaed846-0f9b-3462-3cc3-f10efc8c8f1c"
                                 },
                                 "labelIndex": 1,
                                 "zIndex": 0,
@@ -2776,7 +2781,7 @@
                 "controllerServices": [
                     {
                         "identifier": "73ea1aeb-30ab-3580-933d-68093b4dc792",
-                        "instanceIdentifier": "0df87bab-fd00-3ee0-6536-6cc4166ccd58",
+                        "instanceIdentifier": "30d9ecda-a29a-3ff2-3677-b10f29b71567",
                         "name": "JsonTreeReader",
                         "comments": "",
                         "type": "org.apache.nifi.json.JsonTreeReader",
@@ -2934,7 +2939,7 @@
                     },
                     {
                         "identifier": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
-                        "instanceIdentifier": "00b1c716-d97d-371f-aa8e-6a735b67dbeb",
+                        "instanceIdentifier": "cd52d5ec-2d26-3799-7e28-2c6cbbf1cead",
                         "name": "JsonRecordSetWriter",
                         "comments": "",
                         "type": "org.apache.nifi.json.JsonRecordSetWriter",
@@ -3125,7 +3130,7 @@
                 "flowFileConcurrency": "UNBOUNDED",
                 "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
                 "componentType": "PROCESS_GROUP",
-                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
+                "groupIdentifier": "f778b8c2-1cba-3b50-ade8-26c1450d0f4d"
             }
         ],
         "remoteProcessGroups": [],
@@ -3137,8 +3142,201 @@
         "funnels": [],
         "controllerServices": [
             {
+                "identifier": "43fb3340-a307-360c-869b-68ce6ca06b53",
+                "instanceIdentifier": "96af9c5a-c310-3fed-8280-784b3390a476",
+                "name": "VastDB - AWSCredentialsProviderControllerService",
+                "comments": "",
+                "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderControllerService",
+                "bundle": {
+                    "group": "org.apache.nifi",
+                    "artifact": "nifi-aws-nar",
+                    "version": "2.0.0-M4"
+                },
+                "properties": {
+                    "profile-name": null,
+                    "assume-role-proxy-host": null,
+                    "default-credentials": "false",
+                    "Session Time": "3600",
+                    "assume-role-proxy-port": null,
+                    "assume-role-ssl-context-service": null,
+                    "assume-role-sts-signer-override": "Default Signature",
+                    "custom-signer-class-name": null,
+                    "Assume Role ARN": null,
+                    "custom-signer-module-location": null,
+                    "Assume Role Session Name": null,
+                    "assume-role-sts-endpoint": null,
+                    "assume-role-sts-region": "us-west-2",
+                    "Credentials File": null,
+                    "assume-role-external-id": null,
+                    "anonymous-credentials": "false"
+                },
+                "propertyDescriptors": {
+                    "profile-name": {
+                        "name": "profile-name",
+                        "displayName": "Profile Name",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "Access Key": {
+                        "name": "Access Key",
+                        "displayName": "Access Key ID",
+                        "identifiesControllerService": false,
+                        "sensitive": true,
+                        "dynamic": false
+                    },
+                    "assume-role-proxy-host": {
+                        "name": "assume-role-proxy-host",
+                        "displayName": "Assume Role Proxy Host",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "default-credentials": {
+                        "name": "default-credentials",
+                        "displayName": "Use Default Credentials",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "Session Time": {
+                        "name": "Session Time",
+                        "displayName": "Assume Role Session Time",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "assume-role-proxy-port": {
+                        "name": "assume-role-proxy-port",
+                        "displayName": "Assume Role Proxy Port",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "assume-role-ssl-context-service": {
+                        "name": "assume-role-ssl-context-service",
+                        "displayName": "Assume Role SSL Context Service",
+                        "identifiesControllerService": true,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "assume-role-sts-signer-override": {
+                        "name": "assume-role-sts-signer-override",
+                        "displayName": "Assume Role STS Signer Override",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "custom-signer-class-name": {
+                        "name": "custom-signer-class-name",
+                        "displayName": "Custom Signer Class Name",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "Assume Role ARN": {
+                        "name": "Assume Role ARN",
+                        "displayName": "Assume Role ARN",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "custom-signer-module-location": {
+                        "name": "custom-signer-module-location",
+                        "displayName": "Custom Signer Module Location",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false,
+                        "resourceDefinition": {
+                            "cardinality": "MULTIPLE",
+                            "resourceTypes": [
+                                "DIRECTORY",
+                                "FILE"
+                            ]
+                        }
+                    },
+                    "Assume Role Session Name": {
+                        "name": "Assume Role Session Name",
+                        "displayName": "Assume Role Session Name",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "assume-role-sts-endpoint": {
+                        "name": "assume-role-sts-endpoint",
+                        "displayName": "Assume Role STS Endpoint Override",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "assume-role-sts-region": {
+                        "name": "assume-role-sts-region",
+                        "displayName": "Assume Role STS Region",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "Secret Key": {
+                        "name": "Secret Key",
+                        "displayName": "Secret Access Key",
+                        "identifiesControllerService": false,
+                        "sensitive": true,
+                        "dynamic": false
+                    },
+                    "Credentials File": {
+                        "name": "Credentials File",
+                        "displayName": "Credentials File",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false,
+                        "resourceDefinition": {
+                            "cardinality": "SINGLE",
+                            "resourceTypes": [
+                                "FILE"
+                            ]
+                        }
+                    },
+                    "assume-role-external-id": {
+                        "name": "assume-role-external-id",
+                        "displayName": "Assume Role External ID",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    },
+                    "anonymous-credentials": {
+                        "name": "anonymous-credentials",
+                        "displayName": "Use Anonymous Credentials",
+                        "identifiesControllerService": false,
+                        "sensitive": false,
+                        "dynamic": false
+                    }
+                },
+                "controllerServiceApis": [
+                    {
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
+                        "bundle": {
+                            "group": "org.apache.nifi",
+                            "artifact": "nifi-aws-service-api-nar",
+                            "version": "2.0.0-M4"
+                        }
+                    },
+                    {
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
+                        "bundle": {
+                            "group": "org.apache.nifi",
+                            "artifact": "nifi-aws-service-api-nar",
+                            "version": "2.0.0-M4"
+                        }
+                    }
+                ],
+                "scheduledState": "DISABLED",
+                "bulletinLevel": "WARN",
+                "componentType": "CONTROLLER_SERVICE",
+                "groupIdentifier": "f778b8c2-1cba-3b50-ade8-26c1450d0f4d"
+            },
+            {
                 "identifier": "0b191af6-4220-30fa-ab4f-b2b2a0bf84e2",
-                "instanceIdentifier": "16d10342-c944-335b-81f1-8f647705c150",
+                "instanceIdentifier": "d98b05a1-3cf1-39ca-3eab-85c54584aa7c",
                 "name": "Kafka3ConnectionService",
                 "comments": "",
                 "type": "org.apache.nifi.kafka.service.Kafka3ConnectionService",
@@ -3251,204 +3449,11 @@
                 "scheduledState": "DISABLED",
                 "bulletinLevel": "WARN",
                 "componentType": "CONTROLLER_SERVICE",
-                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
-            },
-            {
-                "identifier": "43fb3340-a307-360c-869b-68ce6ca06b53",
-                "instanceIdentifier": "29e49ede-753a-3ec4-cf2d-170080228379",
-                "name": "VastDB - AWSCredentialsProviderControllerService",
-                "comments": "",
-                "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderControllerService",
-                "bundle": {
-                    "group": "org.apache.nifi",
-                    "artifact": "nifi-aws-nar",
-                    "version": "2.0.0-M4"
-                },
-                "properties": {
-                    "profile-name": null,
-                    "assume-role-proxy-host": null,
-                    "default-credentials": "false",
-                    "Session Time": "3600",
-                    "assume-role-proxy-port": null,
-                    "assume-role-ssl-context-service": null,
-                    "assume-role-sts-signer-override": "Default Signature",
-                    "custom-signer-class-name": null,
-                    "Assume Role ARN": null,
-                    "custom-signer-module-location": null,
-                    "Assume Role Session Name": null,
-                    "assume-role-sts-endpoint": null,
-                    "assume-role-sts-region": "us-west-2",
-                    "Credentials File": null,
-                    "assume-role-external-id": null,
-                    "anonymous-credentials": "false"
-                },
-                "propertyDescriptors": {
-                    "profile-name": {
-                        "name": "profile-name",
-                        "displayName": "Profile Name",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "Access Key": {
-                        "name": "Access Key",
-                        "displayName": "Access Key ID",
-                        "identifiesControllerService": false,
-                        "sensitive": true,
-                        "dynamic": false
-                    },
-                    "assume-role-proxy-host": {
-                        "name": "assume-role-proxy-host",
-                        "displayName": "Assume Role Proxy Host",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "default-credentials": {
-                        "name": "default-credentials",
-                        "displayName": "Use Default Credentials",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "Session Time": {
-                        "name": "Session Time",
-                        "displayName": "Assume Role Session Time",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "assume-role-proxy-port": {
-                        "name": "assume-role-proxy-port",
-                        "displayName": "Assume Role Proxy Port",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "assume-role-ssl-context-service": {
-                        "name": "assume-role-ssl-context-service",
-                        "displayName": "Assume Role SSL Context Service",
-                        "identifiesControllerService": true,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "assume-role-sts-signer-override": {
-                        "name": "assume-role-sts-signer-override",
-                        "displayName": "Assume Role STS Signer Override",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "custom-signer-class-name": {
-                        "name": "custom-signer-class-name",
-                        "displayName": "Custom Signer Class Name",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "Assume Role ARN": {
-                        "name": "Assume Role ARN",
-                        "displayName": "Assume Role ARN",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "custom-signer-module-location": {
-                        "name": "custom-signer-module-location",
-                        "displayName": "Custom Signer Module Location",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false,
-                        "resourceDefinition": {
-                            "cardinality": "MULTIPLE",
-                            "resourceTypes": [
-                                "FILE",
-                                "DIRECTORY"
-                            ]
-                        }
-                    },
-                    "Assume Role Session Name": {
-                        "name": "Assume Role Session Name",
-                        "displayName": "Assume Role Session Name",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "assume-role-sts-endpoint": {
-                        "name": "assume-role-sts-endpoint",
-                        "displayName": "Assume Role STS Endpoint Override",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "assume-role-sts-region": {
-                        "name": "assume-role-sts-region",
-                        "displayName": "Assume Role STS Region",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "Secret Key": {
-                        "name": "Secret Key",
-                        "displayName": "Secret Access Key",
-                        "identifiesControllerService": false,
-                        "sensitive": true,
-                        "dynamic": false
-                    },
-                    "Credentials File": {
-                        "name": "Credentials File",
-                        "displayName": "Credentials File",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false,
-                        "resourceDefinition": {
-                            "cardinality": "SINGLE",
-                            "resourceTypes": [
-                                "FILE"
-                            ]
-                        }
-                    },
-                    "assume-role-external-id": {
-                        "name": "assume-role-external-id",
-                        "displayName": "Assume Role External ID",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    },
-                    "anonymous-credentials": {
-                        "name": "anonymous-credentials",
-                        "displayName": "Use Anonymous Credentials",
-                        "identifiesControllerService": false,
-                        "sensitive": false,
-                        "dynamic": false
-                    }
-                },
-                "controllerServiceApis": [
-                    {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
-                        "bundle": {
-                            "group": "org.apache.nifi",
-                            "artifact": "nifi-aws-service-api-nar",
-                            "version": "2.0.0-M4"
-                        }
-                    },
-                    {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
-                        "bundle": {
-                            "group": "org.apache.nifi",
-                            "artifact": "nifi-aws-service-api-nar",
-                            "version": "2.0.0-M4"
-                        }
-                    }
-                ],
-                "scheduledState": "DISABLED",
-                "bulletinLevel": "WARN",
-                "componentType": "CONTROLLER_SERVICE",
-                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
+                "groupIdentifier": "f778b8c2-1cba-3b50-ade8-26c1450d0f4d"
             },
             {
                 "identifier": "f4d5318a-367a-32d1-b434-62928d73ea58",
-                "instanceIdentifier": "3d167a06-7505-31d6-65c4-959bc9e70746",
+                "instanceIdentifier": "8d809eb8-344e-325e-5680-9c1ee35a31bb",
                 "name": "S3A - AWSCredentialsProviderControllerService",
                 "comments": "",
                 "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderControllerService",
@@ -3555,8 +3560,8 @@
                         "resourceDefinition": {
                             "cardinality": "MULTIPLE",
                             "resourceTypes": [
-                                "FILE",
-                                "DIRECTORY"
+                                "DIRECTORY",
+                                "FILE"
                             ]
                         }
                     },
@@ -3618,7 +3623,7 @@
                 },
                 "controllerServiceApis": [
                     {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
                         "bundle": {
                             "group": "org.apache.nifi",
                             "artifact": "nifi-aws-service-api-nar",
@@ -3626,7 +3631,7 @@
                         }
                     },
                     {
-                        "type": "org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderService",
+                        "type": "org.apache.nifi.processors.aws.credentials.provider.AwsCredentialsProviderService",
                         "bundle": {
                             "group": "org.apache.nifi",
                             "artifact": "nifi-aws-service-api-nar",
@@ -3637,7 +3642,7 @@
                 "scheduledState": "DISABLED",
                 "bulletinLevel": "WARN",
                 "componentType": "CONTROLLER_SERVICE",
-                "groupIdentifier": "dc67245d-d7c1-3690-8370-2591b72ea3b2"
+                "groupIdentifier": "f778b8c2-1cba-3b50-ade8-26c1450d0f4d"
             }
         ],
         "defaultFlowFileExpiration": "0 sec",
