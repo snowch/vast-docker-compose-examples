@@ -45,6 +45,7 @@ docker run --rm \
   -e S3A_ENDPOINT=$S3A_ENDPOINT \
   -e S3A_ACCESS_KEY=$S3A_ACCESS_KEY \
   -e S3A_SECRET_KEY=$S3A_SECRET_KEY \
+  -e S3A_BUCKET=$S3A_BUCKET \
   -v $(pwd)/assets:/app \
   $IMAGE_NAME /bin/bash -c "
     set -eua

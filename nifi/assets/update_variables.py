@@ -489,6 +489,7 @@ def main():
     S3A_ENDPOINT = os.getenv("S3A_ENDPOINT")
     S3A_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
     S3A_SECRET_KEY = os.getenv("S3A_SECRET_KEY")
+    S3A_BUCKET = os.getenv("S3A_BUCKET")
 
     nifi_host = f'https://{DOCKER_HOST_OR_IP}:18443/nifi-api'
     username = 'admin'
@@ -600,7 +601,8 @@ def main():
 
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
-                    'Endpoint Override URL': f'{S3A_ENDPOINT}'
+                    'Endpoint Override URL': f'{S3A_ENDPOINT}',
+                    'Bucket': f'{S3A_BUCKET}'
                 }
             )
     processor = get_processor(api_client, 'ListS3')
