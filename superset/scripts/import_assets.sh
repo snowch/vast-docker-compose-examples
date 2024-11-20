@@ -5,15 +5,17 @@ set -e
 
 # Change to the script's directory
 script_dir="$(cd "$(dirname "$0")" && pwd)"
+parent_dir="$(dirname "$script_dir")"
+
 cd $script_dir
 
 source ../../.env-local
 
-# Define container name (optional)
+# Define container name 
 CONTAINER_NAME="hairyhenderson/gomplate:latest"
 
-# Set working directory on host (optional)
-HOST_WORKDIR=${current_dir}/../
+# Set working directory on host
+HOST_WORKDIR=${parent_dir}
 
 # Define input and output directories
 INPUT_DIR="${HOST_WORKDIR}/templates"
@@ -62,6 +64,12 @@ cd $script_dir
 IMAGE_NAME="python:3.10-slim"  # Replace with your Python image name
 CONTAINER_NAME="import_superset_assets"
 
+# Check if the --overwrite option is provided
+OVERWRITE_FLAG=""
+if [[ "$1" == "--overwrite" ]]; then
+  OVERWRITE_FLAG="--overwrite"
+fi
+
 # Create a Docker container with the necessary setup to run the Python script
 docker run --rm \
   --name $CONTAINER_NAME \
@@ -74,6 +82,6 @@ docker run --rm \
     pip install --no-cache-dir --no-warn-script-location --disable-pip-version-check --quiet superset-api-client && \
 
     # Run the Python script to import the assets
-    python /scripts/import_assets.py
+    python /scripts/import_assets.py $OVERWRITE_FLAG
   "
 
