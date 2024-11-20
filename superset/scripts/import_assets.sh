@@ -4,15 +4,16 @@
 set -e
 
 # Change to the script's directory
-cd "$(dirname "$0")"
+script_dir="$(cd "$(dirname "$0")" && pwd)"
+cd $script_dir
 
-source ../.env-local
+source ../../.env-local
 
 # Define container name (optional)
 CONTAINER_NAME="hairyhenderson/gomplate:latest"
 
 # Set working directory on host (optional)
-HOST_WORKDIR=${PWD}
+HOST_WORKDIR=${current_dir}/../
 
 # Define input and output directories
 INPUT_DIR="${HOST_WORKDIR}/templates"
@@ -45,14 +46,34 @@ docker run --rm \
   --input-dir /workspace/input \
   --output-dir /workspace/output
 
-cd generated
 
+cd $script_dir/../generated
 # Loop through each directory in the current directory
 for dir in *; do
     if [[ -d "$dir" ]]; then
-        # Create a zip file with the same name as the directory
-        zip -r "${dir}.zip" "$dir"
+        # Create a zip file with the same name as the directory using Docker
+        docker run --rm \
+          -v "$(pwd):/data" debian:stable-slim \
+          sh -c "apt-get update && apt-get install -y zip && cd /data && zip -r \"${dir}.zip\" \"${dir}\""
     fi
 done
+cd $script_dir
 
+IMAGE_NAME="python:3.10-slim"  # Replace with your Python image name
+CONTAINER_NAME="import_superset_assets"
+
+# Create a Docker container with the necessary setup to run the Python script
+docker run --rm \
+  --name $CONTAINER_NAME \
+  --network host \
+  -e DOCKER_HOST_OR_IP=$DOCKER_HOST_OR_IP \
+  -v $script_dir/../scripts/:/scripts \
+  -v $script_dir/../generated/:/generated \
+  $IMAGE_NAME /bin/bash -c "
+    # Install necessary dependencies
+    pip install --no-cache-dir --no-warn-script-location --disable-pip-version-check --quiet superset-api-client && \
+
+    # Run the Python script to import the assets
+    python /scripts/import_assets.py
+  "
 

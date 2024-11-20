@@ -9,4 +9,4 @@ cd "$(dirname "$0")"
 source ../.env-local
 
 ./setup_db_connections.sh
-# ./import_assets.sh
+./scripts/import_assets.sh
