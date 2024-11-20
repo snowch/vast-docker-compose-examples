@@ -103,7 +103,13 @@ RUN mamba install --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-RUN pip3 install s3cmd==2.4.0
+RUN pip3 install \
+    s3cmd==2.4.0 \
+    findspark \
+    boto3 \
+    jupysql \
+    trino \
+    sqlalchemy-trino
 
 # Copy configuration files for Spark
 COPY spark-defaults.conf /usr/local/spark/conf/
