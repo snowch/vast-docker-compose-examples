@@ -19,7 +19,6 @@ In this section we start producing tweets that are sent to Kafka.
 
 Open the NiFi url (see [endpoints](#endpoints), above).
 
-- Right Click on the Canvas background and click **Enable All Controller Services**
 - Double Click on **Demo_Flow** to open it
 - Double Click on **Streaming** to open it
 - Double Click on **Publish to Kafka** to open it

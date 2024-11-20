@@ -20,7 +20,6 @@ Make a note of your project endpoints.
 In this section we start the bulk loader Nifi processors
 
 - Open the NiFi url (see [endpoints](#endpoints), above).
-- Right Click on the Canvas background and click **Enable All Controller Services**
 - Double Click on **Demo_Flow** to open it
 - Double Click on **Bulk Import** to open it
 - Double Click on **ListS3** to open it
