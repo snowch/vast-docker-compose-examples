@@ -41,5 +41,5 @@ echo "If this is the first time running compose up,"
 echo "please run the following post-install scripts:"
 echo
 echo "  ./trino/setup_iceberg.sh"
-echo "  ./superset/setup_db_connections.sh"
+echo "  ./superset/postinstall.sh"
 echo "  ./nifi/postinstall.sh"
