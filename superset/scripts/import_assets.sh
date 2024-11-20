@@ -21,7 +21,19 @@ HOST_WORKDIR=${parent_dir}
 INPUT_DIR="${HOST_WORKDIR}/templates"
 OUTPUT_DIR="${HOST_WORKDIR}/generated"
 
-# Run the container
+# Run the container to clean up previous assets and then generate new assets
+docker run --rm \
+  -v "${OUTPUT_DIR}:/workspace/output" \
+  --name superset_generated_cleanup \
+  python:3.10-slim \
+  sh -c "
+    rm -rf /workspace/output/dashboard_export_tweets/ && \
+    rm -rf /workspace/output/dashboard_export_tweets.zip && \
+    rm -rf /workspace/output/dataset_export_tweets/ && \
+    rm -rf /workspace/output/dataset_export_tweets.zip
+  "
+
+# Run gomplate container for asset generation
 docker run --rm \
   -v "${INPUT_DIR}:/workspace/input" \
   -v "${OUTPUT_DIR}:/workspace/output" \
@@ -48,8 +60,8 @@ docker run --rm \
   --input-dir /workspace/input \
   --output-dir /workspace/output
 
-
 cd $script_dir/../generated
+
 # Loop through each directory in the current directory
 for dir in *; do
     if [[ -d "$dir" ]]; then
@@ -84,4 +96,3 @@ docker run --rm \
     # Run the Python script to import the assets
     python /scripts/import_assets.py $OVERWRITE_FLAG
   "
-

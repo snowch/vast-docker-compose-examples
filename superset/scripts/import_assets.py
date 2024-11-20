@@ -40,12 +40,12 @@ with open(file_path, "rb") as file:
     }
     url=f"http://{DOCKER_HOST_OR_IP}:8088/api/v1/dataset/import/"
 
-    print(client.session.headers)
+    # print(client.session.headers)
     response = client.session.post(url, data=data, files=files)
 
 # Print the response
 if response.status_code == 200:
-    print("Upload successful:", response.json())
+    print("Upload successful:", response.text)
 else:
     print(f"Error {response.status_code}: {response.text}")
 
@@ -57,11 +57,11 @@ with open(file_path, "rb") as file:
     }
     url=f"http://{DOCKER_HOST_OR_IP}:8088/api/v1/dashboard/import/"
 
-    print(client.session.headers)
+    # print(client.session.headers)
     response = client.session.post(url, data=data, files=files)
 
 # Print the response
 if response.status_code == 200:
-    print("Upload successful:", response.json())
+    print("Upload successful:", response.text)
 else:
     print(f"Error {response.status_code}: {response.text}")
