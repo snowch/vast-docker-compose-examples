@@ -1,0 +1,22 @@
+slice_name: tweets
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 13__table
+  viz_type: big_number_total
+  metric: count
+  adhoc_filters: []
+  header_font_size: 0.4
+  subheader_font_size: 0.15
+  y_axis_format: SMART_NUMBER
+  time_format: smart_date
+  extra_form_data: {}
+  dashboards: []
+  annotation_layers: []
+query_context: null
+cache_timeout: null
+uuid: b9e30f2e-bc54-492f-887e-fae47e966ee1
+version: 1.0.0
+dataset_uuid: 7e16a73a-83d8-459b-b40d-00d1bef3d345

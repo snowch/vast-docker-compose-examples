@@ -1,0 +1,32 @@
+slice_name: Last messages
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 13__table
+  viz_type: table
+  query_mode: raw
+  groupby: []
+  time_grain_sqla: P1D
+  temporal_columns_lookup: {}
+  all_columns:
+  - text
+  percent_metrics: []
+  adhoc_filters: []
+  order_by_cols:
+  - '["created_at", false]'
+  row_limit: 10
+  server_page_length: 10
+  order_desc: true
+  table_timestamp_format: smart_date
+  show_cell_bars: true
+  color_pn: true
+  extra_form_data: {}
+  dashboards: []
+  annotation_layers: []
+query_context: null
+cache_timeout: null
+uuid: c004eed8-6549-457e-b5b0-0b7677fc2f03
+version: 1.0.0
+dataset_uuid: 7e16a73a-83d8-459b-b40d-00d1bef3d345
