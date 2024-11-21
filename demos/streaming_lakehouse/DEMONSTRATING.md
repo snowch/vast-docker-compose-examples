@@ -59,6 +59,8 @@ Open the NiFi url (see [endpoints](#endpoints), above).
 
 In  this section, we query the tweets in real-time using Apache Superset.
 
+### SQL Lab
+
 Open the Superset url (see [endpoints](#endpoints), above).
 
 - In the Superset toolbar, click on **SQL** >> **SQL Lab**
@@ -77,6 +79,18 @@ FROM "csnowdb|social_media".tweets
 ORDER BY created_at DESC
 LIMIT 5
 ```
+### Dashboard
+
+Open the Superset url (see [endpoints](#endpoints), above).
+
+- In the Superset toolbar, click on **Dashboards**
+- Locate and open the **Quick VAST Dashboard**
+- Click the button with the 3 dots on the top right
+- Click **Set auto-refresh interval**
+- Set to 10 secs
+
+You should see the tweet count and latest tweets change every 10 seconds.
+
 ## Copy tweets to Iceberg
 
 In this section, we perform a federated query to populate Iceberg on Vast S3 with data from Vast DB.
