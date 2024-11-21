@@ -16,6 +16,15 @@ Finally, a Spark Kafka notebook demonstrates how spark can be used to write to K
 
 ![Streaming Flow](./assets/StreamingFlow.png)
 
+## Support
+
+- Vast Data provides support for Vast Datastore (S3), Vast Database, Vast DataEngine (Spark)
+- Support for the other components can be obtained from Vast Data partner, [Stackable](https://stackable.tech/en/):
+  - Kafka
+  - NiFi
+  - Superset
+  - Trino
+
 ## Prerequisites
 
 - Docker Compose
