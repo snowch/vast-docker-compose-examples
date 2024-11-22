@@ -58,7 +58,7 @@ iceberg_data = {
 hive_data = {
     **base_data,
     "database_name": "Trino Vast Hive",
-    "sqlalchemy_uri": f"trino://admin@{DOCKER_HOST_OR_IP}:8443/iceberg?verify=false"
+    "sqlalchemy_uri": f"trino://admin@{DOCKER_HOST_OR_IP}:8443/hive?verify=false"
 }
 
 def delete_database_if_exists(database_name, force_delete):

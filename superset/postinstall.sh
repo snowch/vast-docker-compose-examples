@@ -8,5 +8,5 @@ cd "$(dirname "$0")"
 
 source ../.env-local
 
-./setup_db_connections.sh
-./scripts/import_assets.sh
+./setup_db_connections.sh "$@"
+./scripts/import_assets.sh "$@"
