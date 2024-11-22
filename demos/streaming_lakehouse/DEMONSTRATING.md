@@ -108,8 +108,11 @@ In this section, we perform a federated query to populate Iceberg on Vast S3 wit
 - Ignore the Superset error, this is a Superset [bug](https://github.com/apache/superset/issues/25307)
 
 ```sql
-SELECT *
-FROM iceberg.social_media.twitter_data
+SELECT
+  *
+FROM
+  -- ** ENSURE THIS MATCHES YOUR ENVIRONMENT **
+  iceberg.social_media.twitter_data
 LIMIT 100
 ```
 This should return no records.
@@ -124,7 +127,9 @@ INSERT INTO iceberg.social_media.twitter_data
     id,
     id_str,
     text
-  FROM vast."csnowdb|social_media".tweets
+  FROM
+    -- ** ENSURE THIS MATCHES YOUR ENVIRONMENT **
+    vast."csnowdb|social_media".tweets
   LIMIT 100
 )
 ```
