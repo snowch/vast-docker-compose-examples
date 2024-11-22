@@ -1,8 +1,13 @@
 # Audit Log Notes (WIP)
 
-- see policy, e.g. [docs URL TBC](https://support.vastdata.com/s/topic/0TOV40000000dhJOAQ/protocol-auditing-v46)
+- ensure your username is set in **VMS -> Settings -> Auditing -> Read-access Users**
 - Use superset:
   - vast-audit-log-bucket|vast_audit_log_schema
-  - change parameters
+
+```sql
+SELECT *
+FROM "vast-audit-log-bucket|vast_audit_log_schema".vast_audit_log_table
+LIMIT 100
+```
 
 
