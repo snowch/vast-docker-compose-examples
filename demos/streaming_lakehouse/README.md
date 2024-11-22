@@ -3,7 +3,8 @@
 The primary purpose of this example is to demonstrate how streaming data into the Vast Database using NiFi.  This is highlighted in the streaming flow, below.  
 
 > [!TIP]
-> See this [blog](https://www.vastdata.com/blog/the-data-lake-dilemma) for more information on issues with streaming into data lakehouse technologies like Iceberg, Delta and Hudi.
+> - See this [blog](https://www.vastdata.com/blog/the-data-lake-dilemma) for more information on issues with streaming into data lakehouse technologies like Iceberg, Delta and Hudi.
+> - See the [iceberg docs](https://iceberg.apache.org/docs/latest/spark-structured-streaming/#maintenance-for-streaming-tables) for the concerns with streaming data into Iceberg.
 
 ## Streaming Flow
 
@@ -14,6 +15,15 @@ A separate NiFi flow consumes from the Kafka topic and saves the tweets to the V
 Finally, a Spark Kafka notebook demonstrates how spark can be used to write to Kafka.
 
 ![Streaming Flow](./assets/StreamingFlow.png)
+
+## Support
+
+- Vast Data provides support for Vast Datastore (S3), Vast Database, Vast DataEngine (Spark)
+- Support for the other components can be obtained from Vast Data partner, [Stackable](https://stackable.tech/en/):
+  - Kafka
+  - NiFi
+  - Superset
+  - Trino
 
 ## Prerequisites
 

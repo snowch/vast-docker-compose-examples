@@ -75,7 +75,10 @@ SELECT
   format_datetime(from_unixtime(CAST(created_at / 1000 AS bigint)), 'yyyy/MM/dd HH:mm:ss') AS formatted_time,
   id,
   text
-FROM "csnowdb|social_media".tweets
+FROM
+  -- ** ENSURE THIS MATCHES YOUR ENVIRONMENT **
+  "csnowdb|social_media".tweets
+
 ORDER BY created_at DESC
 LIMIT 5
 ```
