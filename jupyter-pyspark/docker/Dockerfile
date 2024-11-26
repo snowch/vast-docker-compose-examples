@@ -93,6 +93,10 @@ RUN chmod +x /usr/local/bin/s3cmd_configure.sh
 
 USER ${NB_UID}
 
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+    . "$HOME/.cargo/env" && \
+    cargo install datafusion-cli
+
 # Install pyarrow and pandas
 RUN mamba install --yes \
     'grpcio-status' \
@@ -116,7 +120,7 @@ COPY spark-defaults.conf /usr/local/spark/conf/
 COPY spark-env.sh /usr/local/spark/conf/
 COPY log4j2.properties /usr/local/spark/conf/
 
-USER ${NB_UID}
+# USER ${NB_UID}
 
 # Set the startup command to run the mount script and then start Jupyter
 CMD ["/bin/bash", "-c", "/usr/local/bin/mount_s3.sh && start-notebook.sh"]
