@@ -1,0 +1,9 @@
+schema: vast-audit-log-bucket|vast_audit_log_schema
+label: Audit Log Query
+description: ''
+sql: "-- \n-- Ensure you have access to the audit log.  Add your username to: \n--\
+  \ VMS -> Settings -> Auditing -> Read-access Users \n-- \nSELECT *\nFROM \"vast-audit-log-bucket|vast_audit_log_schema\"\
+  .vast_audit_log_table\nLIMIT 100"
+uuid: 40df37e4-2d0f-428a-a6e1-5802211d9dd4
+version: 1.0.0
+database_uuid: b6ace9f1-f612-4c4f-bce9-5a1ec05ec969

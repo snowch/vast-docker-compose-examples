@@ -1,0 +1,10 @@
+schema: vast-big-catalog-bucket|vast_big_catalog_schema
+label: Catalog Query
+description: ''
+sql: "--\n-- Ensure you have enabled access to the catalog using these instructions:\
+  \ \n-- https://support.vastdata.com/s/article/Client-Access-to-the-VAST-Catalog-873214\
+  \ \n-- \nSELECT *\nFROM \"vast-big-catalog-bucket|vast_big_catalog_schema\".vast_big_catalog_table\n\
+  LIMIT 100"
+uuid: 992a9cbd-ac93-4360-93de-0ec6294bd866
+version: 1.0.0
+database_uuid: b6ace9f1-f612-4c4f-bce9-5a1ec05ec969
