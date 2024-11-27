@@ -1,5 +1,5 @@
 schema: {{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}
-label: Latest 5 Tweets
+label: Latest 5 Tweets in VastDB
 description: ''
 sql: "SELECT\n  format_datetime(from_unixtime(CAST(created_at / 1000 AS bigint)),\
   \ 'yyyy/MM/dd HH:mm:ss') AS formatted_time,\n  id,\n  text\nFROM\n
