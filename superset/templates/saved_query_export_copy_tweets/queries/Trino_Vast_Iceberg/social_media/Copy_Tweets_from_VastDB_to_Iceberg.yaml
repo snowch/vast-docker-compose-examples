@@ -1,0 +1,8 @@
+schema: social_media
+label: Copy Tweets from VastDB to Iceberg
+description: ''
+sql: "INSERT INTO iceberg.social_media.twitter_data\n(\n  SELECT\n    created_at as\
+  \ VARCHAR,\n    id,\n    id_str,\n    text\n  FROM\n    vast.\"{{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}\".{{ env.Getenv "VASTDB_TWITTER_INGEST_TABLE" | required "Missing VASTDB_TWITTER_INGEST_TABLE environment variable!" }}\n  LIMIT 100\n)"
+uuid: 32846d91-8bf1-4296-b243-f12d65ca8d18
+version: 1.0.0
+database_uuid: e16e97f0-ef5d-4a4a-be98-b5593927d29f
