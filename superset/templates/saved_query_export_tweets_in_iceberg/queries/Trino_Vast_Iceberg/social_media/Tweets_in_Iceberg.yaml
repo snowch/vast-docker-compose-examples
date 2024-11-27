@@ -1,0 +1,7 @@
+schema: social_media
+label: Tweets in Iceberg
+description: ''
+sql: "SELECT\n  *\nFROM\n  iceberg.social_media.twitter_data\nLIMIT 100\n"
+uuid: 32846d91-8bf1-4296-b243-f12d65ca8d18
+version: 1.0.0
+database_uuid: e16e97f0-ef5d-4a4a-be98-b5593927d29f
