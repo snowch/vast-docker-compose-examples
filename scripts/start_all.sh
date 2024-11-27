@@ -21,7 +21,7 @@ for dir in $(ls -d */ | grep -v "^demos/" | grep -v "^scripts/"); do
   if [[ "$dir" == "jupyter-pyspark/" ]]; then
     # Build the docker image (without cache) before starting services
     echo "Building docker image for $dir..."
-    $DOCKER_COMPOSE_CMD build --no-cache
+    $DOCKER_COMPOSE_CMD build
   fi
 
   if ! $DOCKER_COMPOSE_CMD up -d; then

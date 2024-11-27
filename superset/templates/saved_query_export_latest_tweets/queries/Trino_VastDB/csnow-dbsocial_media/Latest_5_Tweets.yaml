@@ -1,0 +1,10 @@
+schema: {{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}
+label: Latest 5 Tweets
+description: ''
+sql: "SELECT\n  format_datetime(from_unixtime(CAST(created_at / 1000 AS bigint)),\
+  \ 'yyyy/MM/dd HH:mm:ss') AS formatted_time,\n  id,\n  text\nFROM\n
+    vast.\"{{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}\".{{ env.Getenv "VASTDB_TWITTER_INGEST_TABLE" | required "Missing VASTDB_TWITTER_INGEST_TABLE environment variable!" }}\n\n\
+  ORDER BY created_at DESC\nLIMIT 5"
+uuid: f54eb69a-cd01-4dd7-878a-b69269dd2313
+version: 1.0.0
+database_uuid: b6ace9f1-f612-4c4f-bce9-5a1ec05ec969
