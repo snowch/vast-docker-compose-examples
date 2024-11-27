@@ -86,20 +86,10 @@ In this section, we perform a federated query to populate Iceberg on Vast S3 wit
 > [!NOTE]
 > We limit records to around 100 so we don't overwhelm the (small) infrastructure used for the demo services.
 
-- On left side of page, set the following options:
-  - **Database**: Trino Vast Iceberg
-  - **Schema**: social_media
-  - **Table**: twitter_data
-- Ignore the Superset error, this is a Superset [bug](https://github.com/apache/superset/issues/25307)
+- In the Superset toolbar, click on **SQL** >> **SQL Lab** >> **Saved Queries**
+- Click the pencil icon to edit **Tweets in Iceberg**
+- Click the run icon to run the query.
 
-```sql
-SELECT
-  *
-FROM
-  -- ** ENSURE THIS MATCHES YOUR ENVIRONMENT **
-  iceberg.social_media.twitter_data
-LIMIT 100
-```
 This should return no records.
 
 Now run a federated query joining Iceberg and Vast DB:
