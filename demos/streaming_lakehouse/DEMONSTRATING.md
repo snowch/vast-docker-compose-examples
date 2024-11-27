@@ -94,22 +94,11 @@ This should return no records.
 
 Now run a federated query joining Iceberg and Vast DB:
 
-```sql
-INSERT INTO iceberg.social_media.twitter_data
-(
-  SELECT
-    created_at as VARCHAR,
-    id,
-    id_str,
-    text
-  FROM
-    -- ** ENSURE THIS MATCHES YOUR ENVIRONMENT **
-    vast."csnowdb|social_media".tweets
-  LIMIT 100
-)
-```
+- In the Superset toolbar, click on **SQL** >> **SQL Lab** >> **Saved Queries**
+- Click the pencil icon to edit **Copy Tweets from VastDB to Iceberg**
+- Click the run icon to run the query.
 
-Finally, rerun `SELECT * ...` to verify records have been written to iceberg.
+Finally, rerun the **Tweets in Iceberg** to verify records have been written to iceberg.
 
 ## Querying with Spark
 
