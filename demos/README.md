@@ -7,4 +7,4 @@ This section contains sub-folders each containing a separate demo:
 - S3 Bucket Notifications (coming soon)
 - [Catalog](./catalog) (work in progress)
 - [Audit Log](./audit) (work in progress)
-- Vast DB vs S3 performance (coming soon)
+- [Vast DB vs Parquet performance](./vastdb_vs_parquet) (work in progress)
