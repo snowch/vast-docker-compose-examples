@@ -1,3 +1,3 @@
 # VastDB vs Parquet performance
 
-Follow the steps pt1 to pt6 [here](https://github.com/snowch/vast-docker-compose-examples/tree/main/jupyter-pyspark/examples/taxi_data)
+Follow the steps described [here](https://github.com/snowch/vast-docker-compose-examples/blob/main/jupyter-pyspark/examples/taxi_data/yellow_tax_data_pt0_introduction.ipynb)
