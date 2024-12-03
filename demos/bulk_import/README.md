@@ -21,7 +21,7 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 
 ## Setup Instructions
 
-See [here](./SETUP_INSTRUCTIONS.md).
+See [here](../SETUP_INSTRUCTIONS.md).
 
 ## Demonstration Instructions
 
