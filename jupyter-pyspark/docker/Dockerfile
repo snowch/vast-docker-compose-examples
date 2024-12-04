@@ -109,6 +109,7 @@ RUN mamba install --yes \
 
 RUN pip3 install \
     s3cmd==2.4.0 \
+    urllib3 \
     findspark \
     boto3 \
     jupysql \
