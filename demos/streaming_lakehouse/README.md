@@ -27,17 +27,17 @@ Finally, a Spark Kafka notebook demonstrates how spark can be used to write to K
 
 ## Prerequisites
 
-- Docker Compose
 - Host with:
   - approx. 24GB Memory
   - approx. 8 Cores
   - approx. 300GB Storage free
+  - Docker Compose (installed from [here](https://docs.docker.com/engine/install/))
 - Vast S3 Bucket
 - Vast Database
   
 ## Setup Instructions
 
-See [here](./SETUP_INSTRUCTIONS.md).
+See [here](../SETUP_INSTRUCTIONS.md).
 
 ## Demonstrating this workflow
 

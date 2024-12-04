@@ -12,16 +12,17 @@ You can find out more bulk importing with NiFi [here](https://vast-data.github.i
 
 ## Prerequisites
 
-- Docker Compose
 - Host with:
   - approx. 24GB Memory
   - approx. 8 cores
+  - approx. 300GB free storage
+  - Docker Compose (installed from [here](https://docs.docker.com/engine/install/))
 - Vast S3 Bucket
 - Vast Database
 
 ## Setup Instructions
 
-See [here](./SETUP_INSTRUCTIONS.md).
+See [here](../SETUP_INSTRUCTIONS.md).
 
 ## Demonstration Instructions
 
