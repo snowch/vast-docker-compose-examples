@@ -16,5 +16,7 @@
 ## Discussion points
 
 - run `./scripts/endpoints_all.sh` and open the Superset URL
+- navigate to the dashboard **Netflow Data**
+- set dashboard auto refresh to 10 seconds (click **&#x22EF;** next to **EDIT DASHBOARD** top right)
 
 More content coming soon...
