@@ -1,13 +1,13 @@
 # Demonstrating
 
-## Steps
+## Run Data Generator
 
-- From your CLI:
-  - run `./scripts/endpoints_all.sh` and open the Superset URL
-  - cd `./netflow-datagen/`
+- From your CLI, cd `./netflow-datagen/`
     - run `pip install vastdb`
     - run `./start.sh`
 
 ## Discussion points
 
-Coming soon
+- run `./scripts/endpoints_all.sh` and open the Superset URL
+
+More content coming soon...
