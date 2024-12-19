@@ -31,5 +31,5 @@ See [here](../SETUP_INSTRUCTIONS.md).
 
 ## Demonstrating this workflow
 
-See [here](../DEMO.md)
+See [here](./DEMO.md)
 
