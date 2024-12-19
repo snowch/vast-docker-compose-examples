@@ -6,15 +6,6 @@ The primary purpose of this example is to demonstrate ...
 
 This example uses a Python script to generate random netflow data in realtime.
 
-## Support
-
-- Vast Data provides support for Vast Datastore (S3), Vast Database, Vast DataEngine (Spark)
-- Support for the other components can be obtained from Vast Data partner, [Stackable](https://stackable.tech/en/):
-  - Kafka
-  - NiFi
-  - Superset
-  - Trino
-
 ## Prerequisites
 
 - Host with:
