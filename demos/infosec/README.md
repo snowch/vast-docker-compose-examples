@@ -4,7 +4,7 @@ The primary purpose of this example is to demonstrate ...
 
 ## Streaming Flow
 
-This example uses a NiFi flow generate random netflow data in realtime.
+This example uses a Python script to generate random netflow data in realtime.
 
 ## Support
 
