@@ -2,6 +2,13 @@
 
 ## Run Data Generator
 
+- Ensure your `./.env-local` file contains settings for:
+  - VASTDB_ENDPOINT
+  - VASTDB_ACCESS_KEY
+  - VASTDB_SECRET_KEY
+  - VASTDB_NETFLOW_BUCKET
+  - VASTDB_NETFLOW_SCHEMA
+  - VASTDB_NETFLOW_TABLE
 - From your CLI, cd `./netflow-datagen/`
     - run `pip install vastdb`
     - run `./start.sh`
