@@ -1,6 +1,6 @@
 # Demonstrating
 
-## Run Data Generator
+## Run data generator
 
 - Ensure your `./.env-local` file contains settings for:
   - VASTDB_ENDPOINT
