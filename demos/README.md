@@ -7,4 +7,5 @@ This section contains sub-folders each containing a separate demo:
 - [Catalog](./catalog)
 - [Audit Log](./audit)
 - [Vast DB vs Parquet performance](./vastdb_vs_parquet)
+- [Infosec](./infosec)
 - S3 Bucket Notifications (coming soon)
