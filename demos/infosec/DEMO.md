@@ -21,4 +21,12 @@ Follow these steps to run the demo.
 - navigate to the dashboard **Netflow Data**
 - set dashboard auto refresh to 10 seconds (click **&#x22EF;** next to **EDIT DASHBOARD**, top right)
 
-More content coming soon...
+TODO discussion of the dashboards
+
+### Predicate Pushdown
+
+- Click on **SQL** > **Saved Queries**
+- Locate **Infosec Queries** and click the **pencil** icon under **Actions**
+- Highlight the first query and run it, to display the number of rows
+- Highlight the second query and run it.  It should run around 0.5s even with billions of rows!
+
