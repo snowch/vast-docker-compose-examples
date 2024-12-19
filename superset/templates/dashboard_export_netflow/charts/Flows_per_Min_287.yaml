@@ -1,0 +1,55 @@
+slice_name: Flows per Min
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  datasource: 24__table
+  viz_type: echarts_timeseries_line
+  x_axis: timestamp
+  time_grain_sqla: PT1M
+  metrics:
+  - count
+  groupby: []
+  adhoc_filters:
+  - expressionType: SQL
+    sqlExpression: timestamp BETWEEN (now() - INTERVAL '15' MINUTE) AND now()
+    clause: WHERE
+    subject: timestamp
+    operator: TEMPORAL_RANGE
+    comparator: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_qq4jzzodbgf_7kkuu46ki8h
+  row_limit: 10000
+  truncate_metric: true
+  show_empty_columns: true
+  comparison_type: values
+  annotation_layers: []
+  forecastPeriods: 10
+  forecastInterval: 0.8
+  x_axis_title_margin: 15
+  y_axis_title_margin: 15
+  y_axis_title_position: Left
+  sort_series_type: sum
+  color_scheme: supersetColors
+  seriesType: line
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  x_axis_time_format: smart_date
+  rich_tooltip: true
+  tooltipTimeFormat: smart_date
+  y_axis_format: SMART_NUMBER
+  truncateXAxis: true
+  extra_form_data: {}
+  dashboards:
+  - 11
+query_context: '{"datasource":{"id":24,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"time_grain_sqla":"PT1M","having":"","where":"(timestamp
+  BETWEEN (now() - INTERVAL ''15'' MINUTE) AND now())"},"applied_time_extras":{},"columns":[{"timeGrain":"PT1M","columnType":"BASE_AXIS","sqlExpression":"timestamp","label":"timestamp","expressionType":"SQL"}],"metrics":["count"],"orderby":[["count",false]],"annotation_layers":[],"row_limit":10000,"series_columns":[],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["timestamp"],"columns":[],"aggregates":{"count":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"flatten"}]}],"form_data":{"datasource":"24__table","viz_type":"echarts_timeseries_line","x_axis":"timestamp","time_grain_sqla":"PT1M","metrics":["count"],"groupby":[],"adhoc_filters":[{"expressionType":"SQL","sqlExpression":"timestamp
+  BETWEEN (now() - INTERVAL ''15'' MINUTE) AND now()","clause":"WHERE","subject":"timestamp","operator":"TEMPORAL_RANGE","comparator":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_qq4jzzodbgf_7kkuu46ki8h"}],"row_limit":10000,"truncate_metric":true,"show_empty_columns":true,"comparison_type":"values","annotation_layers":[],"forecastPeriods":10,"forecastInterval":0.8,"x_axis_title_margin":15,"y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"sum","color_scheme":"supersetColors","seriesType":"line","show_legend":true,"legendType":"scroll","legendOrientation":"top","x_axis_time_format":"smart_date","rich_tooltip":true,"tooltipTimeFormat":"smart_date","y_axis_format":"SMART_NUMBER","truncateXAxis":true,"extra_form_data":{},"dashboards":[11],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 06d47f17-4ebb-4a95-9630-8fe62820cab2
+version: 1.0.0
+dataset_uuid: 8447662b-57ea-467a-9afd-cb967431493f

@@ -1,0 +1,57 @@
+slice_name: Recent Flows
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 24__table
+  viz_type: table
+  slice_id: 288
+  query_mode: raw
+  groupby: []
+  temporal_columns_lookup:
+    timestamp: true
+  all_columns:
+  - timestamp
+  - src_ip
+  - dst_ip
+  - protocol
+  - src_port
+  - dst_port
+  - duration
+  - bytes_sent
+  - packets
+  percent_metrics: []
+  adhoc_filters:
+  - clause: WHERE
+    comparator: null
+    datasourceWarning: false
+    expressionType: SQL
+    filterOptionName: filter_go0sl3e1lmd_x41dqierxjs
+    isExtra: false
+    isNew: false
+    operator: TEMPORAL_RANGE
+    sqlExpression: timestamp BETWEEN (now() - INTERVAL '1' MINUTE) AND now()
+    subject: timestamp
+  order_by_cols:
+  - '["timestamp", false]'
+  row_limit: 10
+  table_timestamp_format: smart_date
+  show_cell_bars: true
+  color_pn: true
+  column_config:
+    timestamp:
+      d3TimeFormat: '%Y-%m-%d %H:%M:%S'
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 11
+query_context: '{"datasource":{"id":24,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":"(timestamp
+  BETWEEN (now() - INTERVAL ''1'' MINUTE) AND now())"},"applied_time_extras":{},"columns":["timestamp","src_ip","dst_ip","protocol","src_port","dst_port","duration","bytes_sent","packets"],"orderby":[["timestamp",false]],"annotation_layers":[],"row_limit":10,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"post_processing":[]}],"form_data":{"datasource":"24__table","viz_type":"table","slice_id":288,"query_mode":"raw","groupby":[],"temporal_columns_lookup":{"timestamp":true},"all_columns":["timestamp","src_ip","dst_ip","protocol","src_port","dst_port","duration","bytes_sent","packets"],"percent_metrics":[],"adhoc_filters":[{"clause":"WHERE","comparator":null,"datasourceWarning":false,"expressionType":"SQL","filterOptionName":"filter_go0sl3e1lmd_x41dqierxjs","isExtra":false,"isNew":false,"operator":"TEMPORAL_RANGE","sqlExpression":"timestamp
+  BETWEEN (now() - INTERVAL ''1'' MINUTE) AND now()","subject":"timestamp"}],"order_by_cols":["[\"timestamp\",
+  false]"],"row_limit":10,"table_timestamp_format":"smart_date","show_cell_bars":true,"color_pn":true,"column_config":{"timestamp":{"d3TimeFormat":"%Y-%m-%d
+  %H:%M:%S"}},"conditional_formatting":[],"extra_form_data":{},"dashboards":[11],"force":false,"result_format":"json","result_type":"full","include_time":false},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 8528addf-e5ac-4261-a378-69e6b53f2268
+version: 1.0.0
+dataset_uuid: 8447662b-57ea-467a-9afd-cb967431493f

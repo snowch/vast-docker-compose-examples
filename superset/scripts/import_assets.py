@@ -62,6 +62,7 @@ if __name__ == "__main__":
 
         upload_file(client, docker_host, '/generated/dataset_export_tweets.zip', '/api/v1/dataset/import/')
         upload_file(client, docker_host, '/generated/dashboard_export_tweets.zip', '/api/v1/dashboard/import/')
+        upload_file(client, docker_host, '/generated/dashboard_export_netflow.zip', '/api/v1/dashboard/import/')
         upload_file(client, docker_host, '/generated/saved_query_export_catalog.zip', '/api/v1/saved_query/import/')
         upload_file(client, docker_host, '/generated/saved_query_export_auditlog.zip', '/api/v1/saved_query/import/')
         upload_file(client, docker_host, '/generated/saved_query_export_latest_tweets.zip', '/api/v1/saved_query/import/')

@@ -1,0 +1,158 @@
+table_name: {{ env.Getenv "VASTDB_NETFLOW_TABLE" | required "Missing VASTDB_NETFLOW_TABLE environment variable!" }}
+main_dttm_col: timestamp
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+schema:  {{ env.Getenv "VASTDB_NETFLOW_BUCKET" | required "Missing VASTDB_NETFLOW_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_NETFLOW_SCHEMA" | required "Missing VASTDB_NETFLOW_SCHEMA environment variable!" }}
+sql: ''
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+always_filter_main_dttm: false
+uuid: 8447662b-57ea-467a-9afd-cb967431493f
+metrics:
+- metric_name: <new metric>
+  verbose_name: COUNT(*) 15 Min
+  metric_type: null
+  expression: "SELECT date_trunc('MINUTE', \"timestamp\") as ts,\r\n    count(*)\r\
+    \nFROM vast.\"{{ env.Getenv "VASTDB_NETFLOW_BUCKET" | required "Missing VASTDB_NETFLOW_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_NETFLOW_SCHEMA" | required "Missing VASTDB_NETFLOW_SCHEMA environment variable!" }}\".{{ env.Getenv "VASTDB_NETFLOW_TABLE" | required "Missing VASTDB_NETFLOW_TABLE environment variable!" }}\r\nWHERE \"timestamp\" BETWEEN (now() -\
+    \ INTERVAL '15' MINUTE) AND now()\r\nGROUP BY 1"
+  description: null
+  d3format: null
+  currency: null
+  extra: {}
+  warning_text: null
+- metric_name: count
+  verbose_name: COUNT(*)
+  metric_type: count
+  expression: COUNT(*)
+  description: null
+  d3format: null
+  currency: null
+  extra:
+    warning_markdown: ''
+  warning_text: null
+columns:
+- column_name: timestamp
+  verbose_name: null
+  is_dttm: true
+  is_active: true
+  type: TIMESTAMP(3)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: src_ip
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: dst_ip
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: protocol
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: bytes_sent
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BIGINT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: packets
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BIGINT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: duration
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BIGINT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: src_port
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: INTEGER
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+- column_name: dst_port
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: INTEGER
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra:
+    warning_markdown: null
+version: 1.0.0
+database_uuid: a9d335f2-be13-4a46-a696-964c119f0611
