@@ -68,6 +68,7 @@ if __name__ == "__main__":
         upload_file(client, docker_host, '/generated/saved_query_export_latest_tweets.zip', '/api/v1/saved_query/import/')
         upload_file(client, docker_host, '/generated/saved_query_export_tweets_in_iceberg.zip', '/api/v1/saved_query/import/')
         upload_file(client, docker_host, '/generated/saved_query_export_copy_tweets.zip', '/api/v1/saved_query/import/')
+        upload_file(client, docker_host, '/generated/saved_query_export_netflow.zip', '/api/v1/saved_query/import/')
 
     except EnvironmentError as e:
         print(f"Environment setup error: {e}")

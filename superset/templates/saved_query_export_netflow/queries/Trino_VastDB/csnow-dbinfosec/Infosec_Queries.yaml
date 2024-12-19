@@ -1,0 +1,12 @@
+schema: {{ env.Getenv "VASTDB_NETFLOW_BUCKET" | required "Missing VASTDB_NETFLOW_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_NETFLOW_SCHEMA" | required "Missing VASTDB_NETFLOW_SCHEMA environment variable!" }}
+label: Infosec Queries
+description: ''
+sql: "SELECT FORMAT('%,d', count(*)) FROM vast.\"{{ env.Getenv "VASTDB_NETFLOW_BUCKET" | required "Missing VASTDB_NETFLOW_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_NETFLOW_SCHEMA" | required "Missing VASTDB_NETFLOW_SCHEMA environment variable!" }}\".{{ env.Getenv "VASTDB_NETFLOW_TABLE" | required "Missing VASTDB_NETFLOW_TABLE environment variable!" }};\n\nSELECT\
+  \ timestamp AS timestamp,\n       src_ip AS src_ip,\n       dst_ip AS dst_ip,\n\
+  \       protocol AS protocol,\n       src_port AS src_port,\n       dst_port AS\
+  \ dst_port,\n       duration AS duration,\n       bytes_sent AS bytes_sent,\n  \
+  \     packets AS packets\nFROM \"{{ env.Getenv "VASTDB_NETFLOW_BUCKET" | required "Missing VASTDB_NETFLOW_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_NETFLOW_SCHEMA" | required "Missing VASTDB_NETFLOW_SCHEMA environment variable!" }}\".{{ env.Getenv "VASTDB_NETFLOW_TABLE" | required "Missing VASTDB_NETFLOW_TABLE environment variable!" }}\nWHERE ((timestamp BETWEEN\
+  \ (now() - INTERVAL '1' MINUTE) AND now()))\nORDER BY timestamp DESC\nLIMIT 10;"
+uuid: 5ebed8cc-4d74-4f58-86b1-ae27370533f7
+version: 1.0.0
+database_uuid: b6ace9f1-f612-4c4f-bce9-5a1ec05ec969

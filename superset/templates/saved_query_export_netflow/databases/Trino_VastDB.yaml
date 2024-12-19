@@ -1,0 +1,16 @@
+database_name: Trino VastDB
+sqlalchemy_uri: trino://admin@10.143.11.241:8443/vast?verify=false
+cache_timeout: null
+expose_in_sqllab: true
+allow_run_async: false
+allow_ctas: true
+allow_cvas: true
+allow_dml: true
+allow_file_upload: true
+extra:
+  allows_virtual_table_explore: true
+  engine_params:
+    connect_args:
+      http_scheme: https
+uuid: b6ace9f1-f612-4c4f-bce9-5a1ec05ec969
+version: 1.0.0
