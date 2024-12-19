@@ -1,6 +1,8 @@
 # Demonstrating
 
-## Run data generator
+Follow these steps to run the demo.
+
+## Start the data generator
 
 - Ensure your `./.env-local` file contains settings for:
   - VASTDB_ENDPOINT
@@ -17,6 +19,6 @@
 
 - run `./scripts/endpoints_all.sh` and open the Superset URL
 - navigate to the dashboard **Netflow Data**
-- set dashboard auto refresh to 10 seconds (click **&#x22EF;** next to **EDIT DASHBOARD** top right)
+- set dashboard auto refresh to 10 seconds (click **&#x22EF;** next to **EDIT DASHBOARD**, top right)
 
 More content coming soon...
