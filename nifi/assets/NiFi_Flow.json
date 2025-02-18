@@ -2140,7 +2140,7 @@
                                 "properties": {
                                     "VastDB Table Name": "tweets",
                                     "VastDB Database Schema": "PLACEHOLDER",
-                                    "Data Type": "Json",
+                                    "Data Type": "Json Line Delimited",
                                     "VastDB Bucket": "PLACEHOLDER",
                                     "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
@@ -2228,7 +2228,7 @@
                                 "properties": {
                                     "VastDB Table Name": "tweets",
                                     "VastDB Database Schema": "PLACEHOLDER",
-                                    "Data Type": "Json",
+                                    "Data Type": "Json Line Delimited",
                                     "VastDB Bucket": "PLACEHOLDER",
                                     "VastDB Endpoint": "http://PLACEHOLDER:80",
                                     "VastDB Credentials Provider Service": "43fb3340-a307-360c-869b-68ce6ca06b53"
