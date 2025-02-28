@@ -246,14 +246,21 @@ def list_all_process_groups(pg_id='root'):
     out.append(root_entity)
     return out
 
-def upload_flow_definition(nifi_host, api_client, file_path, pg_name):
+def upload_flow_definition(nifi_host, api_client, file_path, pg_name, positionX, positionY):
+
+    process_group = get_process_group(pg_name)
+    if process_group:
+        print(f"ERROR: {pg_name} progress group already exists. Manually delete it and try again.")
+        sys.exit(1)
 
     # File to upload
     with open(file_path, 'rb') as f:
         file_data = f.read()
 
+    fname = file_path.split('/')[1]
+
     # Set up form data and headers
-    files = {'file': ('NiFi_Flow.json', file_data, 'application/json')}
+    files = {'file': (fname, file_data, 'application/json')}
     headers = {
         'Accept': 'application/json, text/plain, */*',
         'Authorization': api_client.default_headers['Authorization'],
@@ -261,8 +268,8 @@ def upload_flow_definition(nifi_host, api_client, file_path, pg_name):
     form_data = {
         'id': 'root',
         'groupName': pg_name,
-        'positionX': '100',
-        'positionY': '100',
+        'positionX': positionX,
+        'positionY': positionY,
         'clientId': 'xxxxx',
         'disconnectedNodeAcknowledged': 'false'
     }
@@ -289,14 +296,8 @@ def main():
     root_pg_id = get_root_pg_id(api_client)
     print(f'Root process group ID: {root_pg_id}')
 
-    pg_name = "Demo_Flow"
-    process_group = get_process_group(pg_name)
-    if process_group:
-        print(f"ERROR: {pg_name} progress group already exists. Manually delete it and try again.")
-        sys.exit(1)
-
-    file_path = '/app/NiFi_Flow.json'
-    upload_flow_definition(nifi_host, api_client, file_path, pg_name)
+    upload_flow_definition(nifi_host, api_client, '/app/NiFi_Flow.json', 'Demo_Flow', 100, 100)
+    upload_flow_definition(nifi_host, api_client, '/app/NiFi_Weather_Flow.json', 'Weather_Flow', 100, 300)
 
 if __name__ == "__main__":
     main()
