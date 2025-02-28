@@ -614,34 +614,6 @@ def main():
         print(f'Updating ListS3 process {processor.id} {update}')
         updated = update_processor(api_client, processor, update)
 
-
-
-    #####################
-    # PutVastDB-Weather-Watermeasures Processor
-    #####################
-
-    update=nipyapi.nifi.ProcessorConfigDTO(
-                properties={
-                    'VastDB Endpoint': VASTDB_ENDPOINT,
-                    'VastDB Bucket': VASTDB_TWITTER_INGEST_BUCKET,
-                    'VastDB Database Schema': 'weather',
-                    'VastDB Table Name': 'watermeasures'
-                }
-            )
-    processor = get_processor(api_client, 'PutVastDB-Weather-Watermeasures', greedy=False)
-    # there are multiple PutVastDB processors
-    if not processor:
-        print(f'Processor PutVastDB-Weather-Watermeasures not Found')
-        #sys.exit(1)
-    elif isinstance(processor, list):
-        for p in processor:
-            print(f'Updating PutVastDB-Weather-Watermeasures process {p.id} {update}')
-            updated = update_processor(api_client, p, update)
-    else:
-        print(f'Updating PutVastDB-Weather-Watermeasures process {p.id} {update}')
-        updated = update_processor(api_client, processor, update)
-
-
     ###################################################################################################
     # Weather Flow
     ###################################################################################################
@@ -677,6 +649,33 @@ def main():
                     'VastDB Table Name': 'weatherstations'
                 }
             )
+    processor = get_processor(api_client, 'PutVastDB-Weather-Weatherstations', greedy=False)
+    # there are multiple PutVastDB processors
+    if not processor:
+        print(f'Processor PutVastDB-Weather-Weatherstations not Found')
+        #sys.exit(1)
+    elif isinstance(processor, list):
+        for p in processor:
+            print(f'Updating PutVastDB-Weather-Weatherstations process {p.id} {update}')
+            updated = update_processor(api_client, p, update)
+    else:
+        print(f'Updating PutVastDB-Weather-Weatherstations process {p.id} {update}')
+        updated = update_processor(api_client, processor, update)
+
+
+
+    #####################
+    # PutVastDB-Weather-Watermeasures Processor
+    #####################
+
+    update=nipyapi.nifi.ProcessorConfigDTO(
+                properties={
+                    'VastDB Endpoint': VASTDB_ENDPOINT,
+                    'VastDB Bucket': VASTDB_TWITTER_INGEST_BUCKET,
+                    'VastDB Database Schema': 'weather',
+                    'VastDB Table Name': 'watermeasures'
+                }
+            )
     processor = get_processor(api_client, 'PutVastDB-Weather-Watermeasures', greedy=False)
     # there are multiple PutVastDB processors
     if not processor:
@@ -691,10 +690,9 @@ def main():
         updated = update_processor(api_client, processor, update)
 
 
-
-    ################################
+    ###################################################################################################
     # Enable all controller services
-    ################################
+    ###################################################################################################
 
     pg_name = "Demo_Flow"
     process_group = get_process_group(pg_name)
