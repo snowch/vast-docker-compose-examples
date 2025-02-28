@@ -333,123 +333,6 @@
             {
                 "bulletinLevel": "WARN",
                 "bundle": {
-                    "artifact": "nifi-kafka-3-service-nar",
-                    "group": "org.apache.nifi",
-                    "version": "2.0.0-M4"
-                },
-                "comments": "",
-                "componentType": "CONTROLLER_SERVICE",
-                "controllerServiceApis": [
-                    {
-                        "bundle": {
-                            "artifact": "nifi-kafka-service-api-nar",
-                            "group": "org.apache.nifi",
-                            "version": "2.0.0-M4"
-                        },
-                        "type": "org.apache.nifi.kafka.service.api.KafkaConnectionService"
-                    }
-                ],
-                "groupIdentifier": "7747c67a-e77c-313d-8997-0a649afc37b2",
-                "identifier": "ef71ec0b-6e45-3e92-a208-5e85f412c14f",
-                "instanceIdentifier": "63a46082-677c-393c-7989-f27b9f39068a",
-                "name": "Kafka3ConnectionService",
-                "properties": {
-                    "SSL Context Service": null,
-                    "ack.wait.time": "5 s",
-                    "bootstrap.servers": "10.143.11.241:19092",
-                    "default.api.timeout.ms": "60 s",
-                    "isolation.level": "read_committed",
-                    "max.block.ms": "5 s",
-                    "max.poll.records": "10000",
-                    "sasl.mechanism": "GSSAPI",
-                    "sasl.username": null,
-                    "security.protocol": "PLAINTEXT"
-                },
-                "propertyDescriptors": {
-                    "SSL Context Service": {
-                        "displayName": "SSL Context Service",
-                        "dynamic": false,
-                        "identifiesControllerService": true,
-                        "name": "SSL Context Service",
-                        "sensitive": false
-                    },
-                    "ack.wait.time": {
-                        "displayName": "Acknowledgment Wait Time",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "ack.wait.time",
-                        "sensitive": false
-                    },
-                    "bootstrap.servers": {
-                        "displayName": "Bootstrap Servers",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "bootstrap.servers",
-                        "sensitive": false
-                    },
-                    "default.api.timeout.ms": {
-                        "displayName": "Client Timeout",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "default.api.timeout.ms",
-                        "sensitive": false
-                    },
-                    "isolation.level": {
-                        "displayName": "Transaction Isolation Level",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "isolation.level",
-                        "sensitive": false
-                    },
-                    "max.block.ms": {
-                        "displayName": "Max Metadata Wait Time",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "max.block.ms",
-                        "sensitive": false
-                    },
-                    "max.poll.records": {
-                        "displayName": "Max Poll Records",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "max.poll.records",
-                        "sensitive": false
-                    },
-                    "sasl.mechanism": {
-                        "displayName": "SASL Mechanism",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "sasl.mechanism",
-                        "sensitive": false
-                    },
-                    "sasl.password": {
-                        "displayName": "SASL Password",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "sasl.password",
-                        "sensitive": true
-                    },
-                    "sasl.username": {
-                        "displayName": "SASL Username",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "sasl.username",
-                        "sensitive": false
-                    },
-                    "security.protocol": {
-                        "displayName": "Security Protocol",
-                        "dynamic": false,
-                        "identifiesControllerService": false,
-                        "name": "security.protocol",
-                        "sensitive": false
-                    }
-                },
-                "scheduledState": "DISABLED",
-                "type": "org.apache.nifi.kafka.service.Kafka3ConnectionService"
-            },
-            {
-                "bulletinLevel": "WARN",
-                "bundle": {
                     "artifact": "nifi-record-serialization-services-nar",
                     "group": "org.apache.nifi",
                     "version": "2.0.0-M4"
@@ -659,7 +542,7 @@
                 "groupIdentifier": "7747c67a-e77c-313d-8997-0a649afc37b2",
                 "identifier": "d465d521-bb67-3331-8eae-435bdef4439d",
                 "instanceIdentifier": "fde217f5-b2d6-3b78-7183-0b24f0dd65d9",
-                "name": "AWSCredentialsProviderControllerService",
+                "name": "Weather-AWSCredentialsProviderControllerService",
                 "properties": {
                     "Assume Role ARN": null,
                     "Assume Role Session Name": null,
