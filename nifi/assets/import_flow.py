@@ -297,7 +297,7 @@ def main():
     print(f'Root process group ID: {root_pg_id}')
 
     upload_flow_definition(nifi_host, api_client, '/app/NiFi_Flow.json', 'Demo_Flow', 100, 100)
-    upload_flow_definition(nifi_host, api_client, '/app/NiFi_Weather_Flow.json', 'Weather_Flow', 100, 300)
+    upload_flow_definition(nifi_host, api_client, '/app/NiFi_Waterlevel_Flow.json', 'Waterlevel_Flow', 100, 300)
 
 if __name__ == "__main__":
     main()

@@ -698,7 +698,7 @@ def main():
     process_group = get_process_group(pg_name)
     enable_controller_services(nifi_host, api_client, process_group.id)
 
-    pg_name = "Weather_Flow"
+    pg_name = "Waterlevel_Flow"
     process_group = get_process_group(pg_name)
     enable_controller_services(nifi_host, api_client, process_group.id)
         
