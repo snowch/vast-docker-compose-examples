@@ -50,7 +50,7 @@
                     "groupId": "7747c67a-e77c-313d-8997-0a649afc37b2",
                     "id": "ca57788d-7317-3af9-860c-cb82a88b081a",
                     "instanceIdentifier": "6e864354-a6d0-399e-ebbc-9587839b535f",
-                    "name": "PutVastDB-Weather-Weatherstations",
+                    "name": "PutVastDB-Weather-Waterstations",
                     "type": "PROCESSOR"
                 },
                 "flowFileExpiration": "0 sec",
@@ -2199,7 +2199,7 @@
                 "identifier": "ca57788d-7317-3af9-860c-cb82a88b081a",
                 "instanceIdentifier": "6e864354-a6d0-399e-ebbc-9587839b535f",
                 "maxBackoffPeriod": "10 mins",
-                "name": "PutVastDB-Weather-Weatherstations",
+                "name": "PutVastDB-Weather-Waterstations",
                 "penaltyDuration": "30 sec",
                 "position": {
                     "x": -1304.0,

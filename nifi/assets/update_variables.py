@@ -640,7 +640,7 @@ def main():
         updated = update_controller(controller, update)
 
     #####################
-    # PutVastDB-Weather-Weatherstations Processor
+    # PutVastDB-Weather-Waterstations Processor
     #####################
 
     update=nipyapi.nifi.ProcessorConfigDTO(
@@ -648,20 +648,20 @@ def main():
                     'VastDB Endpoint': VASTDB_ENDPOINT,
                     'VastDB Bucket': VASTDB_WATERLEVEL_BUCKET,
                     'VastDB Database Schema': VASTDB_WATERLEVEL_SCHEMA,
-                    'VastDB Table Name': 'weatherstations'
+                    'VastDB Table Name': 'waterstations'
                 }
             )
-    processor = get_processor(api_client, 'PutVastDB-Weather-Weatherstations', greedy=False)
+    processor = get_processor(api_client, 'PutVastDB-Weather-Waterstations', greedy=False)
     # there are multiple PutVastDB processors
     if not processor:
-        print(f'Processor PutVastDB-Weather-Weatherstations not Found')
+        print(f'Processor PutVastDB-Weather-Waterstations not Found')
         sys.exit(1)
     elif isinstance(processor, list):
         for p in processor:
-            print(f'Updating PutVastDB-Weather-Weatherstations process {p.id} {update}')
+            print(f'Updating PutVastDB-Weather-Waterstations process {p.id} {update}')
             updated = update_processor(api_client, p, update)
     else:
-        print(f'Updating PutVastDB-Weather-Weatherstations process {p.id} {update}')
+        print(f'Updating PutVastDB-Weather-Waterstations process {p.id} {update}')
         updated = update_processor(api_client, processor, update)
 
 
