@@ -57,6 +57,8 @@ services:
         required: true
       - path: docker/.env-local # optional override
         required: false
+      - path: ../.env-local # e.g. MAPBOX_API_KEY
+        required: false
     image: *superset-image
     container_name: superset_app
 
