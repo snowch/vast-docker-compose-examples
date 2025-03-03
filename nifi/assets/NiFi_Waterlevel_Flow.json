@@ -2212,7 +2212,7 @@
                     "VastDB Credentials Provider Service": "d465d521-bb67-3331-8eae-435bdef4439d",
                     "VastDB Database Schema": "SCHEMA_PLACEHOLDER",
                     "VastDB Endpoint": "ENDPOINT_PLACEHOLDER",
-                    "VastDB Table Name": "weatherstations"
+                    "VastDB Table Name": "waterstations"
                 },
                 "propertyDescriptors": {
                     "Data Type": {
