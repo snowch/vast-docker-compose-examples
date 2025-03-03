@@ -8,4 +8,5 @@ This section contains sub-folders each containing a separate demo:
 - [Audit Log](./audit)
 - [Vast DB vs Parquet performance](./vastdb_vs_parquet)
 - [Infosec](./infosec)
+- [Water Level Monitoring](./waterlevel)
 - S3 Bucket Notifications (coming soon)
