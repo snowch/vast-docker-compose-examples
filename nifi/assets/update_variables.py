@@ -485,6 +485,8 @@ def main():
     VASTDB_BULK_IMPORT_BUCKET = os.getenv("VASTDB_BULK_IMPORT_BUCKET")
     VASTDB_BULK_IMPORT_SCHEMA = os.getenv("VASTDB_BULK_IMPORT_SCHEMA")
     VASTDB_BULK_IMPORT_TABLE = os.getenv("VASTDB_BULK_IMPORT_TABLE")
+    VASTDB_WATERLEVEL_BUCKET = os.getenv("VASTDB_WATERLEVEL_BUCKET")
+    VASTDB_WATERLEVEL_SCHEMA = os.getenv("VASTDB_WATERLEVEL_SCHEMA")
     
     S3A_ENDPOINT = os.getenv("S3A_ENDPOINT")
     S3A_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
@@ -644,8 +646,8 @@ def main():
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
                     'VastDB Endpoint': VASTDB_ENDPOINT,
-                    'VastDB Bucket': VASTDB_TWITTER_INGEST_BUCKET,
-                    'VastDB Database Schema': 'weather',
+                    'VastDB Bucket': VASTDB_WATERLEVEL_BUCKET,
+                    'VastDB Database Schema': VASTDB_WATERLEVEL_SCHEMA,
                     'VastDB Table Name': 'weatherstations'
                 }
             )
@@ -671,8 +673,8 @@ def main():
     update=nipyapi.nifi.ProcessorConfigDTO(
                 properties={
                     'VastDB Endpoint': VASTDB_ENDPOINT,
-                    'VastDB Bucket': VASTDB_TWITTER_INGEST_BUCKET,
-                    'VastDB Database Schema': 'weather',
+                    'VastDB Bucket': VASTDB_WATERLEVEL_BUCKET,
+                    'VastDB Database Schema': VASTDB_WATERLEVEL_SCHEMA,
                     'VastDB Table Name': 'watermeasures'
                 }
             )
