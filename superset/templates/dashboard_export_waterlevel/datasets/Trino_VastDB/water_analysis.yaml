@@ -4,12 +4,12 @@ description: null
 default_endpoint: null
 offset: 0
 cache_timeout: null
-schema: {{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}
+schema: {{ env.Getenv "VASTDB_WATERLEVEL_BUCKET" | required "Missing VASTDB_WATERLEVEL_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_WATERLEVEL_SCHEMA" | required "Missing VASTDB_WATERLEVEL_SCHEMA environment variable!" }}
 sql: 'SELECT *
 
-  FROM "{{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}".waterstations s
+  FROM "{{ env.Getenv "VASTDB_WATERLEVEL_BUCKET" | required "Missing VASTDB_WATERLEVEL_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_WATERLEVEL_SCHEMA" | required "Missing VASTDB_WATERLEVEL_SCHEMA environment variable!" }}".waterstations s
 
-  JOIN "{{ env.Getenv "VASTDB_TWITTER_INGEST_BUCKET" | required "Missing VASTDB_TWITTER_INGEST_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_TWITTER_INGEST_SCHEMA" | required "Missing VASTDB_TWITTER_INGEST_SCHEMA environment variable!" }}".watermeasures t ON s.uuid = t.station_uuid;
+  JOIN "{{ env.Getenv "VASTDB_WATERLEVEL_BUCKET" | required "Missing VASTDB_WATERLEVEL_BUCKET environment variable!" }}|{{ env.Getenv "VASTDB_WATERLEVEL_SCHEMA" | required "Missing VASTDB_WATERLEVEL_SCHEMA environment variable!" }}".watermeasures t ON s.uuid = t.station_uuid;
 
 
 
