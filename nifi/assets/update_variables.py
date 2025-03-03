@@ -655,7 +655,7 @@ def main():
     # there are multiple PutVastDB processors
     if not processor:
         print(f'Processor PutVastDB-Weather-Weatherstations not Found')
-        #sys.exit(1)
+        sys.exit(1)
     elif isinstance(processor, list):
         for p in processor:
             print(f'Updating PutVastDB-Weather-Weatherstations process {p.id} {update}')
@@ -682,7 +682,7 @@ def main():
     # there are multiple PutVastDB processors
     if not processor:
         print(f'Processor PutVastDB-Weather-Watermeasures not Found')
-        #sys.exit(1)
+        sys.exit(1)
     elif isinstance(processor, list):
         for p in processor:
             print(f'Updating PutVastDB-Weather-Watermeasures process {p.id} {update}')

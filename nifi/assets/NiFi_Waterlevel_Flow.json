@@ -1184,10 +1184,10 @@
                 "properties": {
                     "Data Type": "Json Line Delimited",
                     "Flatten Nested Json": "False",
-                    "VastDB Bucket": "csnow-db",
+                    "VastDB Bucket": "DB_PLACEHOLDER",
                     "VastDB Credentials Provider Service": "d465d521-bb67-3331-8eae-435bdef4439d",
-                    "VastDB Database Schema": "weather",
-                    "VastDB Endpoint": "http://172.200.204.2:80",
+                    "VastDB Database Schema": "SCHEMA_PLACEHOLDER",
+                    "VastDB Endpoint": "ENDPOINT_PLACEHOLDER",
                     "VastDB Table Name": "watermeasures"
                 },
                 "propertyDescriptors": {
@@ -2208,10 +2208,10 @@
                 "properties": {
                     "Data Type": "Json Line Delimited",
                     "Flatten Nested Json": "False",
-                    "VastDB Bucket": "csnow-db",
+                    "VastDB Bucket": "DB_PLACEHOLDER",
                     "VastDB Credentials Provider Service": "d465d521-bb67-3331-8eae-435bdef4439d",
-                    "VastDB Database Schema": "weather",
-                    "VastDB Endpoint": "http://172.200.204.2:80",
+                    "VastDB Database Schema": "SCHEMA_PLACEHOLDER",
+                    "VastDB Endpoint": "ENDPOINT_PLACEHOLDER",
                     "VastDB Table Name": "weatherstations"
                 },
                 "propertyDescriptors": {
