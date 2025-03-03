@@ -9,4 +9,5 @@ This section contains sub-folders each containing a separate demo:
 - [Vast DB vs Parquet performance](./vastdb_vs_parquet)
 - [Infosec](./infosec)
 - [Water Level Monitoring](./waterlevel)
+- [Fraud Detection](./fraud_detection)
 - S3 Bucket Notifications (coming soon)
