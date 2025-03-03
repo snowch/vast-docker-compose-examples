@@ -1,0 +1,31 @@
+slice_name: Number of Measurements
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 29__table
+  viz_type: big_number_total
+  slice_id: 111
+  metric: count
+  adhoc_filters:
+  - clause: WHERE
+    comparator: No filter
+    expressionType: SIMPLE
+    operator: TEMPORAL_RANGE
+    subject: timestamp
+  subheader: Measurments
+  header_font_size: 0.4
+  subheader_font_size: 0.15
+  y_axis_format: SMART_NUMBER
+  time_format: smart_date
+  extra_form_data: {}
+  dashboards:
+  - 15
+query_context: '{"datasource":{"id":29,"type":"table"},"force":false,"queries":[{"filters":[{"col":"timestamp","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":["count"],"annotation_layers":[],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"29__table","viz_type":"big_number_total","slice_id":111,"metric":"count","adhoc_filters":[{"clause":"WHERE","comparator":"No
+  filter","expressionType":"SIMPLE","operator":"TEMPORAL_RANGE","subject":"timestamp"}],"subheader":"Measurments","header_font_size":0.4,"subheader_font_size":0.15,"y_axis_format":"SMART_NUMBER","time_format":"smart_date","extra_form_data":{},"dashboards":[15],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 7a992ce7-11a2-4e39-921a-8358fe52f0ab
+version: 1.0.0
+dataset_uuid: ae62c956-81ad-4dc4-b1ec-923f3537bec2

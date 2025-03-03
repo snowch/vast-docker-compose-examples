@@ -24,7 +24,9 @@ cleanup_assets() {
     -v "$OUTPUT_DIR:/workspace/output" \
     --name superset_generated_cleanup \
     python:3.10-slim \
-    sh -c "find /workspace/output -mindepth 1 ! -name '.gitignore' -exec rm -rf {} +"
+    sh -xc "find /workspace/output -mindepth 1 ! -name '.gitignore' -exec rm -rf {} +"
+
+  find $OUTPUT_DIR
 }
 
 # Generate assets using gomplate

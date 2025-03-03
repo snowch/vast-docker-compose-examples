@@ -1,0 +1,40 @@
+slice_name: Measurements Water
+description: null
+certified_by: null
+certification_details: null
+viz_type: pie
+params:
+  datasource: 29__table
+  viz_type: pie
+  groupby:
+  - agency
+  metric: count
+  adhoc_filters:
+  - clause: WHERE
+    subject: timestamp
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    expressionType: SIMPLE
+  row_limit: 100
+  sort_by_metric: true
+  color_scheme: supersetColors
+  show_labels_threshold: 5
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  label_type: key
+  number_format: SMART_NUMBER
+  date_format: smart_date
+  show_labels: true
+  labels_outside: true
+  outerRadius: 70
+  innerRadius: 30
+  extra_form_data: {}
+  dashboards: []
+query_context: '{"datasource":{"id":29,"type":"table"},"force":false,"queries":[{"filters":[{"col":"timestamp","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":["agency"],"metrics":["count"],"orderby":[["count",false]],"annotation_layers":[],"row_limit":100,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"29__table","viz_type":"pie","groupby":["agency"],"metric":"count","adhoc_filters":[{"clause":"WHERE","subject":"timestamp","operator":"TEMPORAL_RANGE","comparator":"No
+  filter","expressionType":"SIMPLE"}],"row_limit":100,"sort_by_metric":true,"color_scheme":"supersetColors","show_labels_threshold":5,"show_legend":true,"legendType":"scroll","legendOrientation":"top","label_type":"key","number_format":"SMART_NUMBER","date_format":"smart_date","show_labels":true,"labels_outside":true,"outerRadius":70,"innerRadius":30,"extra_form_data":{},"dashboards":[],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: ed89a90e-06a6-488a-83ed-daa3a929a933
+version: 1.0.0
+dataset_uuid: ae62c956-81ad-4dc4-b1ec-923f3537bec2

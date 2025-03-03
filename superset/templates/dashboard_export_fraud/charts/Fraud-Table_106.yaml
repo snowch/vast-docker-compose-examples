@@ -1,0 +1,37 @@
+slice_name: Fraud-Table
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 27__table
+  viz_type: table
+  slice_id: 106
+  query_mode: raw
+  groupby: []
+  temporal_columns_lookup: {}
+  all_columns:
+  - transaction_id
+  - settlement_date
+  - stock_symbol
+  - quantity
+  - price
+  - buyer
+  - seller
+  - trade_date
+  - status
+  percent_metrics: []
+  adhoc_filters: []
+  order_by_cols: []
+  row_limit: 1000
+  table_timestamp_format: smart_date
+  show_cell_bars: true
+  color_pn: true
+  extra_form_data: {}
+  dashboards:
+  - 14
+query_context: '{"datasource":{"id":27,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":["transaction_id","settlement_date","stock_symbol","quantity","price","buyer","seller","trade_date","status"],"orderby":[],"annotation_layers":[],"row_limit":1000,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"post_processing":[]}],"form_data":{"datasource":"27__table","viz_type":"table","slice_id":106,"query_mode":"raw","groupby":[],"temporal_columns_lookup":{},"all_columns":["transaction_id","settlement_date","stock_symbol","quantity","price","buyer","seller","trade_date","status"],"percent_metrics":[],"adhoc_filters":[],"order_by_cols":[],"row_limit":1000,"table_timestamp_format":"smart_date","show_cell_bars":true,"color_pn":true,"extra_form_data":{},"dashboards":[14],"force":false,"result_format":"json","result_type":"full","include_time":false},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 962f78f4-24a5-447f-9364-bbcd4551687b
+version: 1.0.0
+dataset_uuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e

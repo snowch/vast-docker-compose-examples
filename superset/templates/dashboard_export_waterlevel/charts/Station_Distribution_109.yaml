@@ -1,0 +1,56 @@
+slice_name: Station Distribution
+description: null
+certified_by: null
+certification_details: null
+viz_type: deck_scatter
+params:
+  datasource: 29__table
+  viz_type: deck_scatter
+  spatial:
+    type: latlong
+    latCol: latitude
+    lonCol: longitude
+  row_limit: 10000
+  filter_nulls: true
+  adhoc_filters:
+  - clause: WHERE
+    subject: timestamp
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    expressionType: SIMPLE
+  mapbox_style: mapbox://styles/mapbox/outdoors-v9
+  autozoom: true
+  viewport:
+    longitude: 6.85236157047845
+    latitude: 31.222656842808707
+    zoom: 1
+    bearing: 0
+    pitch: 0
+  point_radius_fixed:
+    type: fix
+    value: 1000
+  point_unit: square_m
+  min_radius: 2
+  max_radius: 250
+  multiplier: 1
+  color_picker:
+    r: 0
+    g: 122
+    b: 135
+    a: 1
+  legend_position: tr
+  legend_format: SMART_NUMBER
+  dimension: agency
+  color_scheme: supersetColors
+  js_columns: []
+  time_grain_sqla: null
+  granularity: null
+  extra_form_data: {}
+  dashboards: []
+query_context: '{"datasource":{"id":29,"type":"table"},"force":false,"queries":[{"filters":[{"col":"timestamp","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"time_grain_sqla":null,"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[],"annotation_layers":[],"row_limit":10000,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"29__table","viz_type":"deck_scatter","spatial":{"type":"latlong","latCol":"latitude","lonCol":"longitude"},"row_limit":10000,"filter_nulls":true,"adhoc_filters":[{"clause":"WHERE","subject":"timestamp","operator":"TEMPORAL_RANGE","comparator":"No
+  filter","expressionType":"SIMPLE"}],"mapbox_style":"mapbox://styles/mapbox/outdoors-v9","autozoom":true,"viewport":{"longitude":6.85236157047845,"latitude":31.222656842808707,"zoom":1,"bearing":0,"pitch":0},"point_radius_fixed":{"type":"fix","value":1000},"point_unit":"square_m","min_radius":2,"max_radius":250,"multiplier":1,"color_picker":{"r":0,"g":122,"b":135,"a":1},"legend_position":"tr","legend_format":"SMART_NUMBER","dimension":"agency","color_scheme":"supersetColors","js_columns":[],"time_grain_sqla":null,"granularity":null,"extra_form_data":{},"dashboards":[],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 268ed394-1a10-411a-a442-80c0a9860468
+version: 1.0.0
+dataset_uuid: ae62c956-81ad-4dc4-b1ec-923f3537bec2

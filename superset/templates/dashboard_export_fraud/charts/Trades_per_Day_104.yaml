@@ -1,0 +1,50 @@
+slice_name: Trades per Day
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_area
+params:
+  datasource: 27__table
+  viz_type: echarts_area
+  slice_id: 104
+  x_axis: trade_date
+  x_axis_sort_series: name
+  x_axis_sort_series_ascending: true
+  metrics:
+  - count
+  groupby:
+  - status
+  adhoc_filters: []
+  row_limit: 10000
+  truncate_metric: true
+  show_empty_columns: true
+  annotation_layers: []
+  x_axis_title_margin: 15
+  y_axis_title_margin: 15
+  y_axis_title_position: Left
+  sort_series_type: sum
+  color_scheme: supersetColors
+  seriesType: line
+  opacity: 0.2
+  only_total: true
+  markerSize: 6
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  x_axis_time_format: smart_date
+  rich_tooltip: true
+  tooltipTimeFormat: smart_date
+  y_axis_format: SMART_NUMBER
+  truncateXAxis: true
+  y_axis_bounds:
+  - null
+  - null
+  extra_form_data: {}
+  dashboards:
+  - 13
+  - 14
+query_context: '{"datasource":{"id":27,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[{"columnType":"BASE_AXIS","sqlExpression":"trade_date","label":"trade_date","expressionType":"SQL"},"status"],"metrics":["count"],"orderby":[["count",false]],"annotation_layers":[],"row_limit":10000,"series_columns":["status"],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["trade_date"],"columns":["status"],"aggregates":{"count":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"rename","options":{"columns":{"count":null},"level":0,"inplace":true}},{"operation":"flatten"}]}],"form_data":{"datasource":"27__table","viz_type":"echarts_area","slice_id":104,"x_axis":"trade_date","x_axis_sort_series":"name","x_axis_sort_series_ascending":true,"metrics":["count"],"groupby":["status"],"adhoc_filters":[],"row_limit":10000,"truncate_metric":true,"show_empty_columns":true,"annotation_layers":[],"x_axis_title_margin":15,"y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"sum","color_scheme":"supersetColors","seriesType":"line","opacity":0.2,"only_total":true,"markerSize":6,"show_legend":true,"legendType":"scroll","legendOrientation":"top","x_axis_time_format":"smart_date","rich_tooltip":true,"tooltipTimeFormat":"smart_date","y_axis_format":"SMART_NUMBER","truncateXAxis":true,"y_axis_bounds":[null,null],"extra_form_data":{},"dashboards":[13,14],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 7ceb9dd6-e991-4553-a053-0e77ec2643f2
+version: 1.0.0
+dataset_uuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e

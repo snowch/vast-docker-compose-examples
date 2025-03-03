@@ -1,0 +1,212 @@
+dashboard_title: Water Level Data
+description: null
+css: ''
+slug: null
+certified_by: ''
+certification_details: ''
+published: true
+uuid: 3cda5321-a80f-49ba-9273-81df4c3f1bcd
+position:
+  CHART-6I5FxsRhlc:
+    children: []
+    id: CHART-6I5FxsRhlc
+    meta:
+      chartId: 110
+      height: 50
+      sliceName: Measurements Water
+      uuid: ed89a90e-06a6-488a-83ed-daa3a929a933
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-FTystPDrG-
+    type: CHART
+  CHART-LjiiB92AZH:
+    children: []
+    id: CHART-LjiiB92AZH
+    meta:
+      chartId: 111
+      height: 50
+      sliceName: Number of Measurements
+      uuid: 7a992ce7-11a2-4e39-921a-8358fe52f0ab
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-FTystPDrG-
+    type: CHART
+  CHART-Wy2EKGsHy-:
+    children: []
+    id: CHART-Wy2EKGsHy-
+    meta:
+      chartId: 112
+      height: 50
+      sliceName: Number of Stations
+      uuid: 2554feaa-a239-4493-aa3b-87608fde86df
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-FTystPDrG-
+    type: CHART
+  CHART-_chVFT1iL-:
+    children: []
+    id: CHART-_chVFT1iL-
+    meta:
+      chartId: 109
+      height: 65
+      sliceName: Station Distribution
+      uuid: 268ed394-1a10-411a-a442-80c0a9860468
+      width: 8
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-YOglR31jLH
+    type: CHART
+  CHART-hs6LKC0yRn:
+    children: []
+    id: CHART-hs6LKC0yRn
+    meta:
+      chartId: 108
+      height: 66
+      sliceName: Measurements per Hour
+      uuid: 87f27355-aa5a-4bbe-ade5-90171261672e
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-YOglR31jLH
+    type: CHART
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - ROW-FTystPDrG-
+    - ROW-YOglR31jLH
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: Water Level Data
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW-FTystPDrG-:
+    children:
+    - CHART-LjiiB92AZH
+    - CHART-Wy2EKGsHy-
+    - CHART-6I5FxsRhlc
+    id: ROW-FTystPDrG-
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-YOglR31jLH:
+    children:
+    - CHART-_chVFT1iL-
+    - CHART-hs6LKC0yRn
+    id: ROW-YOglR31jLH
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+metadata:
+  chart_configuration:
+    '108':
+      id: 108
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 109
+        - 110
+        - 111
+        - 112
+    '110':
+      id: 110
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 108
+        - 109
+        - 111
+        - 112
+  global_chart_configuration:
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    chartsInScope:
+    - 108
+    - 109
+    - 110
+    - 111
+    - 112
+  color_scheme: ''
+  refresh_frequency: 0
+  shared_label_colors:
+    STANDORT STRALSUND: '#1FA8C9'
+    STANDORT HAMBURG: '#5AC189'
+    STANDORT LAUENBURG: '#666666'
+    DUISBURG-MEIDERICH: '#FCC700'
+    "STANDORT T\xD6NNING": '#3CCCCB'
+    "STANDORT L\xDCBECK": '#8FD3E4'
+    STANDORT EMDEN: '#ACE1C4'
+    STANDORT CUXHAVEN: '#B2B2B2'
+    BREMEN: '#FDE380'
+    WILHELMSHAVEN: '#9EE5E5'
+    RHEINE: '#454E7C'
+    HAMBURG PORT AUTHORITY: '#A868B7'
+    STANDORT KIEL: '#FEC0A1'
+    STANDORT EBERSWALDE: '#D1C6BC'
+    "STANDORT BRUNSB\xDCTTEL": '#A38F79'
+    STANDORT REGENSBURG: '#FF7F44'
+    STANDORT MEPPEN: '#E04355'
+    STANDORT BRANDENBURG: '#D3B3DA'
+    STANDORT BERLIN: '#A1A6BD'
+    STANDORT MAGDEBURG: '#EFA1AA'
+    STANDORT STUTTGART: '#1FA8C9'
+    STANDORT DRESDEN: '#454E7C'
+    "HANN-M\xDCNDEN": '#5AC189'
+    STANDORT KOBLENZ: '#FF7F44'
+    UELZEN: '#666666'
+    STANDORT BINGEN: '#E04355'
+    MINDEN: '#FCC700'
+    STANDORT TRIER: '#A868B7'
+    "STANDORT SAARBR\xDCCKEN": '#3CCCCB'
+    BRAUNSCHWEIG: '#A38F79'
+    ASCHAFFENBURG: '#8FD3E4'
+    VERDEN: '#A1A6BD'
+    STANDORT MANNHEIM: '#ACE1C4'
+    STANDORT FREIBURG: '#FEC0A1'
+    SCHWEINFURT: '#B2B2B2'
+    STANDORT DUISBURG: '#EFA1AA'
+    "STANDORT K\xD6LN": '#FDE380'
+    STANDORT HEIDELBERG: '#D3B3DA'
+    "BUNDESAMT F\xDCR UMWELT CH": '#9EE5E5'
+    "STANDORT N\xDCRNBERG": '#D1C6BC'
+    "REGIERUNGSPR\xC4SIDIUM FREIBURG": '#1FA8C9'
+    REGIONALSTELLE SUHL: '#454E7C'
+    DEICHINFORMATIONSZENTRUM NEUWIED: '#5AC189'
+    RUHRVERBAND: '#FF7F44'
+    WASSERWIRTSCHAFTSAMT INGOLSTADT: '#666666'
+    VIA DONAU: '#FCC700'
+    "REGIERUNGSPR\xC4SIDIUM KASSEL": '#E04355'
+    MARBURG: '#A868B7'
+    COUNT(value): '#1FA8C9'
+    COUNT_DISTINCT(station_uuid): '#454E7C'
+  color_scheme_domain: []
+  expanded_slices: {}
+  label_colors: {}
+  timed_refresh_immune_slices: []
+  cross_filters_enabled: true
+  default_filters: '{}'
+version: 1.0.0

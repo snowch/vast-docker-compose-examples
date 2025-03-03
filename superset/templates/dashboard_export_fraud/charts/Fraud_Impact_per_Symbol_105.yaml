@@ -1,0 +1,136 @@
+slice_name: Fraud Impact per Symbol
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  datasource: 27__table
+  viz_type: echarts_timeseries_bar
+  slice_id: 105
+  x_axis: stock_symbol
+  x_axis_sort_asc: true
+  x_axis_sort_series: name
+  x_axis_sort_series_ascending: true
+  metrics:
+  - expressionType: SIMPLE
+    column:
+      advanced_data_type: null
+      certification_details: null
+      certified_by: null
+      column_name: price
+      description: null
+      expression: null
+      filterable: true
+      groupby: true
+      id: 781
+      is_certified: false
+      is_dttm: false
+      python_date_format: null
+      type: DOUBLE
+      type_generic: 0
+      verbose_name: null
+      warning_markdown: null
+    aggregate: SUM
+    sqlExpression: null
+    datasourceWarning: false
+    hasCustomLabel: false
+    label: SUM(price)
+    optionName: metric_13i9a6fi86sn_luptbehls
+  - expressionType: SIMPLE
+    column:
+      advanced_data_type: null
+      certification_details: null
+      certified_by: null
+      column_name: stock_symbol
+      description: null
+      expression: null
+      filterable: true
+      groupby: true
+      id: 779
+      is_certified: false
+      is_dttm: false
+      python_date_format: null
+      type: VARCHAR
+      type_generic: 1
+      verbose_name: null
+      warning_markdown: null
+    aggregate: COUNT_DISTINCT
+    sqlExpression: null
+    datasourceWarning: false
+    hasCustomLabel: false
+    label: COUNT_DISTINCT(stock_symbol)
+    optionName: metric_mni6xm23csm_fr1mpvxtr0r
+  groupby: []
+  adhoc_filters:
+  - clause: WHERE
+    comparator:
+    - Fraudulent
+    datasourceWarning: false
+    expressionType: SIMPLE
+    filterOptionName: filter_l4rh4vikvrj_xcapxoj75xe
+    isExtra: false
+    isNew: false
+    operator: IN
+    operatorId: IN
+    sqlExpression: null
+    subject: status
+  limit: 100
+  timeseries_limit_metric:
+    aggregate: SUM
+    column:
+      advanced_data_type: null
+      certification_details: null
+      certified_by: null
+      column_name: price
+      description: null
+      expression: null
+      filterable: true
+      groupby: true
+      id: 781
+      is_certified: false
+      is_dttm: false
+      python_date_format: null
+      type: DOUBLE
+      type_generic: 0
+      verbose_name: null
+      warning_markdown: null
+    datasourceWarning: false
+    expressionType: SIMPLE
+    hasCustomLabel: false
+    label: SUM(price)
+    optionName: metric_qgwp9auftzi_vsrl9maq3do
+    sqlExpression: null
+  order_desc: true
+  row_limit: 100
+  truncate_metric: true
+  show_empty_columns: true
+  comparison_type: values
+  annotation_layers: []
+  forecastPeriods: 10
+  forecastInterval: 0.8
+  orientation: vertical
+  x_axis_title_margin: 15
+  y_axis_title_margin: 15
+  y_axis_title_position: Left
+  sort_series_type: sum
+  color_scheme: supersetColors
+  only_total: true
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  x_axis_time_format: smart_date
+  y_axis_format: SMART_NUMBER
+  truncateXAxis: true
+  y_axis_bounds:
+  - null
+  - null
+  rich_tooltip: true
+  tooltipTimeFormat: smart_date
+  extra_form_data: {}
+  dashboards:
+  - 14
+query_context: '{"datasource":{"id":27,"type":"table"},"force":false,"queries":[{"filters":[{"col":"status","op":"IN","val":["Fraudulent"]}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[{"columnType":"BASE_AXIS","sqlExpression":"stock_symbol","label":"stock_symbol","expressionType":"SQL"}],"metrics":[{"expressionType":"SIMPLE","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"price","description":null,"expression":null,"filterable":true,"groupby":true,"id":781,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"DOUBLE","type_generic":0,"verbose_name":null,"warning_markdown":null},"aggregate":"SUM","sqlExpression":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"SUM(price)","optionName":"metric_13i9a6fi86sn_luptbehls"},{"expressionType":"SIMPLE","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"stock_symbol","description":null,"expression":null,"filterable":true,"groupby":true,"id":779,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"VARCHAR","type_generic":1,"verbose_name":null,"warning_markdown":null},"aggregate":"COUNT_DISTINCT","sqlExpression":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"COUNT_DISTINCT(stock_symbol)","optionName":"metric_mni6xm23csm_fr1mpvxtr0r"}],"orderby":[[{"aggregate":"SUM","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"price","description":null,"expression":null,"filterable":true,"groupby":true,"id":781,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"DOUBLE","type_generic":0,"verbose_name":null,"warning_markdown":null},"datasourceWarning":false,"expressionType":"SIMPLE","hasCustomLabel":false,"label":"SUM(price)","optionName":"metric_qgwp9auftzi_vsrl9maq3do","sqlExpression":null},false]],"annotation_layers":[],"row_limit":100,"series_columns":[],"series_limit":100,"series_limit_metric":{"aggregate":"SUM","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"price","description":null,"expression":null,"filterable":true,"groupby":true,"id":781,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"DOUBLE","type_generic":0,"verbose_name":null,"warning_markdown":null},"datasourceWarning":false,"expressionType":"SIMPLE","hasCustomLabel":false,"label":"SUM(price)","optionName":"metric_qgwp9auftzi_vsrl9maq3do","sqlExpression":null},"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["stock_symbol"],"columns":[],"aggregates":{"SUM(price)":{"operator":"mean"},"COUNT_DISTINCT(stock_symbol)":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"flatten"}]}],"form_data":{"datasource":"27__table","viz_type":"echarts_timeseries_bar","slice_id":105,"x_axis":"stock_symbol","x_axis_sort_asc":true,"x_axis_sort_series":"name","x_axis_sort_series_ascending":true,"metrics":[{"expressionType":"SIMPLE","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"price","description":null,"expression":null,"filterable":true,"groupby":true,"id":781,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"DOUBLE","type_generic":0,"verbose_name":null,"warning_markdown":null},"aggregate":"SUM","sqlExpression":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"SUM(price)","optionName":"metric_13i9a6fi86sn_luptbehls"},{"expressionType":"SIMPLE","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"stock_symbol","description":null,"expression":null,"filterable":true,"groupby":true,"id":779,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"VARCHAR","type_generic":1,"verbose_name":null,"warning_markdown":null},"aggregate":"COUNT_DISTINCT","sqlExpression":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"COUNT_DISTINCT(stock_symbol)","optionName":"metric_mni6xm23csm_fr1mpvxtr0r"}],"groupby":[],"adhoc_filters":[{"clause":"WHERE","comparator":["Fraudulent"],"datasourceWarning":false,"expressionType":"SIMPLE","filterOptionName":"filter_l4rh4vikvrj_xcapxoj75xe","isExtra":false,"isNew":false,"operator":"IN","operatorId":"IN","sqlExpression":null,"subject":"status"}],"limit":100,"timeseries_limit_metric":{"aggregate":"SUM","column":{"advanced_data_type":null,"certification_details":null,"certified_by":null,"column_name":"price","description":null,"expression":null,"filterable":true,"groupby":true,"id":781,"is_certified":false,"is_dttm":false,"python_date_format":null,"type":"DOUBLE","type_generic":0,"verbose_name":null,"warning_markdown":null},"datasourceWarning":false,"expressionType":"SIMPLE","hasCustomLabel":false,"label":"SUM(price)","optionName":"metric_qgwp9auftzi_vsrl9maq3do","sqlExpression":null},"order_desc":true,"row_limit":100,"truncate_metric":true,"show_empty_columns":true,"comparison_type":"values","annotation_layers":[],"forecastPeriods":10,"forecastInterval":0.8,"orientation":"vertical","x_axis_title_margin":15,"y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"sum","color_scheme":"supersetColors","only_total":true,"show_legend":true,"legendType":"scroll","legendOrientation":"top","x_axis_time_format":"smart_date","y_axis_format":"SMART_NUMBER","truncateXAxis":true,"y_axis_bounds":[null,null],"rich_tooltip":true,"tooltipTimeFormat":"smart_date","extra_form_data":{},"dashboards":[14],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 8f643889-83a4-4a78-a946-98612fe97058
+version: 1.0.0
+dataset_uuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e

@@ -1,0 +1,390 @@
+dashboard_title: Trading
+description: null
+css: ''
+slug: null
+certified_by: ''
+certification_details: ''
+published: false
+uuid: 7285ce02-9a34-4c54-8421-fa14377ab1f0
+position:
+  CHART-56NlN2h6Mn:
+    children: []
+    id: CHART-56NlN2h6Mn
+    meta:
+      chartId: 101
+      height: 50
+      sliceName: Trading Events
+      uuid: 901214ad-9dce-439b-bb72-473750d73cd7
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-S0PawKVERA
+    type: CHART
+  CHART-TAYt8LGfSt:
+    children: []
+    id: CHART-TAYt8LGfSt
+    meta:
+      chartId: 102
+      height: 50
+      sliceName: Trades-by-revenue
+      sliceNameOverride: Price Breakdown per Process Type
+      uuid: f4b9b4c5-3cac-4f29-992a-587ff53a4dae
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-S0PawKVERA
+    type: CHART
+  CHART-TQZGXKAT3K:
+    children: []
+    id: CHART-TQZGXKAT3K
+    meta:
+      chartId: 103
+      height: 50
+      sliceName: Trades
+      uuid: faf8e557-def3-40a7-8e02-00c6646ab23a
+      width: 2
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-S0PawKVERA
+    type: CHART
+  CHART-explore-104-1:
+    children: []
+    id: CHART-explore-104-1
+    meta:
+      chartId: 104
+      height: 50
+      sliceName: Trades per Day
+      uuid: 7ceb9dd6-e991-4553-a053-0e77ec2643f2
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-pLlAZDcN6K
+    type: CHART
+  CHART-explore-105-1:
+    children: []
+    id: CHART-explore-105-1
+    meta:
+      chartId: 105
+      height: 50
+      sliceName: Fraud Impact per Symbol
+      uuid: 8f643889-83a4-4a78-a946-98612fe97058
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-Up9a8ug0GE
+    type: CHART
+  CHART-explore-106-1:
+    children: []
+    id: CHART-explore-106-1
+    meta:
+      chartId: 106
+      height: 38
+      sliceName: Fraud-Table
+      uuid: 962f78f4-24a5-447f-9364-bbcd4551687b
+      width: 12
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-Up9a8ug0GE
+    type: CHART
+  CHART-explore-107-1:
+    children: []
+    id: CHART-explore-107-1
+    meta:
+      chartId: 107
+      height: 50
+      sliceName: Trade Volume
+      sliceNameOverride: Trading Volume
+      uuid: 439d12e3-323a-48b7-accb-37606d3712ba
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW--VHC92YXSW
+    type: CHART
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - ROW-S0PawKVERA
+    - ROW-pLlAZDcN6K
+    - ROW-Up9a8ug0GE
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: Trading
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW-S0PawKVERA:
+    children:
+    - CHART-TQZGXKAT3K
+    - CHART-56NlN2h6Mn
+    - CHART-TAYt8LGfSt
+    - CHART-explore-107-1
+    id: ROW-S0PawKVERA
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-Up9a8ug0GE:
+    children:
+    - CHART-explore-106-1
+    id: ROW-Up9a8ug0GE
+    meta:
+      '0': ROOT_ID
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-pLlAZDcN6K:
+    children:
+    - CHART-explore-104-1
+    - CHART-explore-105-1
+    id: ROW-pLlAZDcN6K
+    meta:
+      '0': ROOT_ID
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+metadata:
+  chart_configuration:
+    '101':
+      id: 101
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 102
+        - 103
+        - 104
+        - 105
+        - 106
+        - 107
+    '102':
+      id: 102
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 101
+        - 103
+        - 104
+        - 105
+        - 106
+        - 107
+    '104':
+      id: 104
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 101
+        - 102
+        - 103
+        - 105
+        - 106
+        - 107
+    '105':
+      id: 105
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 101
+        - 102
+        - 103
+        - 104
+        - 106
+        - 107
+    '106':
+      id: 106
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 101
+        - 102
+        - 103
+        - 104
+        - 105
+        - 107
+    '107':
+      id: 107
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 101
+        - 102
+        - 103
+        - 104
+        - 105
+        - 106
+  global_chart_configuration:
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    chartsInScope:
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    - 107
+  color_scheme: ''
+  refresh_frequency: 0
+  shared_label_colors:
+    count: '#1FA8C9'
+    SUM(price): '#5AC189'
+    SUM(quantity): '#3CCCCB'
+    Settled: '#E04355'
+    Pending: '#A868B7'
+    Failed: '#FF7F44'
+    Fraudulent: '#454E7C'
+    COUNT_DISTINCT(stock_symbol): '#FCC700'
+  color_scheme_domain: []
+  expanded_slices: {}
+  label_colors: {}
+  timed_refresh_immune_slices: []
+  cross_filters_enabled: true
+  default_filters: '{}'
+  native_filter_configuration:
+  - id: NATIVE_FILTER-vuZT8afeb
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    name: date
+    filterType: filter_select
+    targets:
+    - column:
+        name: settlement_date
+      datasetUuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 101
+    - 102
+    - 103
+    - 104
+    tabsInScope: []
+  - id: NATIVE_FILTER-_tC4iASnS
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    name: stock_symbol
+    filterType: filter_select
+    targets:
+    - column:
+        name: stock_symbol
+      datasetUuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds:
+    - NATIVE_FILTER-vuZT8afeb
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 101
+    - 102
+    - 103
+    - 104
+    tabsInScope: []
+  - id: NATIVE_FILTER-5WudYEaOo
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    name: status
+    filterType: filter_select
+    targets:
+    - column:
+        name: status
+      datasetUuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds:
+    - NATIVE_FILTER-_tC4iASnS
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 101
+    - 102
+    - 103
+    - 104
+    tabsInScope: []
+  - id: NATIVE_FILTER-CmtUoIuyK
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: true
+      searchAllOptions: false
+      inverseSelection: false
+    name: transaction
+    filterType: filter_select
+    targets:
+    - column:
+        name: transaction_id
+      datasetUuid: 1b3133cf-11d8-4a12-aa73-d5c9e0464c8e
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    tabsInScope: []
+  stagger_refresh: true
+version: 1.0.0
