@@ -26,6 +26,10 @@ Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
 
 ## Running
 
+## Kafka Producer
+
+This process writes simulated data to Kafka.
+
 - Navigate to the **examples/fraud_detection/** folder
 - Open the **Fraud_detect_producer.ipynb** notebook
 - In the menu, select **Kernel** > **Restart Kernel and Run All Cells...**
@@ -35,6 +39,20 @@ Open the Jupyter-Spark url (see [endpoints](#endpoints), above).
 Produced: 88839 records
 ```
 
+## Kafka Consumer
+
+This process reads records from Kafka and writes to the Vast DB.
+
+- Navigate to the **examples/fraud_detection/** folder
+- Open the **Consume_IdentifyFraud.ipynb** notebook
+- In the menu, select **Kernel** > **Restart Kernel and Run All Cells...**
+- Note that after a few seconds, you should see the output.  The number of records should be continuously increasing.
+
+```
+Starting Spark streaming job...
+Last update: 08:50:30 | Batch 0: 0 records | Total messages: 0 | DB rows: 0   
+```
+
 ## Shutdown
 
-
+Click the stop button on both the **Fraud_detect_producer.ipynb** notebook and the **Consume_IdentifyFraud.ipynb** notebook.
