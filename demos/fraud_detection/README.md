@@ -51,4 +51,4 @@ See [here](../SETUP_INSTRUCTIONS.md)
 
 # Demo Instructions
 
-Coming soon ...
+See [here](../DEMONSTRATING.md)
