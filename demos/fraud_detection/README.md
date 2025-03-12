@@ -43,7 +43,10 @@ The VAST Transaction Demo showcases the capabilities of transactions in a data l
 
 By providing a robust transactional layer, VAST Data enables users to build scalable and reliable applications on top of their data lakehouse, while also simplifying development and improving overall system performance.
 
-![Screen Recording](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/Transaction-Demo.mp4)
+<video width="640" height="360" controls>
+  <source src="https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/Transaction-Demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 # Demo Instructions
 
