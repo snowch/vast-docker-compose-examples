@@ -45,6 +45,10 @@ By providing a robust transactional layer, VAST Data enables users to build scal
 
 ![Demo](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/Transaction-Demo.gif)
 
+# Setup Instructions
+
+See [here](../SETUP_INSTRUCTIONS.md)
+
 # Demo Instructions
 
 Coming soon ...
