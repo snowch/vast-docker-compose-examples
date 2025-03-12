@@ -24,7 +24,7 @@ The VAST Trade Settlement Demo showcases the capabilities of near real-time stre
 
 By leveraging VAST DB and real-time streaming capabilities, users can gain a competitive edge in the trade settlement market, improving efficiency, reducing risk, and enhancing decision-making.
 
-![Screen Recording](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/VAST-Trading-Fraud-Demo2.mov)
+![Demo](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/VAST-Trading-Fraud-Demo2.gif)
 
 ## Benefits of Transactions in a Data Lakehouse
 
@@ -43,10 +43,6 @@ The VAST Transaction Demo showcases the capabilities of transactions in a data l
 
 By providing a robust transactional layer, VAST Data enables users to build scalable and reliable applications on top of their data lakehouse, while also simplifying development and improving overall system performance.
 
-<video width="640" height="360" controls>
-  <source src="https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/Transaction-Demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 
 # Demo Instructions
 
