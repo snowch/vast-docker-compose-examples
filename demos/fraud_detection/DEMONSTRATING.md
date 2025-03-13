@@ -55,7 +55,10 @@ Last update: 08:50:30 | Batch 0: 0 records | Total messages: 0 | DB rows: 0
 
 ## Superset
 
-Open the Dashboard "Trading".  See the [demo video](../README.md) for inspiration!
+Open the Dashboard "Trading".  See the demo video for inspiration!
+
+![Demo](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/VAST-Trading-Fraud-Demo2.gif)
+
 
 ## Shutdown
 
