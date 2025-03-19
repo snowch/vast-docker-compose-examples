@@ -48,12 +48,15 @@ fi
 
 # Download VAST NAR using the retrieved version
 wget --continue --no-check-certificate -O /mnt/jars/vastdb_nifi-${LATEST_VAST_NAR_RELEASE}-linux-x86_64-py39.nar https://github.com/vast-data/vastdb_nifi/releases/download/v${LATEST_VAST_NAR_RELEASE}/vastdb_nifi-${LATEST_VAST_NAR_RELEASE}-linux-x86_64-py39.nar
-wget --continue --no-check-certificate -O /mnt/jars/genai_nifi-${LATEST_GENAI_NAR_RELEASE}-linux-x86_64-py39.nar https://github.com/snowch/genai_nifi/releases/download/v${LATEST_GENAI_NAR_RELEASE}/genai_nifi-${LATEST_GENAI_NAR_RELEASE}-linux-x86_64-py39.nar
+#wget --continue --no-check-certificate -O /mnt/jars/genai_nifi-${LATEST_GENAI_NAR_RELEASE}-linux-x86_64-py39.nar https://github.com/snowch/genai_nifi/releases/download/v${LATEST_GENAI_NAR_RELEASE}/genai_nifi-${LATEST_GENAI_NAR_RELEASE}-linux-x86_64-py39.nar
 
 
 # Download remaining NIFI NARS using environment variables (assuming set)
 wget --continue --no-check-certificate -O /mnt/jars/nifi-parquet-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-parquet-nar/${NIFI_VERSION}/nifi-parquet-nar-${NIFI_VERSION}.nar
 wget --continue --no-check-certificate -O /mnt/jars/nifi-hadoop-libraries-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-hadoop-libraries-nar/${NIFI_VERSION}/nifi-hadoop-libraries-nar-${NIFI_VERSION}.nar
-wget --continue --no-check-certificate -O /mnt/jars/nifi-iceberg-processors-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-iceberg-processors-nar/${NIFI_VERSION}/nifi-iceberg-processors-nar-${NIFI_VERSION}.nar
-wget --continue --no-check-certificate -O /mnt/jars/nifi-iceberg-services-api-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-iceberg-services-api-nar/${NIFI_VERSION}/nifi-iceberg-services-api-nar-${NIFI_VERSION}.nar
-wget --continue --no-check-certificate -O /mnt/jars/nifi-iceberg-services-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-iceberg-services-nar/${NIFI_VERSION}/nifi-iceberg-services-nar-${NIFI_VERSION}.nar
+
+#wget --continue --no-check-certificate -O /mnt/jars/nifi-iceberg-processors-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-iceberg-processors-nar/${NIFI_VERSION}/nifi-iceberg-processors-nar-${NIFI_VERSION}.nar
+#wget --continue --no-check-certificate -O /mnt/jars/nifi-iceberg-services-api-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-iceberg-services-api-nar/${NIFI_VERSION}/nifi-iceberg-services-api-nar-${NIFI_VERSION}.nar
+#wget --continue --no-check-certificate -O /mnt/jars/nifi-iceberg-services-nar-${NIFI_VERSION}.nar https://repo1.maven.org/maven2/org/apache/nifi/nifi-iceberg-services-nar/${NIFI_VERSION}/nifi-iceberg-services-nar-${NIFI_VERSION}.nar
+
+cp -f /mnt/nars/*.nar /mnt/jars/

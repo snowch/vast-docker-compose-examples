@@ -8,6 +8,7 @@ services:
       - path: ./.env
         required: true
     volumes:
+      - ./nars://mnt/nars:ro
       - nar_extensions:/mnt/jars
       - ./setup.sh:/workspace/setup.sh
     command: >
