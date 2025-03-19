@@ -487,6 +487,7 @@ def main():
     VASTDB_BULK_IMPORT_TABLE = os.getenv("VASTDB_BULK_IMPORT_TABLE")
     VASTDB_WATERLEVEL_BUCKET = os.getenv("VASTDB_WATERLEVEL_BUCKET")
     VASTDB_WATERLEVEL_SCHEMA = os.getenv("VASTDB_WATERLEVEL_SCHEMA")
+    VAST_KAFKA_BROKER = os.getenv("VAST_KAFKA_BROKER")
     
     S3A_ENDPOINT = os.getenv("S3A_ENDPOINT")
     S3A_ACCESS_KEY = os.getenv("S3A_ACCESS_KEY")
@@ -545,7 +546,7 @@ def main():
 
     update=nipyapi.nifi.ControllerServiceDTO(
                 properties={
-                    'bootstrap.servers': f'{DOCKER_HOST_OR_IP}:19092'
+                    'bootstrap.servers': VAST_KAFKA_BROKER
                 }
             )
     controller = get_controller(api_client, 'Kafka3ConnectionService')

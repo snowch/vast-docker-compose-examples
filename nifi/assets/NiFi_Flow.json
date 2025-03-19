@@ -203,7 +203,7 @@
                 "bundle": {
                     "artifact": "nifi-kafka-3-service-nar",
                     "group": "org.apache.nifi",
-                    "version": "2.0.0-M4"
+                    "version": "2.3.0-SNAPSHOT"
                 },
                 "comments": "",
                 "componentType": "CONTROLLER_SERVICE",
@@ -212,7 +212,7 @@
                         "bundle": {
                             "artifact": "nifi-kafka-service-api-nar",
                             "group": "org.apache.nifi",
-                            "version": "2.0.0-M4"
+                            "version": "2.3.0-SNAPSHOT"
                         },
                         "type": "org.apache.nifi.kafka.service.api.KafkaConnectionService"
                     }
@@ -231,7 +231,8 @@
                     "max.poll.records": "10000",
                     "sasl.mechanism": "GSSAPI",
                     "sasl.username": null,
-                    "security.protocol": "PLAINTEXT"
+                    "security.protocol": "PLAINTEXT",
+                    "enable.idempotence": false
                 },
                 "propertyDescriptors": {
                     "SSL Context Service": {
@@ -1800,7 +1801,7 @@
                                 "bundle": {
                                     "artifact": "nifi-kafka-nar",
                                     "group": "org.apache.nifi",
-                                    "version": "2.0.0-M4"
+                                    "version": "2.3.0-SNAPSHOT"
                                 },
                                 "comments": "",
                                 "componentType": "PROCESSOR",
@@ -1832,7 +1833,7 @@
                                     "Record Writer": "2f3d3a5a-cd88-39f2-8ffb-96d007c8367b",
                                     "Topic Name": "streaming-demo",
                                     "Transactional ID Prefix": null,
-                                    "Transactions Enabled": "true",
+                                    "Transactions Enabled": "false",
                                     "acks": "all",
                                     "compression.type": "none",
                                     "max.request.size": "1 MB",
@@ -3048,7 +3049,7 @@
                                 "bundle": {
                                     "artifact": "nifi-kafka-nar",
                                     "group": "org.apache.nifi",
-                                    "version": "2.0.0-M4"
+                                    "version": "2.3.0-SNAPSHOT"
                                 },
                                 "comments": "",
                                 "componentType": "PROCESSOR",
@@ -3290,7 +3291,7 @@
                                 "bundle": {
                                     "artifact": "nifi-kafka-nar",
                                     "group": "org.apache.nifi",
-                                    "version": "2.0.0-M4"
+                                    "version": "2.3.0-SNAPSHOT"
                                 },
                                 "comments": "",
                                 "componentType": "PROCESSOR",
