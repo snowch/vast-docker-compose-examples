@@ -17,19 +17,24 @@
  sudo apt install python3-full
 ```
 
+Change to examples folder:
+
+```bash
+cd /path/to/vast-docker-compose-examples
+```
+
 Create python venv
 
 ```bash
- python3 -m venv /home/vastdata/vast-docker-compose-examples/.pyvenv
- source /home/vastdata/vast-docker-compose-examples/.pyvenv/bin/activate
+ python3 -m venv .pyvenv
+ source .pyvenv/bin/activate
 ```
 
-Enter new venv + add vastdb module
+Add vastdb module
 
 ```bash
- (.pyvenv) vastdata@whitmore-vdc:~/vast-docker-compose-examples/netflow-datagen$ pip3 install vastdb
+pip3 install vastdb
 ```
-
 
 ## Start the containers
 
