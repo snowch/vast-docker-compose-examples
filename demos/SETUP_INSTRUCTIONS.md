@@ -10,6 +10,27 @@
 - Copy `.env-example` to `.env-local` in the repo root folder
 - Update `.env-local` to reflect your environment
 
+## Setup environment
+
+```bash
+ sudo apt install python3-pip
+ sudo apt install python3-full
+```
+
+Create python venv
+
+```bash
+ python3 -m venv /home/vastdata/vast-docker-compose-examples/.pyvenv
+ source /home/vastdata/vast-docker-compose-examples/.pyvenv/bin/activate
+```
+
+Enter new venv + add vastdb module
+
+```bash
+ (.pyvenv) vastdata@whitmore-vdc:~/vast-docker-compose-examples/netflow-datagen$ pip3 install vastdb
+```
+
+
 ## Start the containers
 
 Run the following scripts from the repo root folder:
