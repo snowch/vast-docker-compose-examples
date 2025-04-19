@@ -1,6 +1,6 @@
 # Infosec
 
-The primary purpose of this example is to demonstrate ... 
+The primary purpose of this example is to demonstrate ingesting and querying netflow data in Vast Database.
 
 ## Streaming Flow
 
