@@ -1,0 +1,45 @@
+{
+    "query_taxpayer_id": "TXP_D76E9A1F4D",
+    "similar_profiles": [
+        {
+            "Taxpayer ID": "TXP_39700D394A",
+            "Distance": 0.020193874835968018
+        },
+        {
+            "Taxpayer ID": "TXP_3969B4D1F8",
+            "Distance": 0.020348548889160156
+        },
+        {
+            "Taxpayer ID": "TXP_4664B4B131",
+            "Distance": 0.03896951675415039
+        },
+        {
+            "Taxpayer ID": "TXP_685DD9187F",
+            "Distance": 0.04871177673339844
+        },
+        {
+            "Taxpayer ID": "TXP_F08A65BE3A",
+            "Distance": 0.05200451612472534
+        },
+        {
+            "Taxpayer ID": "TXP_C7F4F8754F",
+            "Distance": 0.05273747444152832
+        },
+        {
+            "Taxpayer ID": "TXP_6076F8372F",
+            "Distance": 0.05363571643829346
+        },
+        {
+            "Taxpayer ID": "TXP_103D937FF3",
+            "Distance": 0.0545695424079895
+        },
+        {
+            "Taxpayer ID": "TXP_7C0AE0A2FC",
+            "Distance": 0.0552365779876709
+        },
+        {
+            "Taxpayer ID": "TXP_E841CB3D0F",
+            "Distance": 0.0585482120513916
+        }
+    ]
+}
