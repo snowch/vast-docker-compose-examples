@@ -93,10 +93,10 @@ The demands on the vector database depend heavily on the embedding strategy:
 
 Let's estimate the potential storage requirements for the vector database itself, assuming a common embedding dimension of **768** using `float32` (4 bytes/dimension) and including a **1.5x-2x overhead** for IDs, metadata, and the search index (e.g., HNSW graph):
 
-1.  **Embedding Granular Records (Small Scale):**
-    * *Scenario:* Embedding billions of individual records (e.g., 10 billion significant records over time).
-    * *Raw Vector Size:* 10B vectors * 768 dims * 4 bytes/dim ≈ 30.7 TB (or **~31 TB**).
-    * *Estimated DB Size (with overhead):* **~45 TB to 60 TB**. This requires a significantly more scalable storage and indexing solution.
+1.  **Embedding Granular Records (Medium Scale):**
+    * *Scenario:* Embedding billions of individual records (e.g., 100 billion significant records over time).
+    * *Raw Vector Size:* 100B vectors * 768 dims * 4 bytes/dim ≈ 307.2 TB (or **~307 TB**).
+    * *Estimated DB Size (with overhead):*  ~460 TB to 615 TB. This necessitates a highly scalable, distributed, storage and indexing solution.
 
 3.  **Embedding Granular Records (Large Scale):**
     * *Scenario:* Embedding trillions of individual records (e.g., considering detailed transaction logs over many years).
