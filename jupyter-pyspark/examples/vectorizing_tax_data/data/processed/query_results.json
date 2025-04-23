@@ -1,45 +1,45 @@
 {
-    "query_taxpayer_id": "TXP_1E865610F4",
+    "query_taxpayer_id": "TXP_595479B867",
     "similar_profiles": [
         {
-            "Taxpayer ID": "TXP_E0313DA653",
-            "Distance": 0.010671257972717285
+            "Taxpayer ID": "TXP_3BF21F2AE7",
+            "Distance": 0.13536721467971802
         },
         {
-            "Taxpayer ID": "TXP_220000D545",
-            "Distance": 0.018632173538208008
+            "Taxpayer ID": "TXP_BAA950F168",
+            "Distance": 0.15242314338684082
         },
         {
-            "Taxpayer ID": "TXP_BDF5286456",
-            "Distance": 0.02045607566833496
+            "Taxpayer ID": "TXP_D33C9D72AD",
+            "Distance": 0.15604060888290405
         },
         {
-            "Taxpayer ID": "TXP_2AF1C31EB8",
-            "Distance": 0.020550251007080078
+            "Taxpayer ID": "TXP_D9351E6FD0",
+            "Distance": 0.18911492824554443
         },
         {
-            "Taxpayer ID": "TXP_50BAB82433",
-            "Distance": 0.028064966201782227
+            "Taxpayer ID": "TXP_2D85DCB938",
+            "Distance": 0.18999230861663818
         },
         {
-            "Taxpayer ID": "TXP_D95E78876D",
-            "Distance": 0.029509663581848145
+            "Taxpayer ID": "TXP_8ACB54CE81",
+            "Distance": 0.22352516651153564
         },
         {
-            "Taxpayer ID": "TXP_946DF5DFDE",
-            "Distance": 0.03789395093917847
+            "Taxpayer ID": "TXP_58584DB75E",
+            "Distance": 0.22649133205413818
         },
         {
-            "Taxpayer ID": "TXP_CCBBD72690",
-            "Distance": 0.042717814445495605
+            "Taxpayer ID": "TXP_20B925A862",
+            "Distance": 0.23277711868286133
         },
         {
-            "Taxpayer ID": "TXP_2FB98FF8B0",
-            "Distance": 0.042893171310424805
+            "Taxpayer ID": "TXP_248D37CEF3",
+            "Distance": 0.23914211988449097
         },
         {
-            "Taxpayer ID": "TXP_B4C083A06F",
-            "Distance": 0.04916203022003174
+            "Taxpayer ID": "TXP_A2E4FF8EC6",
+            "Distance": 0.2514756917953491
         }
     ]
 }
