@@ -59,6 +59,9 @@ Open the Dashboard "Trading".  See the demo video for inspiration!
 
 ![Demo](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/VAST-Trading-Fraud-Demo2.gif)
 
+## Knime
+
+![Demo](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/knime_ml_model.gif)
 
 ## Shutdown
 
