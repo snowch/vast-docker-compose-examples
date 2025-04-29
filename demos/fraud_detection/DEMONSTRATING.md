@@ -57,6 +57,8 @@ Last update: 08:50:30 | Batch 0: 0 records | Total messages: 0 | DB rows: 0
 
 Open the Dashboard "Trading".  See the demo video for inspiration!
 
+Note that the errors you see initially on the Superset reports in the recording are because the Vast DB schema was removed to start with a clean environment. 
+
 ![Demo](https://media.githubusercontent.com/media/snowch/vast-docker-compose-examples/refs/heads/main/demos/fraud_detection/assets/VAST-Trading-Fraud-Demo2.gif)
 
 ## Knime
