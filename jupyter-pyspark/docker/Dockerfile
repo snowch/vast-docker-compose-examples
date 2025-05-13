@@ -125,6 +125,42 @@ COPY spark-defaults.conf /usr/local/spark/conf/
 COPY spark-env.sh /usr/local/spark/conf/
 COPY log4j2.properties /usr/local/spark/conf/
 
+
+#########
+# --- Add new kernel for examples/banking/customer_lifetime_value ---
+# You can use ARGs to make the kernel name, Python version, and display name configurable
+ARG NEW_KERNEL_ENV_NAME="custom_py310"
+ARG NEW_KERNEL_PYTHON_VERSION="3.10"
+ARG NEW_KERNEL_DISPLAY_NAME="Python 3.10 (Custom - CLV Analysis)"
+ARG NEW_KERNEL_PACKAGES="pandas numpy scikit-learn matplotlib" # Space-separated list of packages
+
+RUN echo "Creating new Conda environment for kernel: ${NEW_KERNEL_ENV_NAME} with Python ${NEW_KERNEL_PYTHON_VERSION}" && \
+    # Create the new Conda environment with the specified Python version
+    mamba create -n "${NEW_KERNEL_ENV_NAME}" python="${NEW_KERNEL_PYTHON_VERSION}" -y && \
+    \
+    echo "Installing ipykernel and packages (${NEW_KERNEL_PACKAGES}) into ${NEW_KERNEL_ENV_NAME}" && \
+    # Install ipykernel and other desired packages into the new environment
+    # Note: mamba install -n env_name package1 package2 ...
+    mamba install -n "${NEW_KERNEL_ENV_NAME}" ipykernel ${NEW_KERNEL_PACKAGES} -y && \
+    \
+    # (Optional but recommended for explicit control over display name and ensuring registration)
+    # If nb_conda_kernels is present (usual for jupyter/scipy-notebook),
+    # it would auto-detect this environment once ipykernel is installed.
+    # This explicit registration gives you control over the display name.
+    echo "Registering ${NEW_KERNEL_ENV_NAME} as a Jupyter kernel with display name: ${NEW_KERNEL_DISPLAY_NAME}" && \
+    mamba run -n "${NEW_KERNEL_ENV_NAME}" python -m ipykernel install --user --name="${NEW_KERNEL_ENV_NAME}_kernel_spec" --display-name="${NEW_KERNEL_DISPLAY_NAME}" && \
+    \
+    echo "Cleaning up mamba caches" && \
+    mamba clean --all -f -y && \
+    \
+    # Ensure permissions are correct for the new environment and user's kernels directory
+    # Conda environments are typically in ${CONDA_DIR}/envs/
+    # User-installed kernelspecs are in /home/${NB_USER}/.local/share/jupyter/kernels/
+    fix-permissions "${CONDA_DIR}/envs/${NEW_KERNEL_ENV_NAME}" && \
+    fix-permissions "/home/${NB_USER}/.local"
+# --- End new kernel addition ---
+##########
+
 # USER ${NB_UID}
 
 # Set the startup command to run the mount script and then start Jupyter
