@@ -132,7 +132,7 @@ COPY log4j2.properties /usr/local/spark/conf/
 ARG NEW_KERNEL_ENV_NAME="custom_py310"
 ARG NEW_KERNEL_PYTHON_VERSION="3.10"
 ARG NEW_KERNEL_DISPLAY_NAME="Python 3.10 (Custom - CLV Analysis)"
-ARG NEW_KERNEL_PACKAGES="pandas numpy scikit-learn matplotlib" # Space-separated list of packages
+ARG NEW_KERNEL_PACKAGES="pandas numpy scikit-learn matplotlib pymc-marketing arviz graphviz vastdb pyarrow" # Space-separated list of packages
 
 RUN echo "Creating new Conda environment for kernel: ${NEW_KERNEL_ENV_NAME} with Python ${NEW_KERNEL_PYTHON_VERSION}" && \
     # Create the new Conda environment with the specified Python version
