@@ -1,7 +1,7 @@
 # Base Jupyter image setup
 ARG REGISTRY=quay.io
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook
+ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook:b74418220768
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -34,6 +34,10 @@ RUN apt-get update --yes && \
     ca-certificates-java && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends  python3-graphviz && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # If spark_version is not set, latest stable Spark will be installed
 ARG spark_version
 ARG hadoop_version="3"
@@ -42,7 +46,7 @@ ARG scala_version
 # URL to use for Spark downloads
 # You need to use https://archive.apache.org/dist/spark/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use the recommended site for download
-ARG spark_download_url="https://dlcdn.apache.org/spark/"
+ARG spark_download_url="https://archive.apache.org/dist/spark/"
 
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
@@ -93,9 +97,9 @@ RUN chmod +x /usr/local/bin/s3cmd_configure.sh
 
 USER ${NB_UID}
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
-    . "$HOME/.cargo/env" && \
-    cargo install datafusion-cli
+#RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+#    . "$HOME/.cargo/env" && \
+#    cargo install datafusion-cli
 
 # Install pyarrow and pandas
 RUN mamba install --yes \
