@@ -64,22 +64,6 @@ docker compose down
 - `KAFKA_TOPIC` - Kafka topic name (default: zeek-live-logs)
 - `MONITOR_INTERFACE` - Network interface to monitor (default: eth0)
 
-### Key Simplifications
-
-**Before (Complex Setup):**
-- Custom bridge networks (`br-zeek-sim`)
-- Network namespaces
-- Multiple veth pairs
-- Host networking mode
-- Complex virtual network setup script
-
-**After (Simplified Setup):**
-- Standard Docker bridge network
-- Container's default `eth0` interface
-- No custom network namespaces
-- Standard Docker networking
-- Automatic traffic capture between containers
-
 ## 📊 Monitoring Traffic
 
 ### What Zeek Monitors
@@ -108,14 +92,13 @@ Zeek monitors all traffic between containers in the `zeek-network`:
 
 ```
 zeek-service/
-├── docker-compose.yml          # Simplified Docker Compose configuration
-├── Dockerfile                  # Zeek container with Kafka plugin
+├── docker-compose.yml         # Simplified Docker Compose configuration
+├── Dockerfile                 # Zeek container with Kafka plugin
 ├── Dockerfile.scapy           # Traffic simulator container
 ├── scripts/
 │   └── monitor-live.sh        # Simplified monitoring script
 ├── zeek-config/
-│   ├── kafka-live.zeek        # Zeek configuration for live monitoring
-│   └── kafka-pcap.zeek        # Zeek configuration for PCAP analysis
+│   └── kafka-live.zeek        # Zeek configuration for live monitoring
 ├── zeek-logs/                 # Zeek output logs
 ├── traffic-scripts/           # Traffic generation scripts
 ├── web-content/               # Test web server content

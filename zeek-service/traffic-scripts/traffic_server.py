@@ -195,7 +195,7 @@ WEB_INTERFACE = """
         function log(message) {
             const logDiv = document.getElementById('log');
             const timestamp = new Date().toLocaleTimeString();
-            logDiv.innerHTML += `[${timestamp}] ${message}\\n`;
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>\\n`;
             logDiv.scrollTop = logDiv.scrollHeight;
         }
         
