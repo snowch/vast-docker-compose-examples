@@ -1,0 +1,64 @@
+services:
+  # Simplified Zeek monitoring using container's default network interface
+  zeek-live:
+    build: .
+    container_name: zeek-live-monitor
+    restart: unless-stopped
+    volumes:
+      - ./zeek-config:/config
+      - ./zeek-logs:/logs
+      - ./scripts:/scripts
+    environment:
+      - KAFKA_BROKER=172.200.204.1:9092
+      - KAFKA_TOPIC=zeek-live-logs
+      - MONITOR_INTERFACE=eth0  # Use container's default interface
+    command: /scripts/monitor-live.sh
+    # Use default bridge network instead of host networking
+    networks:
+      - zeek-network
+    # Still need some capabilities for packet capture
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # Enable promiscuous mode for packet capture
+    privileged: true
+    # Route traffic through Zeek container to enable monitoring
+    ports:
+      - "8082:80"  # Proxy port for monitoring web traffic
+
+  # Simplified traffic simulator using default networking
+  traffic-simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile.scapy
+    container_name: scapy-traffic-sim
+    restart: unless-stopped
+    volumes:
+      - ./traffic-scripts:/traffic-scripts
+    ports:
+      - "8080:8080"
+    networks:
+      - zeek-network
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    command: python3 /traffic-scripts/traffic_server.py
+
+  # Optional: Add a simple web server to generate HTTP traffic for testing
+  web-server:
+    image: nginx:alpine
+    container_name: test-web-server
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    networks:
+      - zeek-network
+    volumes:
+      - ./web-content:/usr/share/nginx/html:ro
+
+networks:
+  zeek-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24

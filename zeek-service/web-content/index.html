@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeek Traffic Test Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Zeek Traffic Monitoring Test Server</h1>
+        <p>This simple web server generates HTTP traffic that can be monitored by Zeek.</p>
+        
+        <div class="status">
+            <h3>📊 Traffic Generation</h3>
+            <button class="button" onclick="generateTraffic()">Generate HTTP Traffic</button>
+            <button class="button" onclick="fetchData()">Fetch JSON Data</button>
+            <button class="button" onclick="postData()">POST Request</button>
+        </div>
+        
+        <div id="output" class="status" style="display: none;">
+            <h3>📝 Output</h3>
+            <pre id="result"></pre>
+        </div>
+        
+        <div class="status">
+            <h3>ℹ️ Information</h3>
+            <p><strong>Purpose:</strong> Generate various types of HTTP traffic for Zeek monitoring</p>
+            <p><strong>Zeek Monitor:</strong> Monitoring traffic on container's eth0 interface</p>
+            <p><strong>Network:</strong> Docker bridge network (zeek-network)</p>
+        </div>
+    </div>
+
+    <script>
+        function showOutput(text) {
+            document.getElementById('output').style.display = 'block';
+            document.getElementById('result').textContent = text;
+        }
+
+        function generateTraffic() {
+            fetch('/api/test')
+                .then(response => response.text())
+                .then(data => showOutput('GET /api/test: ' + data))
+                .catch(error => showOutput('Error: ' + error));
+        }
+
+        function fetchData() {
+            fetch('/api/data')
+                .then(response => response.json())
+                .then(data => showOutput('GET /api/data: ' + JSON.stringify(data, null, 2)))
+                .catch(error => showOutput('Error: ' + error));
+        }
+
+        function postData() {
+            fetch('/api/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: 'Test POST request',
+                    timestamp: new Date().toISOString()
+                })
+            })
+            .then(response => response.json())
+            .then(data => showOutput('POST /api/submit: ' + JSON.stringify(data, null, 2)))
+            .catch(error => showOutput('Error: ' + error));
+        }
+
+        // Auto-generate some traffic every 30 seconds
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                generateTraffic();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
