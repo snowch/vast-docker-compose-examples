@@ -138,20 +138,7 @@ WEB_INTERFACE = """
             <button class="stop" onclick="stopAllTraffic()">Stop All Traffic</button>
         </div>
         
-        <div class="section">
-            <h3>🔧 Network Interface Selection</h3>
-            <div>
-                <label>Target Interface:</label>
-                <select id="networkInterface">
-                    <option value="br-zeek-sim">br-zeek-sim (simulation bridge)</option>
-                    <option value="veth-guest3">veth-guest3 (virtual host 1)</option>
-                    <option value="veth-guest4">veth-guest4 (virtual host 2)</option>
-                    <option value="tap-monitor">tap-monitor (monitoring tap)</option>
-                </select>
-                <button onclick="refreshInterfaces()">Refresh Interfaces</button>
-            </div>
-            <div id="interfaceStatus"></div>
-        </div>
+
 
         <div class="section">
             <h3>⚙️ Custom Traffic Configuration</h3>
@@ -175,7 +162,6 @@ WEB_INTERFACE = """
                 <label>Packets per second:</label>
                 <input type="number" id="pps" value="2" min="1" max="100">
             </div>
-            <button onclick="startInterfaceTraffic()">Start Interface Traffic</button>
             <button onclick="startCustomTraffic()">Start Custom Traffic</button>
         </div>
         
@@ -233,47 +219,7 @@ WEB_INTERFACE = """
             }
         }
         
-        async function refreshInterfaces() {
-            log('Refreshing network interfaces...');
-            const result = await apiCall('interfaces');
-            if (result && result.success) {
-                const select = document.getElementById('networkInterface');
-                select.innerHTML = '';
-                
-                result.interfaces.forEach(iface => {
-                    const option = document.createElement('option');
-                    option.value = iface.name;
-                    option.textContent = `${iface.name} (${iface.is_up ? 'UP' : 'DOWN'})`;
-                    select.appendChild(option);
-                });
-                
-                document.getElementById('interfaceStatus').innerHTML = 
-                    `Found ${result.interfaces.length} interfaces`;
-                log(`Found ${result.interfaces.length} network interfaces`);
-            }
-        }
-        
-        async function startInterfaceTraffic() {
-            const iface = document.getElementById('networkInterface').value;
-            const trafficType = document.getElementById('trafficType').value;
-            const targetIP = document.getElementById('targetIP').value;
-            const duration = parseInt(document.getElementById('duration').value);
-            const pps = parseInt(document.getElementById('pps').value);
-            
-            log(`Starting interface traffic on ${iface}...`);
-            const result = await apiCall('start_interface_traffic', {
-                interface: iface,
-                type: trafficType,
-                target_ip: targetIP,
-                duration: duration,
-                packets_per_second: pps
-            });
-            
-            if (result && result.success) {
-                showStatus(`Interface traffic started on ${iface}`, 'success');
-                log(`Interface traffic started - Session ID: ${result.session_id}`);
-            }
-        }
+
         
         async function startHTTPTraffic() {
             log('Starting HTTP traffic generation...');
@@ -356,8 +302,7 @@ WEB_INTERFACE = """
         // Auto-refresh status every 30 seconds
         setInterval(getStatus, 30000);
         
-        // Auto-refresh interfaces on page load
-        refreshInterfaces();
+
         
         // Initial status check
         getStatus();
@@ -413,63 +358,7 @@ def start_scenario():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
-@app.route('/api/interfaces', methods=['POST', 'GET'])
-def get_interfaces():
-    try:
-        generator = TrafficGenerator()
-        interfaces = generator.list_interfaces_with_stats()
-        
-        return jsonify({
-            'success': True,
-            'interfaces': interfaces
-        })
-        
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
 
-@app.route('/api/start_interface_traffic', methods=['POST'])
-def start_interface_traffic():
-    try:
-        data = request.get_json()
-        interface = data.get('interface', 'br-zeek-sim')
-        traffic_type = data.get('type', 'mixed')
-        duration = data.get('duration', 60)
-        target_ip = data.get('target_ip', '192.168.200.20')
-        packets_per_second = data.get('packets_per_second', 2)
-        
-        # Generate unique session ID
-        session_id = f"interface_{interface}_{int(time.time())}"
-        
-        # Create traffic generator
-        generator = TrafficGenerator()
-        
-        # Start interface traffic generation
-        thread = threading.Thread(
-            target=generator.generate_traffic_to_interface,
-            args=(interface, traffic_type, target_ip, duration, packets_per_second, False)
-        )
-        
-        thread.start()
-        
-        # Store the session
-        traffic_threads[session_id] = generator
-        active_sessions[session_id] = {
-            'type': f"interface_{traffic_type}",
-            'interface': interface,
-            'started': datetime.now().isoformat(),
-            'duration': duration,
-            'target_ip': target_ip,
-            'pps': packets_per_second
-        }
-        
-        return jsonify({
-            'success': True,
-            'session_id': session_id,
-            'message': f'Interface traffic generation started on {interface}'
-        })
-        
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/api/start_traffic', methods=['POST'])
 def start_traffic():
