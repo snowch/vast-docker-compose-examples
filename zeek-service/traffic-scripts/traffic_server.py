@@ -25,7 +25,7 @@ class TrafficGenerator(NetworkTrafficGenerator):
     def __init__(self):
         super().__init__()
         
-    def generate_http_traffic(self, target_ip="192.168.200.20", duration=60, packets_per_second=1):
+    def generate_http_traffic(self, target_ip="192.168.100.20", duration=60, packets_per_second=1):
         """Generate simulated HTTP traffic with precise timing"""
         self.running = True
         start_time = time.time()
@@ -53,7 +53,7 @@ class TrafficGenerator(NetworkTrafficGenerator):
                 
         self.running = False
     
-    def generate_dns_traffic(self, target_ip="192.168.200.1", duration=60, packets_per_second=1):
+    def generate_dns_traffic(self, target_ip="192.168.100.1", duration=60, packets_per_second=1):
         """Generate simulated DNS traffic with precise timing"""
         self.running = True
         start_time = time.time()
@@ -82,26 +82,36 @@ class TrafficGenerator(NetworkTrafficGenerator):
         self.running = False
     
     def generate_mixed_traffic(self, duration=60, packets_per_second=2):
-        """Generate mixed protocol traffic"""
+        """Generate mixed protocol traffic with precise timing"""
         self.running = True
-        end_time = time.time() + duration
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
         
         while self.running and time.time() < end_time:
             try:
-                traffic_type = random.choice(['http', 'dns', 'tcp', 'udp'])
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    traffic_type = random.choice(['http', 'dns', 'tcp', 'udp'])
+                    
+                    if traffic_type == 'http':
+                        target = f"192.168.100.{random.randint(20, 29)}"
+                        packet = IP(dst=target)/TCP(dport=80, sport=random.randint(1024, 65535))/Raw(load="GET /index.html HTTP/1.1\r\n\r\n")
+                    elif traffic_type == 'dns':
+                        packet = IP(dst="192.168.100.1")/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname=f"host{random.randint(1,100)}.example.com"))
+                    elif traffic_type == 'tcp':
+                        packet = IP(dst=f"192.168.100.{random.randint(20, 29)}")/TCP(dport=random.choice([22, 443, 993, 995]))
+                    else:  # udp
+                        packet = IP(dst=f"192.168.100.{random.randint(20, 29)}")/UDP(dport=random.choice([123, 161, 514]))
+                    
+                    send(packet, verbose=0)
+                    
+                    # Schedule next packet with precise timing
+                    next_packet_time += packet_interval
                 
-                if traffic_type == 'http':
-                    target = f"192.168.200.{random.randint(20, 29)}"
-                    packet = IP(dst=target)/TCP(dport=80, sport=random.randint(1024, 65535))/Raw(load="GET /index.html HTTP/1.1\r\n\r\n")
-                elif traffic_type == 'dns':
-                    packet = IP(dst="192.168.200.1")/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname=f"host{random.randint(1,100)}.example.com"))
-                elif traffic_type == 'tcp':
-                    packet = IP(dst=f"192.168.200.{random.randint(20, 29)}")/TCP(dport=random.choice([22, 443, 993, 995]))
-                else:  # udp
-                    packet = IP(dst=f"192.168.200.{random.randint(20, 29)}")/UDP(dport=random.choice([123, 161, 514]))
-                
-                send(packet, verbose=0)
-                time.sleep(1.0 / packets_per_second)
+                # Small sleep to prevent busy waiting
+                time.sleep(0.001)
             except Exception as e:
                 print(f"Error generating mixed traffic: {e}")
                 break
@@ -138,21 +148,35 @@ WEB_INTERFACE = """
 <body>
     <div class="container">
         <h1>🌐 Live Network Traffic Simulator</h1>
+        <div style="margin: 20px 0; padding: 15px; background: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px;">
+            <h4 style="margin: 0 0 10px 0; color: #1976d2;">📡 Network Traffic Generator for Zeek Monitoring</h4>
+            <p style="margin: 0; color: #0d47a1;">Generate realistic network traffic to test your Zeek-Kafka pipeline. All traffic is sent to the virtual network (192.168.100.0/24) where Zeek monitors and forwards events to Kafka with optimized low-latency settings.</p>
+        </div>
                 
         <div class="section">
             <h3>🎭 Realistic Simulation Scenarios</h3>
-            <button class="scenario" onclick="startScenario('web_browsing')">🌐 Web Browsing</button>
-            <button class="scenario" onclick="startScenario('file_transfer')">📁 File Transfer</button>
-            <button class="scenario" onclick="startScenario('video_streaming')">🎥 Video Streaming</button>
-            <button class="scenario" onclick="startScenario('office_network')">🏢 Office Network</button>
-            <button class="scenario" onclick="startScenario('malicious_activity')">🛡️ Security Testing</button>
+            <p><strong>Pre-configured traffic patterns that simulate real-world network behavior:</strong></p>
+            <div style="margin: 10px 0; font-size: 14px; color: #666;">
+                Each scenario runs for <strong>2 minutes</strong> at <strong>5 packets/second</strong> with realistic protocol mixes
+            </div>
+            <button class="scenario" onclick="startScenario('web_browsing')" title="HTTP/HTTPS requests, DNS lookups, typical web traffic patterns">🌐 Web Browsing</button>
+            <button class="scenario" onclick="startScenario('file_transfer')" title="FTP, SFTP, SCP traffic with large data transfers">📁 File Transfer</button>
+            <button class="scenario" onclick="startScenario('video_streaming')" title="High-bandwidth UDP streams simulating video content">🎥 Video Streaming</button>
+            <button class="scenario" onclick="startScenario('office_network')" title="Email, file shares, printing, DHCP - typical office protocols">🏢 Office Network</button>
+            <button class="scenario" onclick="startScenario('malicious_activity')" title="Port scans, brute force, suspicious DNS - for IDS testing">🛡️ Security Testing</button>
         </div>
 
         <div class="section">
             <h3>⚡ Quick Start Traffic Generation</h3>
-            <button onclick="startHTTPTraffic()">Generate HTTP Traffic</button>
-            <button onclick="startDNSTraffic()">Generate DNS Traffic</button>
-            <button onclick="startMixedTraffic()">Generate Mixed Traffic</button>
+            <p><strong>One-click traffic generation with predefined settings:</strong></p>
+            <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 14px;">
+                <div><strong>HTTP Traffic:</strong> 2 packets/sec for 60 seconds → 192.168.100.20:80</div>
+                <div><strong>DNS Traffic:</strong> 1 packet/sec for 60 seconds → 192.168.100.1:53</div>
+                <div><strong>Mixed Traffic:</strong> 3 packets/sec for 120 seconds (HTTP, DNS, TCP, UDP mix)</div>
+            </div>
+            <button onclick="startHTTPTraffic()" title="Generates HTTP GET requests to simulate web browsing">Generate HTTP Traffic</button>
+            <button onclick="startDNSTraffic()" title="Generates DNS queries for common domains">Generate DNS Traffic</button>
+            <button onclick="startMixedTraffic()" title="Generates random mix of HTTP, DNS, TCP, and UDP traffic">Generate Mixed Traffic</button>
             <button class="stop" onclick="stopAllTraffic()">Stop All Traffic</button>
         </div>
         
@@ -160,25 +184,29 @@ WEB_INTERFACE = """
 
         <div class="section">
             <h3>⚙️ Custom Traffic Configuration</h3>
+            <p><strong>Configure your own traffic parameters for specific testing needs:</strong></p>
+            <div style="margin: 10px 0; padding: 10px; background: #fff3cd; border-radius: 4px; font-size: 14px; color: #856404;">
+                <strong>💡 Tips:</strong> Use HTTP for web traffic testing, DNS for name resolution testing, Mixed for general network activity simulation. Higher packet rates generate more events but may impact system performance.
+            </div>
             <div>
                 <label>Traffic Type:</label>
-                <select id="trafficType">
-                    <option value="http">HTTP</option>
-                    <option value="dns">DNS</option>
-                    <option value="mixed">Mixed</option>
+                <select id="trafficType" title="Choose the protocol type to generate">
+                    <option value="http">HTTP (Web traffic to port 80)</option>
+                    <option value="dns">DNS (Name resolution queries to port 53)</option>
+                    <option value="mixed">Mixed (Random HTTP, DNS, TCP, UDP)</option>
                 </select>
             </div>
             <div>
                 <label>Target IP:</label>
-                <input type="text" id="targetIP" value="192.168.200.20" placeholder="192.168.200.20">
+                <input type="text" id="targetIP" value="192.168.100.20" placeholder="192.168.100.20" title="Destination IP address in virtual network range">
             </div>
             <div>
                 <label>Duration (seconds):</label>
-                <input type="number" id="duration" value="60" min="1" max="3600">
+                <input type="number" id="duration" value="60" min="1" max="3600" title="How long to generate traffic (1-3600 seconds)">
             </div>
             <div>
                 <label>Packets per second:</label>
-                <input type="number" id="pps" value="2" min="1" max="100">
+                <input type="number" id="pps" value="2" min="1" max="100" title="Traffic rate - higher values create more events">
             </div>
             <button onclick="startCustomTraffic()">Start Custom Traffic</button>
         </div>
@@ -243,7 +271,7 @@ WEB_INTERFACE = """
             log('Starting HTTP traffic generation...');
             const result = await apiCall('start_traffic', {
                 type: 'http',
-                target_ip: '192.168.200.20',
+                target_ip: '192.168.100.20',
                 duration: 60,
                 packets_per_second: 2
             });
@@ -257,7 +285,7 @@ WEB_INTERFACE = """
             log('Starting DNS traffic generation...');
             const result = await apiCall('start_traffic', {
                 type: 'dns',
-                target_ip: '192.168.200.1',
+                target_ip: '192.168.100.1',
                 duration: 60,
                 packets_per_second: 1
             });
