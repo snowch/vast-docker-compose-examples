@@ -42,6 +42,10 @@ redef Kafka::tag_json = T;
 # Live monitoring specific settings
 redef LogAscii::use_json = T;
 
+# Fix for TCP checksum offloading in containerized environments
+# Ignore invalid checksums that are common with NIC offloading
+redef ignore_checksums = T;
+
 # Enhanced event handlers with more detailed logging
 event zeek_init() {
     print "🚀 Zeek initialized - starting packet capture";

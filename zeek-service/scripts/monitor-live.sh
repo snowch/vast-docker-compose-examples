@@ -61,5 +61,6 @@ echo ""
 echo "💡 This simplified setup monitors traffic on the container's default network interface"
 echo "💡 All containers in the zeek-network will have their traffic monitored"
 
-# Start Zeek in live monitoring mode
-exec zeek -i "$INTERFACE" "$ZEEK_CONFIG"
+# Start Zeek in live monitoring mode with checksum validation disabled
+# The -C flag ignores invalid checksums (common in containerized environments)
+exec zeek -C -i "$INTERFACE" "$ZEEK_CONFIG"
