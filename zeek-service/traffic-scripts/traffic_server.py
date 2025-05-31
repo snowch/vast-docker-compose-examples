@@ -198,113 +198,133 @@ WEB_INTERFACE = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Scapy Virtual Network Traffic Generator</title>
+    <title>Network Traffic Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
-        .container { max-width: 1400px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
-        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
-        .virtual-net { background: #e8f5e8; border-color: #4caf50; }
-        .live-monitoring { background: #e3f2fd; border-color: #2196f3; }
-        button { background: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
-        button:hover { background: #0056b3; }
-        button.stop { background: #dc3545; }
-        button.stop:hover { background: #c82333; }
-        button.scenario { background: #28a745; }
-        button.scenario:hover { background: #218838; }
-        button.kafka { background: #17a2b8; }
-        button.kafka:hover { background: #138496; }
-        input, select { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; }
-        .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
-        .logs-container { display: flex; gap: 20px; margin-top: 20px; }
-        .log-panel { flex: 1; }
-        .log-box { background: #f8f9fa; padding: 10px; border: 1px solid #dee2e6; border-radius: 4px; height: 300px; overflow-y: scroll; font-family: monospace; font-size: 12px; white-space: pre-wrap; }
-        .kafka-box { background: #f8f9fa; padding: 10px; border: 1px solid #dee2e6; border-radius: 4px; height: 400px; overflow-y: scroll; font-family: monospace; font-size: 11px; white-space: pre-wrap; }
-        .connection-status { padding: 5px 10px; border-radius: 3px; font-weight: bold; margin-bottom: 10px; font-size: 12px; }
-        .connected { background-color: #d4edda; color: #155724; }
-        .disconnected { background-color: #f8d7da; color: #721c24; }
-        .clear-btn { background-color: #6c757d; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; font-size: 12px; margin: 5px 5px 10px 0; }
-        .clear-btn:hover { background-color: #545b62; }
-        .topology { background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: monospace; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 10px; background: #f8f9fa; font-size: 14px; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header h1 { margin: 0; font-size: 24px; color: #2c3e50; }
+        .status-badge { background: #e3f2fd; color: #1976d2; padding: 8px 12px; border-radius: 20px; font-weight: 500; font-size: 13px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .control-panel { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .scenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 15px 0; }
+        .scenario-btn { background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 12px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s; text-align: center; }
+        .scenario-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .custom-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; align-items: end; margin: 15px 0; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 12px; color: #6c757d; margin-bottom: 4px; font-weight: 500; }
+        input, select { padding: 8px; border: 1px solid #dee2e6; border-radius: 4px; font-size: 13px; }
+        .btn { background: #007bff; color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500; transition: background 0.2s; }
+        .btn:hover { background: #0056b3; }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #218838; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
+        .btn-secondary { background: #6c757d; }
+        .btn-secondary:hover { background: #545b62; }
+        .status-section { background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .status-display { padding: 10px; border-radius: 4px; margin: 10px 0; font-weight: 500; }
+        .status-success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .status-error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .status-info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        .logs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .log-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .log-header { padding: 15px 20px; border-bottom: 1px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; }
+        .log-header h3 { margin: 0; font-size: 16px; color: #495057; }
+        .log-controls { display: flex; gap: 8px; }
+        .log-box { height: 300px; overflow-y: auto; padding: 15px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 11px; line-height: 1.4; background: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; word-wrap: break-word; }
+        .kafka-status { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .kafka-connected { background: #d4edda; color: #155724; }
+        .kafka-disconnected { background: #f8d7da; color: #721c24; }
+        .btn-sm { padding: 6px 10px; font-size: 11px; }
+        .section-title { font-size: 16px; font-weight: 600; color: #495057; margin: 0 0 15px 0; }
+        .tip { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 10px; border-radius: 4px; font-size: 12px; margin: 10px 0; }
+        @media (max-width: 768px) {
+            .main-grid, .logs-grid { grid-template-columns: 1fr; }
+            .scenarios { grid-template-columns: repeat(2, 1fr); }
+            .custom-form { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🌐 Live Network Traffic Simulator</h1>
-        <div style="margin: 20px 0; padding: 15px; background: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px;">
-            <h4 style="margin: 0 0 10px 0; color: #1976d2;">📡 Network Traffic Generator for Zeek Monitoring</h4>
-            <p style="margin: 0; color: #0d47a1;">Generate realistic network traffic to test your Zeek-Kafka pipeline. All traffic is sent to the virtual network (192.168.100.0/24) where Zeek monitors and forwards events to Kafka with optimized low-latency settings.</p>
-        </div>
-                
-        <div class="section">
-            <h3>🎭 Realistic Simulation Scenarios</h3>
-            <p><strong>Pre-configured traffic patterns that simulate real-world network behavior:</strong></p>
-            <div style="margin: 10px 0; font-size: 14px; color: #666;">
-                Each scenario runs for <strong>2 minutes</strong> at <strong>5 packets/second</strong> with realistic protocol mixes
+    <div class="header">
+        <h1>🔍 Network Traffic Generator for Zeek Monitoring</h1>
+        <div class="status-badge">📊 Status: Active | 🔗 Network: zeek-network</div>
+    </div>
+    
+    <div class="main-grid">
+        <div class="control-panel">
+            <h2 class="section-title">🎭 Quick Scenarios</h2>
+            <div class="scenarios">
+                <button class="scenario-btn" onclick="startScenario('web_browsing')">🌐<br>Web Browsing</button>
+                <button class="scenario-btn" onclick="startScenario('file_transfer')">📁<br>File Transfer</button>
+                <button class="scenario-btn" onclick="startScenario('video_streaming')">🎥<br>Video Stream</button>
+                <button class="scenario-btn" onclick="startScenario('office_network')">🏢<br>Office Network</button>
+                <button class="scenario-btn" onclick="startScenario('malicious_activity')">🛡️<br>Security Test</button>
             </div>
-            <button class="scenario" onclick="startScenario('web_browsing')" title="HTTP/HTTPS requests, DNS lookups, typical web traffic patterns">🌐 Web Browsing</button>
-            <button class="scenario" onclick="startScenario('file_transfer')" title="FTP, SFTP, SCP traffic with large data transfers">📁 File Transfer</button>
-            <button class="scenario" onclick="startScenario('video_streaming')" title="High-bandwidth UDP streams simulating video content">🎥 Video Streaming</button>
-            <button class="scenario" onclick="startScenario('office_network')" title="Email, file shares, printing, DHCP - typical office protocols">🏢 Office Network</button>
-            <button class="scenario" onclick="startScenario('malicious_activity')" title="Port scans, brute force, suspicious DNS - for IDS testing">🛡️ Security Testing</button>
-        </div>
-
-
-        <div class="section">
-            <h3>⚙️ Custom Traffic Configuration</h3>
-            <p><strong>Configure your own traffic parameters for specific testing needs:</strong></p>
-            <div style="margin: 10px 0; padding: 10px; background: #fff3cd; border-radius: 4px; font-size: 14px; color: #856404;">
-                <strong>💡 Tips:</strong> Use HTTP for web traffic testing, DNS for name resolution testing, Mixed for general network activity simulation. Higher packet rates generate more events but may impact system performance.
-            </div>
-            <div>
-                <label>Traffic Type:</label>
-                <select id="trafficType" title="Choose the protocol type to generate">
-                    <option value="http">HTTP (Web traffic to port 80)</option>
-                    <option value="dns">DNS (Name resolution queries to port 53)</option>
-                    <option value="mixed">Mixed (Random HTTP, DNS, TCP, UDP)</option>
-                </select>
-            </div>
-            <div>
-                <label>Target IP:</label>
-                <input type="text" id="targetIP" value="192.168.100.20" placeholder="192.168.100.20" title="Destination IP address in virtual network range">
-            </div>
-            <div>
-                <label>Duration (seconds):</label>
-                <input type="number" id="duration" value="60" min="1" max="3600" title="How long to generate traffic (1-3600 seconds)">
-            </div>
-            <div>
-                <label>Packets per second:</label>
-                <input type="number" id="pps" value="2" min="1" max="100" title="Traffic rate - higher values create more events">
-            </div>
-            <button onclick="startCustomTraffic()">Start Custom Traffic</button>
+            <div class="tip">💡 Each scenario runs for 2 minutes at 5 packets/second</div>
         </div>
         
-        <div class="section">
-            <h3>📈 Status</h3>
-            <div id="status"></div>
-            <button onclick="getStatus()">Refresh Status</button>
-        </div>
-        
-        <div class="logs-container">
-            <div class="log-panel">
-                <div class="section">
-                    <h3>📝 Activity Log</h3>
-                    <button class="clear-btn" onclick="clearActivityLog()">Clear Log</button>
-                    <div id="log" class="log-box"></div>
+        <div class="control-panel">
+            <h2 class="section-title">⚙️ Custom Traffic</h2>
+            <div class="custom-form">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="trafficType">
+                        <option value="http">HTTP</option>
+                        <option value="dns">DNS</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
                 </div>
-                
-                <div class="section">
-                    <h3>📡 Kafka Consumer (zeek-live-logs)</h3>
-                    <div id="kafka-status" class="connection-status disconnected">Disconnected</div>
-                    <button id="kafka-start-btn" class="kafka" onclick="startKafkaConsumer()">Start Consumer</button>
-                    <button id="kafka-stop-btn" class="stop" onclick="stopKafkaConsumer()" style="display: none;">Stop Consumer</button>
-                    <button class="clear-btn" onclick="clearKafkaMessages()">Clear Messages</button>
-                    <div id="kafka-log" class="kafka-box"></div>
+                <div class="form-group">
+                    <label>Target IP</label>
+                    <input type="text" id="targetIP" value="192.168.100.20">
+                </div>
+                <div class="form-group">
+                    <label>Duration (s)</label>
+                    <input type="number" id="duration" value="60" min="1" max="3600">
+                </div>
+                <div class="form-group">
+                    <label>Packets/sec</label>
+                    <input type="number" id="pps" value="2" min="1" max="100">
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-success" onclick="startCustomTraffic()">Start Traffic</button>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <div class="status-section">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="section-title">📈 System Status</h2>
+            <button class="btn btn-secondary btn-sm" onclick="getStatus()">Refresh</button>
+        </div>
+        <div id="status" class="status-display status-info">Ready to generate traffic</div>
+    </div>
+    
+    <div class="logs-grid">
+        <div class="log-panel">
+            <div class="log-header">
+                <h3>📝 Activity Log</h3>
+                <button class="btn btn-secondary btn-sm" onclick="clearActivityLog()">Clear</button>
+            </div>
+            <div id="log" class="log-box"></div>
+        </div>
+        
+        <div class="log-panel">
+            <div class="log-header">
+                <h3>📡 Kafka Consumer</h3>
+                <div class="log-controls">
+                    <span id="kafka-status" class="kafka-status kafka-disconnected">Disconnected</span>
+                    <button id="kafka-start-btn" class="btn btn-success btn-sm" onclick="startKafkaConsumer()">Start</button>
+                    <button id="kafka-stop-btn" class="btn btn-danger btn-sm" onclick="stopKafkaConsumer()" style="display: none;">Stop</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearKafkaMessages()">Clear</button>
+                </div>
+            </div>
+            <div id="kafka-log" class="log-box"></div>
         </div>
     </div>
 
@@ -466,9 +486,6 @@ WEB_INTERFACE = """
                 if (data.raw_message) {
                     content += `[${timestamp}] RAW: ${data.raw_message}\n`;
                 } else {
-                    // Debug: show the actual data structure
-                    console.log('Kafka message data:', data);
-                    
                     // Try multiple possible field names for Zeek logs
                     const logType = data._path || data.path || data.log_type || data.event_type || 'unknown';
                     
@@ -481,53 +498,40 @@ WEB_INTERFACE = """
                                  data.resp_h || data.server_ip || data.dst || 'N/A';
                     
                     // Try various field names for protocol
-                    const proto = data.proto || data.protocol || data.service || data.port || 'N/A';
+                    const proto = data.proto || data.protocol || data.service || 'N/A';
                     
                     // Try various field names for ports
                     const srcPort = data['id.orig_p'] || data['id_orig_p'] || data.src_port || data.source_port || '';
                     const dstPort = data['id.resp_p'] || data['id_resp_p'] || data.dst_port || data.dest_port || '';
                     
-                    // Format the main log line
+                    // Format compact log line
                     let srcStr = srcIP;
                     let dstStr = dstIP;
                     if (srcPort) srcStr += ':' + srcPort;
                     if (dstPort) dstStr += ':' + dstPort;
                     
-                    content += `[${timestamp}] ${logType.toUpperCase()}: ${srcStr} -> ${dstStr} (${proto})\n`;
-                    
-                    // Add specific details based on log type and available fields
+                    // Create a more compact single-line format
+                    let details = '';
                     if (data.method && data.uri) {
-                        content += `  HTTP: ${data.method} ${data.uri}\n`;
+                        details = ` ${data.method} ${data.uri}`;
+                    } else if (data.query) {
+                        details = ` DNS:${data.query}`;
                     } else if (data.method) {
-                        content += `  HTTP Method: ${data.method}\n`;
+                        details = ` ${data.method}`;
                     } else if (data.uri || data.url) {
-                        content += `  URI: ${data.uri || data.url}\n`;
-                    }
-                    
-                    if (data.query) {
-                        content += `  DNS Query: ${data.query}\n`;
+                        details = ` ${data.uri || data.url}`;
                     }
                     
                     if (data.status_code || data.response_code) {
-                        content += `  Status: ${data.status_code || data.response_code}\n`;
+                        details += ` [${data.status_code || data.response_code}]`;
                     }
                     
-                    if (data.user_agent) {
-                        content += `  User-Agent: ${data.user_agent}\n`;
-                    }
+                    content += `[${timestamp}] ${logType.toUpperCase()}: ${srcStr} → ${dstStr} (${proto})${details}\n`;
                     
-                    if (data.host || data.hostname) {
-                        content += `  Host: ${data.host || data.hostname}\n`;
-                    }
-                    
-                    // Show timestamp if available
-                    if (data.ts || data.timestamp) {
-                        content += `  Zeek TS: ${data.ts || data.timestamp}\n`;
-                    }
-                    
-                    // If we still have N/A values, show raw JSON for debugging
+                    // If we still have N/A values, show compact JSON for debugging
                     if (srcIP === 'N/A' && dstIP === 'N/A' && logType === 'unknown') {
-                        content += `  DEBUG - Raw JSON: ${JSON.stringify(data)}\n`;
+                        const keys = Object.keys(data).slice(0, 3).join(', ');
+                        content += `[${timestamp}] DEBUG: ${keys}...\n`;
                     }
                 }
             });
