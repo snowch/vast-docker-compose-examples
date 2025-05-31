@@ -477,12 +477,12 @@ WEB_INTERFACE = """
         .status-success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
         .status-error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
         .status-info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
-        .logs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; min-width: 0; }
+        .logs-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 15px; min-width: 0; }
         .log-panel { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); min-width: 0; }
         .log-header { padding: 15px 20px; border-bottom: 1px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; }
         .log-header h3 { margin: 0; font-size: 16px; color: #495057; }
         .log-controls { display: flex; gap: 8px; }
-        .log-box { height: 300px; overflow-y: auto; padding: 15px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 11px; line-height: 1.4; background: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; word-wrap: break-word; }
+        .log-box { height: 300px; overflow-x: auto; overflow-y: auto; padding: 15px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 11px; line-height: 1.4; background: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; white-space: nowrap; }
         .kafka-log-box { height: 300px; width: 100%; min-width: 0; max-width: 100%; overflow-x: scroll; overflow-y: auto; padding: 15px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 11px; line-height: 1.4; background: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; white-space: pre; box-sizing: border-box; }
         .kafka-status { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
         .kafka-connected { background: #d4edda; color: #155724; }
