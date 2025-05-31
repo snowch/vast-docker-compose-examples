@@ -10,6 +10,7 @@ import threading
 import time
 import os
 import json
+import subprocess
 from datetime import datetime
 from scapy.all import *
 import random
@@ -96,12 +97,55 @@ class KafkaMessageConsumer:
         if self.consumer:
             self.consumer.close()
 
+def get_zeek_monitor_ip():
+    """Discover the IP address of the zeek-live-monitor container"""
+    try:
+        # Try to get the IP of the zeek-live-monitor container
+        result = subprocess.run(
+            ['docker', 'inspect', '-f', '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}', 'zeek-live-monitor'],
+            capture_output=True, text=True, timeout=10
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            ip = result.stdout.strip()
+            print(f"Found Zeek monitor IP: {ip}")
+            return ip
+    except Exception as e:
+        print(f"Error getting Zeek monitor IP: {e}")
+    
+    # Fallback: try to find any container in the zeek-network
+    try:
+        result = subprocess.run(
+            ['docker', 'network', 'inspect', 'zeek-network', '-f', '{{range .Containers}}{{.IPv4Address}}{{end}}'],
+            capture_output=True, text=True, timeout=10
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            # Parse the first IP from the network (remove /24 suffix)
+            ips = result.stdout.strip().split()
+            for ip_with_mask in ips:
+                ip = ip_with_mask.split('/')[0]
+                if ip and ip != '192.168.100.1':  # Skip gateway
+                    print(f"Found container IP in zeek-network: {ip}")
+                    return ip
+    except Exception as e:
+        print(f"Error inspecting zeek-network: {e}")
+    
+    # Final fallback
+    print("Using fallback IP: 192.168.100.2")
+    return "192.168.100.2"
+
 class TrafficGenerator(NetworkTrafficGenerator):
     def __init__(self):
         super().__init__()
+        self.zeek_monitor_ip = get_zeek_monitor_ip()
         
-    def generate_http_traffic(self, target_ip="192.168.100.20", duration=60, packets_per_second=1):
+    def generate_http_traffic(self, target_ip=None, duration=60, packets_per_second=1):
         """Generate simulated HTTP traffic with precise timing"""
+        # Use discovered Zeek monitor IP if no target specified
+        if target_ip is None:
+            target_ip = self.zeek_monitor_ip
+        
+        print(f"Generating HTTP traffic to {target_ip} for {duration}s at {packets_per_second} pps")
+        
         self.running = True
         start_time = time.time()
         end_time = start_time + duration
@@ -128,8 +172,14 @@ class TrafficGenerator(NetworkTrafficGenerator):
                 
         self.running = False
     
-    def generate_dns_traffic(self, target_ip="192.168.100.1", duration=60, packets_per_second=1):
+    def generate_dns_traffic(self, target_ip=None, duration=60, packets_per_second=1):
         """Generate simulated DNS traffic with precise timing"""
+        # Use discovered Zeek monitor IP if no target specified
+        if target_ip is None:
+            target_ip = self.zeek_monitor_ip
+        
+        print(f"Generating DNS traffic to {target_ip} for {duration}s at {packets_per_second} pps")
+        
         self.running = True
         start_time = time.time()
         end_time = start_time + duration
@@ -278,10 +328,6 @@ WEB_INTERFACE = """
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Target IP</label>
-                    <input type="text" id="targetIP" value="192.168.100.20">
-                </div>
-                <div class="form-group">
                     <label>Duration (s)</label>
                     <input type="number" id="duration" value="60" min="1" max="3600">
                 </div>
@@ -294,6 +340,7 @@ WEB_INTERFACE = """
                     <button class="btn btn-success" onclick="startCustomTraffic()">Start Traffic</button>
                 </div>
             </div>
+            <div class="tip">💡 Traffic automatically targets the Zeek monitor container for proper monitoring</div>
         </div>
     </div>
     
@@ -375,14 +422,12 @@ WEB_INTERFACE = """
         
         async function startCustomTraffic() {
             const trafficType = document.getElementById('trafficType').value;
-            const targetIP = document.getElementById('targetIP').value;
             const duration = parseInt(document.getElementById('duration').value);
             const pps = parseInt(document.getElementById('pps').value);
             
             log(`Starting custom ${trafficType} traffic...`);
             const result = await apiCall('start_traffic', {
                 type: trafficType,
-                target_ip: targetIP,
                 duration: duration,
                 packets_per_second: pps
             });
@@ -605,7 +650,6 @@ def start_traffic():
         data = request.get_json()
         traffic_type = data.get('type', 'mixed')
         duration = data.get('duration', 60)
-        target_ip = data.get('target_ip', '192.168.200.20')
         packets_per_second = data.get('packets_per_second', 2)
         
         # Generate unique session ID
@@ -615,15 +659,16 @@ def start_traffic():
         generator = TrafficGenerator()
         
         # Start appropriate traffic generation in a thread
+        # HTTP and DNS will automatically use the discovered Zeek monitor IP
         if traffic_type == 'http':
             thread = threading.Thread(
                 target=generator.generate_http_traffic,
-                args=(target_ip, duration, packets_per_second)
+                args=(None, duration, packets_per_second)  # None = use auto-discovered IP
             )
         elif traffic_type == 'dns':
             thread = threading.Thread(
                 target=generator.generate_dns_traffic,
-                args=(target_ip, duration, packets_per_second)
+                args=(None, duration, packets_per_second)  # None = use auto-discovered IP
             )
         else:  # mixed
             thread = threading.Thread(
@@ -639,7 +684,7 @@ def start_traffic():
             'type': traffic_type,
             'started': datetime.now().isoformat(),
             'duration': duration,
-            'target_ip': target_ip,
+            'target_ip': generator.zeek_monitor_ip,
             'pps': packets_per_second
         }
         
