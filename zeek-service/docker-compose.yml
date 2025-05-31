@@ -44,17 +44,7 @@ services:
       - NET_RAW
     command: python3 /traffic-scripts/traffic_server.py
 
-  # Optional: Add a simple web server to generate HTTP traffic for testing
-  web-server:
-    image: nginx:alpine
-    container_name: test-web-server
-    restart: unless-stopped
-    ports:
-      - "8081:80"
-    networks:
-      - zeek-network
-    volumes:
-      - ./web-content:/usr/share/nginx/html:ro
+
 
 networks:
   zeek-network:

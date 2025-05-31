@@ -9,10 +9,17 @@ from flask_cors import CORS
 import threading
 import time
 import os
+import json
 from datetime import datetime
 from scapy.all import *
 import random
 from network_traffic_generator import NetworkTrafficGenerator
+try:
+    from kafka import KafkaConsumer
+    KAFKA_AVAILABLE = True
+except ImportError:
+    KAFKA_AVAILABLE = False
+    print("Warning: kafka-python not available. Kafka consumer will be disabled.")
 
 app = Flask(__name__)
 CORS(app)
@@ -20,6 +27,74 @@ CORS(app)
 # Global variables for traffic generation control
 traffic_threads = {}
 active_sessions = {}
+kafka_messages = []
+kafka_consumer_thread = None
+kafka_running = False
+
+class KafkaMessageConsumer:
+    def __init__(self, broker='172.200.204.1:9092', topic='zeek-live-logs'):
+        self.broker = broker
+        self.topic = topic
+        self.running = False
+        self.consumer = None
+        
+    def start_consuming(self):
+        """Start consuming Kafka messages in a separate thread"""
+        if not KAFKA_AVAILABLE:
+            print("Kafka consumer not available - kafka-python package not installed")
+            return False
+            
+        try:
+            self.consumer = KafkaConsumer(
+                self.topic,
+                bootstrap_servers=[self.broker],
+                auto_offset_reset='latest',
+                enable_auto_commit=True,
+                group_id='zeek-web-consumer',
+                value_deserializer=lambda x: x.decode('utf-8') if x else None
+            )
+            self.running = True
+            
+            for message in self.consumer:
+                if not self.running:
+                    break
+                    
+                try:
+                    # Parse the message
+                    msg_data = json.loads(message.value) if message.value else {}
+                    timestamp = datetime.now().strftime('%H:%M:%S')
+                    
+                    # Add to global messages list (keep last 100 messages)
+                    global kafka_messages
+                    kafka_messages.append({
+                        'timestamp': timestamp,
+                        'data': msg_data
+                    })
+                    
+                    # Keep only last 100 messages
+                    if len(kafka_messages) > 100:
+                        kafka_messages = kafka_messages[-100:]
+                        
+                except json.JSONDecodeError:
+                    # Handle non-JSON messages
+                    timestamp = datetime.now().strftime('%H:%M:%S')
+                    kafka_messages.append({
+                        'timestamp': timestamp,
+                        'data': {'raw_message': message.value}
+                    })
+                    
+        except Exception as e:
+            print(f"Kafka consumer error: {e}")
+            self.running = False
+            return False
+            
+        return True
+        
+    def stop_consuming(self):
+        """Stop consuming Kafka messages"""
+        self.running = False
+        if self.consumer:
+            self.consumer.close()
 
 class TrafficGenerator(NetworkTrafficGenerator):
     def __init__(self):
@@ -126,7 +201,7 @@ WEB_INTERFACE = """
     <title>Scapy Virtual Network Traffic Generator</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
         .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
         .virtual-net { background: #e8f5e8; border-color: #4caf50; }
         .live-monitoring { background: #e3f2fd; border-color: #2196f3; }
@@ -136,12 +211,23 @@ WEB_INTERFACE = """
         button.stop:hover { background: #c82333; }
         button.scenario { background: #28a745; }
         button.scenario:hover { background: #218838; }
+        button.kafka { background: #17a2b8; }
+        button.kafka:hover { background: #138496; }
         input, select { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; }
         .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
         .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-        #log { background: #f8f9fa; padding: 10px; border: 1px solid #dee2e6; border-radius: 4px; height: 200px; overflow-y: scroll; font-family: monospace; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .logs-container { display: flex; gap: 20px; margin-top: 20px; }
+        .log-panel { flex: 1; }
+        .log-box { background: #f8f9fa; padding: 10px; border: 1px solid #dee2e6; border-radius: 4px; height: 300px; overflow-y: scroll; font-family: monospace; font-size: 12px; white-space: pre-wrap; }
+        .kafka-box { background: #f8f9fa; padding: 10px; border: 1px solid #dee2e6; border-radius: 4px; height: 400px; overflow-y: scroll; font-family: monospace; font-size: 11px; white-space: pre-wrap; }
+        .connection-status { padding: 5px 10px; border-radius: 3px; font-weight: bold; margin-bottom: 10px; font-size: 12px; }
+        .connected { background-color: #d4edda; color: #155724; }
+        .disconnected { background-color: #f8d7da; color: #721c24; }
+        .clear-btn { background-color: #6c757d; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; font-size: 12px; margin: 5px 5px 10px 0; }
+        .clear-btn:hover { background-color: #545b62; }
         .topology { background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: monospace; }
     </style>
 </head>
@@ -165,21 +251,6 @@ WEB_INTERFACE = """
             <button class="scenario" onclick="startScenario('office_network')" title="Email, file shares, printing, DHCP - typical office protocols">🏢 Office Network</button>
             <button class="scenario" onclick="startScenario('malicious_activity')" title="Port scans, brute force, suspicious DNS - for IDS testing">🛡️ Security Testing</button>
         </div>
-
-        <div class="section">
-            <h3>⚡ Quick Start Traffic Generation</h3>
-            <p><strong>One-click traffic generation with predefined settings:</strong></p>
-            <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 14px;">
-                <div><strong>HTTP Traffic:</strong> 2 packets/sec for 60 seconds → 192.168.100.20:80</div>
-                <div><strong>DNS Traffic:</strong> 1 packet/sec for 60 seconds → 192.168.100.1:53</div>
-                <div><strong>Mixed Traffic:</strong> 3 packets/sec for 120 seconds (HTTP, DNS, TCP, UDP mix)</div>
-            </div>
-            <button onclick="startHTTPTraffic()" title="Generates HTTP GET requests to simulate web browsing">Generate HTTP Traffic</button>
-            <button onclick="startDNSTraffic()" title="Generates DNS queries for common domains">Generate DNS Traffic</button>
-            <button onclick="startMixedTraffic()" title="Generates random mix of HTTP, DNS, TCP, and UDP traffic">Generate Mixed Traffic</button>
-            <button class="stop" onclick="stopAllTraffic()">Stop All Traffic</button>
-        </div>
-        
 
 
         <div class="section">
@@ -217,9 +288,23 @@ WEB_INTERFACE = """
             <button onclick="getStatus()">Refresh Status</button>
         </div>
         
-        <div class="section">
-            <h3>📝 Activity Log</h3>
-            <div id="log"></div>
+        <div class="logs-container">
+            <div class="log-panel">
+                <div class="section">
+                    <h3>📝 Activity Log</h3>
+                    <button class="clear-btn" onclick="clearActivityLog()">Clear Log</button>
+                    <div id="log" class="log-box"></div>
+                </div>
+                
+                <div class="section">
+                    <h3>📡 Kafka Consumer (zeek-live-logs)</h3>
+                    <div id="kafka-status" class="connection-status disconnected">Disconnected</div>
+                    <button id="kafka-start-btn" class="kafka" onclick="startKafkaConsumer()">Start Consumer</button>
+                    <button id="kafka-stop-btn" class="stop" onclick="stopKafkaConsumer()" style="display: none;">Stop Consumer</button>
+                    <button class="clear-btn" onclick="clearKafkaMessages()">Clear Messages</button>
+                    <div id="kafka-log" class="kafka-box"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -266,47 +351,7 @@ WEB_INTERFACE = """
         }
         
 
-        
-        async function startHTTPTraffic() {
-            log('Starting HTTP traffic generation...');
-            const result = await apiCall('start_traffic', {
-                type: 'http',
-                target_ip: '192.168.100.20',
-                duration: 60,
-                packets_per_second: 2
-            });
-            if (result && result.success) {
-                showStatus('HTTP traffic generation started', 'success');
-                log(`HTTP traffic started - Session ID: ${result.session_id}`);
-            }
-        }
-        
-        async function startDNSTraffic() {
-            log('Starting DNS traffic generation...');
-            const result = await apiCall('start_traffic', {
-                type: 'dns',
-                target_ip: '192.168.100.1',
-                duration: 60,
-                packets_per_second: 1
-            });
-            if (result && result.success) {
-                showStatus('DNS traffic generation started', 'success');
-                log(`DNS traffic started - Session ID: ${result.session_id}`);
-            }
-        }
-        
-        async function startMixedTraffic() {
-            log('Starting mixed traffic generation...');
-            const result = await apiCall('start_traffic', {
-                type: 'mixed',
-                duration: 120,
-                packets_per_second: 3
-            });
-            if (result && result.success) {
-                showStatus('Mixed traffic generation started', 'success');
-                log(`Mixed traffic started - Session ID: ${result.session_id}`);
-            }
-        }
+
         
         async function startCustomTraffic() {
             const trafficType = document.getElementById('trafficType').value;
@@ -345,10 +390,154 @@ WEB_INTERFACE = """
             }
         }
         
+        // Kafka consumer functions
+        async function startKafkaConsumer() {
+            log('Starting Kafka consumer...');
+            const result = await apiCall('kafka/start');
+            if (result && result.success) {
+                document.getElementById('kafka-status').className = 'connection-status connected';
+                document.getElementById('kafka-status').textContent = 'Connected';
+                document.getElementById('kafka-start-btn').style.display = 'none';
+                document.getElementById('kafka-stop-btn').style.display = 'inline-block';
+                log('Kafka consumer started successfully');
+                // Start polling for messages
+                startKafkaPolling();
+            } else {
+                log(`Failed to start Kafka consumer: ${result ? result.error : 'Unknown error'}`);
+            }
+        }
+        
+        async function stopKafkaConsumer() {
+            log('Stopping Kafka consumer...');
+            const result = await apiCall('kafka/stop');
+            if (result && result.success) {
+                document.getElementById('kafka-status').className = 'connection-status disconnected';
+                document.getElementById('kafka-status').textContent = 'Disconnected';
+                document.getElementById('kafka-start-btn').style.display = 'inline-block';
+                document.getElementById('kafka-stop-btn').style.display = 'none';
+                log('Kafka consumer stopped');
+                stopKafkaPolling();
+            }
+        }
+        
+        async function clearKafkaMessages() {
+            const result = await apiCall('kafka/clear');
+            if (result && result.success) {
+                document.getElementById('kafka-log').innerHTML = '';
+                log('Kafka messages cleared');
+            }
+        }
+        
+        function clearActivityLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        let kafkaPollingInterval;
+        
+        function startKafkaPolling() {
+            kafkaPollingInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/api/kafka/messages');
+                    const result = await response.json();
+                    if (result && result.success) {
+                        updateKafkaLog(result.messages);
+                    }
+                } catch (error) {
+                    console.error('Error polling Kafka messages:', error);
+                }
+            }, 1000); // Poll every second
+        }
+        
+        function stopKafkaPolling() {
+            if (kafkaPollingInterval) {
+                clearInterval(kafkaPollingInterval);
+                kafkaPollingInterval = null;
+            }
+        }
+        
+        function updateKafkaLog(messages) {
+            const kafkaLogDiv = document.getElementById('kafka-log');
+            let content = '';
+            
+            messages.forEach(msg => {
+                const timestamp = msg.timestamp;
+                const data = msg.data;
+                
+                if (data.raw_message) {
+                    content += `[${timestamp}] RAW: ${data.raw_message}\n`;
+                } else {
+                    // Debug: show the actual data structure
+                    console.log('Kafka message data:', data);
+                    
+                    // Try multiple possible field names for Zeek logs
+                    const logType = data._path || data.path || data.log_type || data.event_type || 'unknown';
+                    
+                    // Try various field names for source IP
+                    const srcIP = data['id.orig_h'] || data['id_orig_h'] || data.src_ip || data.source_ip || 
+                                 data.orig_h || data.client_ip || data.src || 'N/A';
+                    
+                    // Try various field names for destination IP  
+                    const dstIP = data['id.resp_h'] || data['id_resp_h'] || data.dst_ip || data.dest_ip || 
+                                 data.resp_h || data.server_ip || data.dst || 'N/A';
+                    
+                    // Try various field names for protocol
+                    const proto = data.proto || data.protocol || data.service || data.port || 'N/A';
+                    
+                    // Try various field names for ports
+                    const srcPort = data['id.orig_p'] || data['id_orig_p'] || data.src_port || data.source_port || '';
+                    const dstPort = data['id.resp_p'] || data['id_resp_p'] || data.dst_port || data.dest_port || '';
+                    
+                    // Format the main log line
+                    let srcStr = srcIP;
+                    let dstStr = dstIP;
+                    if (srcPort) srcStr += ':' + srcPort;
+                    if (dstPort) dstStr += ':' + dstPort;
+                    
+                    content += `[${timestamp}] ${logType.toUpperCase()}: ${srcStr} -> ${dstStr} (${proto})\n`;
+                    
+                    // Add specific details based on log type and available fields
+                    if (data.method && data.uri) {
+                        content += `  HTTP: ${data.method} ${data.uri}\n`;
+                    } else if (data.method) {
+                        content += `  HTTP Method: ${data.method}\n`;
+                    } else if (data.uri || data.url) {
+                        content += `  URI: ${data.uri || data.url}\n`;
+                    }
+                    
+                    if (data.query) {
+                        content += `  DNS Query: ${data.query}\n`;
+                    }
+                    
+                    if (data.status_code || data.response_code) {
+                        content += `  Status: ${data.status_code || data.response_code}\n`;
+                    }
+                    
+                    if (data.user_agent) {
+                        content += `  User-Agent: ${data.user_agent}\n`;
+                    }
+                    
+                    if (data.host || data.hostname) {
+                        content += `  Host: ${data.host || data.hostname}\n`;
+                    }
+                    
+                    // Show timestamp if available
+                    if (data.ts || data.timestamp) {
+                        content += `  Zeek TS: ${data.ts || data.timestamp}\n`;
+                    }
+                    
+                    // If we still have N/A values, show raw JSON for debugging
+                    if (srcIP === 'N/A' && dstIP === 'N/A' && logType === 'unknown') {
+                        content += `  DEBUG - Raw JSON: ${JSON.stringify(data)}\n`;
+                    }
+                }
+            });
+            
+            kafkaLogDiv.textContent = content;
+            kafkaLogDiv.scrollTop = kafkaLogDiv.scrollHeight;
+        }
+        
         // Auto-refresh status every 30 seconds
         setInterval(getStatus, 30000);
-        
-
         
         // Initial status check
         getStatus();
@@ -494,11 +683,76 @@ def get_status():
         return jsonify({
             'success': True,
             'active_sessions': active_count,
-            'sessions': active_sessions
+            'sessions': active_sessions,
+            'kafka_running': kafka_running,
+            'kafka_available': KAFKA_AVAILABLE
         })
         
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/kafka/start', methods=['POST'])
+def start_kafka_consumer():
+    global kafka_consumer_thread, kafka_running
+    
+    if not KAFKA_AVAILABLE:
+        return jsonify({
+            'success': False, 
+            'error': 'Kafka consumer not available - kafka-python package not installed'
+        })
+    
+    if kafka_running:
+        return jsonify({
+            'success': False, 
+            'error': 'Kafka consumer already running'
+        })
+    
+    try:
+        consumer = KafkaMessageConsumer()
+        kafka_consumer_thread = threading.Thread(target=consumer.start_consuming)
+        kafka_consumer_thread.daemon = True
+        kafka_consumer_thread.start()
+        kafka_running = True
+        
+        return jsonify({
+            'success': True,
+            'message': 'Kafka consumer started'
+        })
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/kafka/stop', methods=['POST'])
+def stop_kafka_consumer():
+    global kafka_running
+    
+    kafka_running = False
+    
+    return jsonify({
+        'success': True,
+        'message': 'Kafka consumer stopped'
+    })
+
+@app.route('/api/kafka/messages', methods=['GET'])
+def get_kafka_messages():
+    global kafka_messages
+    
+    return jsonify({
+        'success': True,
+        'messages': kafka_messages[-50:],  # Return last 50 messages
+        'total_count': len(kafka_messages)
+    })
+
+@app.route('/api/kafka/clear', methods=['POST'])
+def clear_kafka_messages():
+    global kafka_messages
+    
+    kafka_messages.clear()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Kafka messages cleared'
+    })
 
 if __name__ == '__main__':
     print("Starting Virtual Network Traffic Generator Server...")

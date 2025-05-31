@@ -16,8 +16,6 @@ RUN apt-get update && \
     netcat-openbsd \
     iproute2 \
     tcpdump \
-    nginx \
-    supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 # Install librdkafka
@@ -38,17 +36,14 @@ RUN zkg install seisollc/zeek-kafka --version v1.2.0 --force
 RUN zeek -N Seiso::Kafka
 
 # Create necessary directories
-RUN mkdir -p /logs /scripts /var/log/supervisor
+RUN mkdir -p /logs /scripts
 
-# Copy monitoring scripts and configurations
+# Copy monitoring scripts
 COPY scripts/monitor-live.sh /scripts/
-COPY nginx-proxy.conf /etc/nginx/nginx.conf
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /scripts/*.sh
 
 # Set working directory
 WORKDIR /
 
 # Default command - can be overridden by docker-compose
-# If no command specified, run supervisor to manage nginx and zeek
-CMD ["/usr/bin/supervisord"]
+CMD ["/scripts/monitor-live.sh"]

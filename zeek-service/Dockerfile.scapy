@@ -17,7 +17,8 @@ RUN pip install --no-cache-dir \
     scapy \
     flask \
     flask-cors \
-    requests
+    requests \
+    kafka-python
 
 # Create directories
 RUN mkdir -p /traffic-scripts
