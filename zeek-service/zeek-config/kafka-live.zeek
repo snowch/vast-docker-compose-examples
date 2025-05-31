@@ -19,7 +19,13 @@ redef Kafka::kafka_conf = table(
     ["metadata.broker.list"] = "172.200.204.1:9092",
     ["client.id"] = "zeek-live-monitor",
     ["batch.num.messages"] = "1", # set to 1 to immediately save to kafka
-    ["queue.buffering.max.ms"] = "1000",
+    ["queue.buffering.max.ms"] = "10", # Reduced from 1000ms to 10ms for minimal latency
+    ["linger.ms"] = "0", # Send immediately, don't wait
+    ["acks"] = "1", # Only wait for leader acknowledgment
+    ["retries"] = "3",
+    ["delivery.timeout.ms"] = "5000",
+    ["request.timeout.ms"] = "2000",
+    ["socket.timeout.ms"] = "1000",
     ["debug"] = "broker,topic,msg",
     ["log_level"] = "7"
 );

@@ -26,18 +26,27 @@ class TrafficGenerator(NetworkTrafficGenerator):
         super().__init__()
         
     def generate_http_traffic(self, target_ip="192.168.200.20", duration=60, packets_per_second=1):
-        """Generate simulated HTTP traffic"""
+        """Generate simulated HTTP traffic with precise timing"""
         self.running = True
-        end_time = time.time() + duration
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
         
         while self.running and time.time() < end_time:
             try:
-                # Create HTTP-like TCP traffic
-                src_port = random.randint(1024, 65535)
-                packet = IP(dst=target_ip)/TCP(dport=80, sport=src_port)/Raw(load="GET / HTTP/1.1\r\nHost: example.com\r\n\r\n")
-                send(packet, verbose=0)
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    # Create HTTP-like TCP traffic
+                    src_port = random.randint(1024, 65535)
+                    packet = IP(dst=target_ip)/TCP(dport=80, sport=src_port)/Raw(load="GET / HTTP/1.1\r\nHost: example.com\r\n\r\n")
+                    send(packet, verbose=0)
+                    
+                    # Schedule next packet with precise timing
+                    next_packet_time += packet_interval
                 
-                time.sleep(1.0 / packets_per_second)
+                # Small sleep to prevent busy waiting
+                time.sleep(0.001)
             except Exception as e:
                 print(f"Error generating HTTP traffic: {e}")
                 break
@@ -45,18 +54,27 @@ class TrafficGenerator(NetworkTrafficGenerator):
         self.running = False
     
     def generate_dns_traffic(self, target_ip="192.168.200.1", duration=60, packets_per_second=1):
-        """Generate simulated DNS traffic"""
+        """Generate simulated DNS traffic with precise timing"""
         self.running = True
-        end_time = time.time() + duration
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
         domains = ["example.com", "google.com", "github.com", "stackoverflow.com", "wikipedia.org"]
         
         while self.running and time.time() < end_time:
             try:
-                domain = random.choice(domains)
-                packet = IP(dst=target_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
-                send(packet, verbose=0)
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    domain = random.choice(domains)
+                    packet = IP(dst=target_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
+                    send(packet, verbose=0)
+                    
+                    # Schedule next packet with precise timing
+                    next_packet_time += packet_interval
                 
-                time.sleep(1.0 / packets_per_second)
+                # Small sleep to prevent busy waiting
+                time.sleep(0.001)
             except Exception as e:
                 print(f"Error generating DNS traffic: {e}")
                 break
