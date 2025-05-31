@@ -242,6 +242,205 @@ class TrafficGenerator(NetworkTrafficGenerator):
                 break
                 
         self.running = False
+    
+    def generate_web_browsing_scenario(self, duration=120, packets_per_second=5):
+        """Generate web browsing scenario using the same approach as custom traffic"""
+        self.running = True
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
+        
+        print(f"Starting web browsing scenario for {duration}s at {packets_per_second} pps")
+        
+        while self.running and time.time() < end_time:
+            try:
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    # Create realistic web browsing traffic
+                    traffic_type = random.choice(['http_get', 'https_connect', 'dns_lookup'])
+                    
+                    if traffic_type == 'http_get':
+                        target_ip = f"192.168.100.{random.randint(20, 29)}"
+                        src_port = random.randint(1024, 65535)
+                        pages = ["/", "/index.html", "/about.html", "/products.html", "/contact.html"]
+                        page = random.choice(pages)
+                        payload = f"GET {page} HTTP/1.1\r\nHost: example.com\r\nUser-Agent: Mozilla/5.0\r\n\r\n"
+                        packet = IP(dst=target_ip)/TCP(dport=80, sport=src_port)/Raw(load=payload)
+                    elif traffic_type == 'https_connect':
+                        target_ip = f"192.168.100.{random.randint(20, 29)}"
+                        packet = IP(dst=target_ip)/TCP(dport=443, sport=random.randint(1024, 65535), flags="S")
+                    else:  # dns_lookup
+                        domains = ["example.com", "cdn.example.com", "api.example.com", "images.example.com"]
+                        domain = random.choice(domains)
+                        packet = IP(dst="192.168.100.1")/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
+                    
+                    send(packet, verbose=0)
+                    next_packet_time += packet_interval
+                
+                time.sleep(0.001)
+            except Exception as e:
+                print(f"Error in web browsing scenario: {e}")
+                break
+                
+        self.running = False
+    
+    def generate_file_transfer_scenario(self, duration=120, packets_per_second=5):
+        """Generate file transfer scenario"""
+        self.running = True
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
+        
+        print(f"Starting file transfer scenario for {duration}s at {packets_per_second} pps")
+        
+        while self.running and time.time() < end_time:
+            try:
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    traffic_type = random.choice(['ftp_control', 'ftp_data', 'sftp'])
+                    target_ip = f"192.168.100.{random.randint(20, 29)}"
+                    
+                    if traffic_type == 'ftp_control':
+                        commands = ["USER demo", "PASS secret", "LIST", "RETR file.txt", "STOR upload.txt"]
+                        command = random.choice(commands)
+                        packet = IP(dst=target_ip)/TCP(dport=21, sport=random.randint(1024, 65535))/Raw(load=command + "\r\n")
+                    elif traffic_type == 'ftp_data':
+                        data_size = random.randint(500, 1400)
+                        payload = "FILE_DATA_" + "A" * (data_size - 10)
+                        packet = IP(dst=target_ip)/TCP(dport=20, sport=random.randint(1024, 65535))/Raw(load=payload)
+                    else:  # sftp
+                        packet = IP(dst=target_ip)/TCP(dport=22, sport=random.randint(1024, 65535))
+                    
+                    send(packet, verbose=0)
+                    next_packet_time += packet_interval
+                
+                time.sleep(0.001)
+            except Exception as e:
+                print(f"Error in file transfer scenario: {e}")
+                break
+                
+        self.running = False
+    
+    def generate_video_streaming_scenario(self, duration=120, packets_per_second=5):
+        """Generate video streaming scenario"""
+        self.running = True
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
+        
+        print(f"Starting video streaming scenario for {duration}s at {packets_per_second} pps")
+        
+        while self.running and time.time() < end_time:
+            try:
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    # High bandwidth streaming traffic
+                    src_ip = f"192.168.100.{random.randint(20, 29)}"  # Server
+                    dst_ip = f"192.168.100.{random.randint(10, 19)}"  # Client
+                    
+                    data_size = random.randint(800, 1400)
+                    payload = "VIDEO_STREAM_" + "X" * (data_size - 13)
+                    packet = IP(src=src_ip, dst=dst_ip)/UDP(sport=8080, dport=random.randint(1024, 65535))/Raw(load=payload)
+                    
+                    send(packet, verbose=0)
+                    next_packet_time += packet_interval
+                
+                time.sleep(0.001)
+            except Exception as e:
+                print(f"Error in video streaming scenario: {e}")
+                break
+                
+        self.running = False
+    
+    def generate_office_network_scenario(self, duration=120, packets_per_second=5):
+        """Generate office network scenario"""
+        self.running = True
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
+        
+        print(f"Starting office network scenario for {duration}s at {packets_per_second} pps")
+        
+        while self.running and time.time() < end_time:
+            try:
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    services = ["email", "file_share", "print", "web_proxy"]
+                    service = random.choice(services)
+                    src_ip = f"192.168.100.{random.randint(10, 19)}"
+                    
+                    if service == "email":
+                        dst_ip = f"192.168.100.{random.randint(20, 29)}"
+                        protocols = [("smtp", 25), ("pop3", 110), ("imap", 143), ("smtps", 465)]
+                        protocol, port = random.choice(protocols)
+                        packet = IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=port)
+                    elif service == "file_share":
+                        dst_ip = f"192.168.100.{random.randint(20, 29)}"
+                        packet = IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=445)  # SMB
+                    elif service == "print":
+                        dst_ip = f"192.168.100.{random.randint(30, 39)}"  # Printer range
+                        packet = IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=631)  # IPP
+                    else:  # web_proxy
+                        dst_ip = f"192.168.100.{random.randint(20, 29)}"
+                        packet = IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=8080)
+                    
+                    send(packet, verbose=0)
+                    next_packet_time += packet_interval
+                
+                time.sleep(0.001)
+            except Exception as e:
+                print(f"Error in office network scenario: {e}")
+                break
+                
+        self.running = False
+    
+    def generate_malicious_activity_scenario(self, duration=120, packets_per_second=5):
+        """Generate malicious activity scenario for IDS testing"""
+        self.running = True
+        start_time = time.time()
+        end_time = start_time + duration
+        packet_interval = 1.0 / packets_per_second
+        next_packet_time = start_time
+        
+        print(f"Starting malicious activity scenario for {duration}s at {packets_per_second} pps")
+        
+        while self.running and time.time() < end_time:
+            try:
+                current_time = time.time()
+                if current_time >= next_packet_time:
+                    attacks = ["port_scan", "brute_force", "suspicious_dns", "data_exfiltration"]
+                    attack = random.choice(attacks)
+                    src_ip = f"192.168.100.{random.randint(100, 109)}"  # Suspicious source range
+                    dst_ip = f"192.168.100.{random.randint(10, 29)}"
+                    
+                    if attack == "port_scan":
+                        ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 993, 995]
+                        port = random.choice(ports)
+                        packet = IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=port, flags="S")
+                    elif attack == "brute_force":
+                        packet = IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=22)
+                    elif attack == "suspicious_dns":
+                        domains = ["malware-c2.evil", "phishing.bad", "botnet.cmd"]
+                        domain = random.choice(domains)
+                        packet = IP(src=src_ip, dst="192.168.100.1")/UDP(sport=random.randint(1024, 65535), dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
+                    else:  # data_exfiltration
+                        data_size = random.randint(1000, 1400)
+                        payload = "EXFIL_DATA_" + "S" * (data_size - 11)
+                        packet = IP(src=dst_ip, dst=src_ip)/TCP(sport=random.randint(1024, 65535), dport=443)/Raw(load=payload)
+                    
+                    send(packet, verbose=0)
+                    next_packet_time += packet_interval
+                
+                time.sleep(0.001)
+            except Exception as e:
+                print(f"Error in malicious activity scenario: {e}")
+                break
+                
+        self.running = False
 
 # Web interface HTML template
 WEB_INTERFACE = """
@@ -379,13 +578,13 @@ WEB_INTERFACE = """
         function log(message) {
             const logDiv = document.getElementById('log');
             const timestamp = new Date().toLocaleTimeString();
-            logDiv.innerHTML += `[${timestamp}] ${message}<br>\\n`;
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>\n`;
             logDiv.scrollTop = logDiv.scrollHeight;
         }
         
         function showStatus(message, type = 'info') {
             const statusDiv = document.getElementById('status');
-            statusDiv.className = `status ${type}`;
+            statusDiv.className = `status-display status-${type}`;
             statusDiv.textContent = message;
         }
         
@@ -416,9 +615,6 @@ WEB_INTERFACE = """
                 log(`Scenario started - Session ID: ${result.session_id}`);
             }
         }
-        
-
-
         
         async function startCustomTraffic() {
             const trafficType = document.getElementById('trafficType').value;
@@ -460,7 +656,7 @@ WEB_INTERFACE = """
             log('Starting Kafka consumer...');
             const result = await apiCall('kafka/start');
             if (result && result.success) {
-                document.getElementById('kafka-status').className = 'connection-status connected';
+                document.getElementById('kafka-status').className = 'kafka-status kafka-connected';
                 document.getElementById('kafka-status').textContent = 'Connected';
                 document.getElementById('kafka-start-btn').style.display = 'none';
                 document.getElementById('kafka-stop-btn').style.display = 'inline-block';
@@ -476,7 +672,7 @@ WEB_INTERFACE = """
             log('Stopping Kafka consumer...');
             const result = await apiCall('kafka/stop');
             if (result && result.success) {
-                document.getElementById('kafka-status').className = 'connection-status disconnected';
+                document.getElementById('kafka-status').className = 'kafka-status kafka-disconnected';
                 document.getElementById('kafka-status').textContent = 'Disconnected';
                 document.getElementById('kafka-start-btn').style.display = 'inline-block';
                 document.getElementById('kafka-stop-btn').style.display = 'none';
@@ -614,11 +810,37 @@ def start_scenario():
         # Create traffic generator
         generator = TrafficGenerator()
         
-        # Start scenario simulation
-        thread = threading.Thread(
-            target=generator.generate_simulation_traffic,
-            args=("br-zeek-sim", scenario, duration, packets_per_second)
-        )
+        # Start scenario simulation - use the same approach as custom traffic
+        if scenario == "web_browsing":
+            thread = threading.Thread(
+                target=generator.generate_web_browsing_scenario,
+                args=(duration, packets_per_second)
+            )
+        elif scenario == "file_transfer":
+            thread = threading.Thread(
+                target=generator.generate_file_transfer_scenario,
+                args=(duration, packets_per_second)
+            )
+        elif scenario == "video_streaming":
+            thread = threading.Thread(
+                target=generator.generate_video_streaming_scenario,
+                args=(duration, packets_per_second)
+            )
+        elif scenario == "office_network":
+            thread = threading.Thread(
+                target=generator.generate_office_network_scenario,
+                args=(duration, packets_per_second)
+            )
+        elif scenario == "malicious_activity":
+            thread = threading.Thread(
+                target=generator.generate_malicious_activity_scenario,
+                args=(duration, packets_per_second)
+            )
+        else:
+            thread = threading.Thread(
+                target=generator.generate_mixed_traffic,
+                args=(duration, packets_per_second)
+            )
         
         thread.start()
         
@@ -641,8 +863,6 @@ def start_scenario():
         
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
-
-
 
 @app.route('/api/start_traffic', methods=['POST'])
 def start_traffic():

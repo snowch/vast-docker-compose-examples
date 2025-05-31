@@ -17,6 +17,7 @@ class NetworkTrafficGenerator:
         self.running = False
         self.thread = None
         self.available_interfaces = self.get_network_interfaces()
+        self.network_info = self.discover_network_config()
         
     def get_network_interfaces(self):
         """Get list of available network interfaces, prioritizing virtual sim interfaces"""
@@ -31,6 +32,47 @@ class NetworkTrafficGenerator:
             return sim_interfaces + other_interfaces if sim_interfaces else other_interfaces
         except:
             return ['br-zeek-sim']  # fallback to our simulation bridge
+    
+    def discover_network_config(self):
+        """Discover the container's network configuration"""
+        network_info = {
+            'subnet': '192.168.100.0/24',  # default fallback
+            'gateway': '192.168.100.1',
+            'container_ip': None,
+            'network_base': '192.168.100'
+        }
+        
+        try:
+            # Try to get container's IP address
+            import socket
+            hostname = socket.gethostname()
+            container_ip = socket.gethostbyname(hostname)
+            network_info['container_ip'] = container_ip
+            
+            # Extract network base from container IP
+            if container_ip and '.' in container_ip:
+                ip_parts = container_ip.split('.')
+                if len(ip_parts) >= 3:
+                    network_base = f"{ip_parts[0]}.{ip_parts[1]}.{ip_parts[2]}"
+                    network_info['network_base'] = network_base
+                    network_info['subnet'] = f"{network_base}.0/24"
+                    network_info['gateway'] = f"{network_base}.1"
+                    
+            print(f"Discovered network config: {network_info}")
+            
+        except Exception as e:
+            print(f"Network discovery failed, using defaults: {e}")
+            
+        return network_info
+    
+    def get_random_ip_in_range(self, ip_range_start, ip_range_end):
+        """Generate random IP in the discovered network range"""
+        network_base = self.network_info['network_base']
+        return f"{network_base}.{random.randint(ip_range_start, ip_range_end)}"
+    
+    def get_gateway_ip(self):
+        """Get the network gateway IP"""
+        return self.network_info['gateway']
     
     def generate_simulation_traffic(self, interface="br-zeek-sim", scenario="web_browsing", 
                                   duration=60, packets_per_second=5):
@@ -56,9 +98,22 @@ class NetworkTrafficGenerator:
                 else:
                     packet = self.create_mixed_simulation_traffic()
                 
-                # Send to virtual interface
-                sendp(packet, iface=interface, verbose=0)
-                packets_sent += 1
+                # Send packet - try interface-specific first, fallback to IP layer
+                try:
+                    # Try sending with specific interface first
+                    sendp(packet, iface=interface, verbose=0)
+                    packets_sent += 1
+                except Exception as iface_error:
+                    try:
+                        # Fallback: send at IP layer (remove Ethernet header)
+                        if packet.haslayer(Ether) and packet.haslayer(IP):
+                            ip_packet = packet[IP]
+                            send(ip_packet, verbose=0)
+                            packets_sent += 1
+                        else:
+                            print(f"Packet format error: {iface_error}")
+                    except Exception as send_error:
+                        print(f"Send failed: {send_error}")
                 
                 # Variable delays for realistic timing
                 delay = random.uniform(0.5, 2.0) / packets_per_second
@@ -74,8 +129,8 @@ class NetworkTrafficGenerator:
     
     def create_web_browsing_traffic(self):
         """Create realistic web browsing patterns"""
-        src_ip = f"192.168.200.{random.randint(10, 19)}"
-        dst_ip = f"192.168.200.{random.randint(20, 29)}"
+        src_ip = self.get_random_ip_in_range(10, 19)
+        dst_ip = self.get_random_ip_in_range(20, 29)
         
         traffic_types = ["http_get", "https_handshake", "dns_lookup", "http_post"]
         traffic_type = random.choice(traffic_types)
@@ -92,7 +147,7 @@ class NetworkTrafficGenerator:
         elif traffic_type == "dns_lookup":
             domains = ["example.com", "cdn.example.com", "api.example.com", "images.example.com"]
             domain = random.choice(domains)
-            return Ether()/IP(src=src_ip, dst="192.168.200.1")/UDP(sport=random.randint(1024, 65535), dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
+            return Ether()/IP(src=src_ip, dst=self.get_gateway_ip())/UDP(sport=random.randint(1024, 65535), dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
         
         else:  # http_post
             payload = "POST /api/data HTTP/1.1\r\nHost: api.example.com\r\nContent-Length: 25\r\n\r\n{\"user\":\"demo\",\"data\":123}"
@@ -100,8 +155,8 @@ class NetworkTrafficGenerator:
     
     def create_file_transfer_traffic(self):
         """Create file transfer simulation (FTP, SFTP, etc.)"""
-        src_ip = f"192.168.200.{random.randint(10, 19)}"
-        dst_ip = f"192.168.200.{random.randint(20, 29)}"
+        src_ip = self.get_random_ip_in_range(10, 19)
+        dst_ip = self.get_random_ip_in_range(20, 29)
         
         protocols = ["ftp_data", "ftp_control", "sftp", "scp"]
         protocol = random.choice(protocols)
@@ -122,8 +177,8 @@ class NetworkTrafficGenerator:
     
     def create_video_streaming_traffic(self):
         """Create video streaming simulation"""
-        src_ip = f"192.168.200.{random.randint(20, 29)}"  # Server
-        dst_ip = f"192.168.200.{random.randint(10, 19)}"  # Client
+        src_ip = self.get_random_ip_in_range(20, 29)  # Server
+        dst_ip = self.get_random_ip_in_range(10, 19)  # Client
         
         # High bandwidth, consistent packets
         data_size = random.randint(800, 1400)
@@ -133,36 +188,36 @@ class NetworkTrafficGenerator:
     
     def create_office_network_traffic(self):
         """Create typical office network patterns"""
-        src_ip = f"192.168.200.{random.randint(10, 19)}"
+        src_ip = self.get_random_ip_in_range(10, 19)
         
         services = ["email", "file_share", "print", "web_proxy", "dhcp"]
         service = random.choice(services)
         
         if service == "email":
-            dst_ip = f"192.168.200.{random.randint(20, 29)}"
+            dst_ip = self.get_random_ip_in_range(20, 29)
             protocols = [("smtp", 25), ("pop3", 110), ("imap", 143), ("smtps", 465)]
             protocol, port = random.choice(protocols)
             return Ether()/IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=port)
         
         elif service == "file_share":
-            dst_ip = f"192.168.200.{random.randint(20, 29)}"
+            dst_ip = self.get_random_ip_in_range(20, 29)
             return Ether()/IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=445)  # SMB
         
         elif service == "print":
-            dst_ip = f"192.168.200.{random.randint(30, 39)}"  # Printer range
+            dst_ip = self.get_random_ip_in_range(30, 39)  # Printer range
             return Ether()/IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=631)  # IPP
         
         elif service == "dhcp":
             return Ether()/IP(src="0.0.0.0", dst="255.255.255.255")/UDP(sport=68, dport=67)/Raw(load="DHCP_DISCOVER")
         
         else:  # web_proxy
-            dst_ip = f"192.168.200.{random.randint(20, 29)}"
+            dst_ip = self.get_random_ip_in_range(20, 29)
             return Ether()/IP(src=src_ip, dst=dst_ip)/TCP(sport=random.randint(1024, 65535), dport=8080)
     
     def create_malicious_traffic(self):
         """Create simulated malicious activity patterns (for IDS testing)"""
-        src_ip = f"192.168.200.{random.randint(100, 109)}"  # Suspicious source range
-        dst_ip = f"192.168.200.{random.randint(10, 29)}"
+        src_ip = self.get_random_ip_in_range(100, 109)  # Suspicious source range
+        dst_ip = self.get_random_ip_in_range(10, 29)
         
         attacks = ["port_scan", "brute_force", "suspicious_dns", "data_exfiltration"]
         attack = random.choice(attacks)
@@ -181,7 +236,7 @@ class NetworkTrafficGenerator:
             # DNS queries to suspicious domains
             domains = ["malware-c2.evil", "phishing.bad", "botnet.cmd"]
             domain = random.choice(domains)
-            return Ether()/IP(src=src_ip, dst="192.168.200.1")/UDP(sport=random.randint(1024, 65535), dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
+            return Ether()/IP(src=src_ip, dst=self.get_gateway_ip())/UDP(sport=random.randint(1024, 65535), dport=53)/DNS(rd=1, qd=DNSQR(qname=domain))
         
         else:  # data_exfiltration
             # Large outbound data transfer
@@ -316,8 +371,8 @@ class NetworkTrafficGenerator:
         return Ether()/IP(src=src_ip, dst=target_ip)/TCP(sport=random.randint(1024, 65535), dport=random.choice(ports), flags="S")
     
     def get_random_source_ip(self):
-        """Generate random source IP from virtual network range"""
-        return f"192.168.200.{random.randint(10, 50)}"
+        """Generate random source IP from discovered network range"""
+        return self.get_random_ip_in_range(10, 50)
     
     def capture_interface_traffic(self, interface, filename, duration=60, filter_expr=""):
         """Capture real traffic from an interface"""
