@@ -483,6 +483,7 @@ WEB_INTERFACE = """
         .log-header h3 { margin: 0; font-size: 16px; color: #495057; }
         .log-controls { display: flex; gap: 8px; }
         .log-box { height: 300px; overflow-y: auto; padding: 15px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 11px; line-height: 1.4; background: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; word-wrap: break-word; }
+        .kafka-log-box { height: 300px; overflow: auto; padding: 15px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 11px; line-height: 1.4; background: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; white-space: pre; word-wrap: normal; }
         .kafka-status { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
         .kafka-connected { background: #d4edda; color: #155724; }
         .kafka-disconnected { background: #f8d7da; color: #721c24; }
@@ -570,7 +571,7 @@ WEB_INTERFACE = """
                     <button class="btn btn-secondary btn-sm" onclick="clearKafkaMessages()">Clear</button>
                 </div>
             </div>
-            <div id="kafka-log" class="log-box"></div>
+            <div id="kafka-log" class="kafka-log-box"></div>
         </div>
     </div>
 
@@ -723,61 +724,11 @@ WEB_INTERFACE = """
             messages.forEach(msg => {
                 const timestamp = msg.timestamp;
                 const data = msg.data;
-                
-                if (data.raw_message) {
-                    content += `[${timestamp}] RAW: ${data.raw_message}\n`;
-                } else {
-                    // Try multiple possible field names for Zeek logs
-                    const logType = data._path || data.path || data.log_type || data.event_type || 'unknown';
-                    
-                    // Try various field names for source IP
-                    const srcIP = data['id.orig_h'] || data['id_orig_h'] || data.src_ip || data.source_ip || 
-                                 data.orig_h || data.client_ip || data.src || 'N/A';
-                    
-                    // Try various field names for destination IP  
-                    const dstIP = data['id.resp_h'] || data['id_resp_h'] || data.dst_ip || data.dest_ip || 
-                                 data.resp_h || data.server_ip || data.dst || 'N/A';
-                    
-                    // Try various field names for protocol
-                    const proto = data.proto || data.protocol || data.service || 'N/A';
-                    
-                    // Try various field names for ports
-                    const srcPort = data['id.orig_p'] || data['id_orig_p'] || data.src_port || data.source_port || '';
-                    const dstPort = data['id.resp_p'] || data['id_resp_p'] || data.dst_port || data.dest_port || '';
-                    
-                    // Format compact log line
-                    let srcStr = srcIP;
-                    let dstStr = dstIP;
-                    if (srcPort) srcStr += ':' + srcPort;
-                    if (dstPort) dstStr += ':' + dstPort;
-                    
-                    // Create a more compact single-line format
-                    let details = '';
-                    if (data.method && data.uri) {
-                        details = ` ${data.method} ${data.uri}`;
-                    } else if (data.query) {
-                        details = ` DNS:${data.query}`;
-                    } else if (data.method) {
-                        details = ` ${data.method}`;
-                    } else if (data.uri || data.url) {
-                        details = ` ${data.uri || data.url}`;
-                    }
-                    
-                    if (data.status_code || data.response_code) {
-                        details += ` [${data.status_code || data.response_code}]`;
-                    }
-                    
-                    content += `[${timestamp}] ${logType.toUpperCase()}: ${srcStr} → ${dstStr} (${proto})${details}\n`;
-                    
-                    // If we still have N/A values, show compact JSON for debugging
-                    if (srcIP === 'N/A' && dstIP === 'N/A' && logType === 'unknown') {
-                        const keys = Object.keys(data).slice(0, 3).join(', ');
-                        content += `[${timestamp}] DEBUG: ${keys}...\n`;
-                    }
-                }
+                // Use textContent instead of innerHTML to preserve formatting
+                content += `[${timestamp}] RAW: ${JSON.stringify(data, null, 2)}\n`;
             });
             
-            kafkaLogDiv.textContent = content;
+            kafkaLogDiv.textContent = content; // This preserves whitespace and formatting
             kafkaLogDiv.scrollTop = kafkaLogDiv.scrollHeight;
         }
         
