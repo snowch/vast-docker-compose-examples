@@ -1,4 +1,4 @@
-# Simplified live traffic monitoring configuration for Zeek-Kafka with debugging
+# Simplified live traffic monitoring configuration for Zeek-Kafka with basic detection
 @load base/protocols/conn
 @load base/protocols/dns
 @load base/protocols/http
@@ -6,6 +6,23 @@
 @load base/protocols/ftp
 @load base/protocols/ssh
 @load base/protocols/smtp
+
+# Load basic detection frameworks
+@load base/frameworks/notice
+@load policy/protocols/conn/known-hosts
+@load policy/protocols/conn/known-services
+@load policy/protocols/dns/detect-external-names
+@load policy/protocols/ftp/detect
+@load policy/protocols/http/detect-sqli
+@load policy/protocols/http/detect-webapps
+@load policy/protocols/ssh/detect-bruteforcing
+@load policy/protocols/ssl/validate-certs
+@load policy/tuning/json-logs
+@load policy/misc/detect-traceroute
+@load policy/frameworks/software/vulnerable
+@load policy/frameworks/software/version-changes
+
+# Load Kafka plugin
 @load Seiso/Kafka
 
 # Enable verbose logging
@@ -42,16 +59,24 @@ redef Kafka::tag_json = T;
 # Live monitoring specific settings
 redef LogAscii::use_json = T;
 
+# Notice logging will use default policy
+
 # Fix for TCP checksum offloading in containerized environments
 # Ignore invalid checksums that are common with NIC offloading
 redef ignore_checksums = T;
 
+# Configure detection thresholds to be more sensitive for demo purposes
+redef SSH::password_guesses_limit = 3;
+
+
+
 # Enhanced event handlers with more detailed logging
 event zeek_init() {
-    print "🚀 Zeek initialized - starting packet capture";
+    print "🚀 Zeek initialized with enhanced detection capabilities";
     print fmt("📊 Kafka broker: %s", "172.200.204.1:9092");
     print fmt("📤 Kafka topic: %s", "zeek-live-logs");
     print "🔧 Kafka plugin loaded and configured";
+    print "🛡️ Security detection policies loaded";
 }
 
 event connection_established(c: connection) {
@@ -69,11 +94,28 @@ event new_connection(c: connection) {
 event dns_request(c: connection, msg: dns_msg, query: string, qtype: count, qclass: count) {
     local log_msg = fmt("[DNS] %s -> %s (type: %s)", c$id$orig_h, query, qtype);
     print log_msg;
+    
+    # Check for suspicious domains
+    if (/\.(evil|bad|malware|botnet|phishing)\./ in query) {
+        NOTICE([$note=DNS::External_Name,
+                $msg=fmt("Suspicious DNS query: %s", query),
+                $src=c$id$orig_h]);
+    }
 }
 
 event http_request(c: connection, method: string, original_URI: string, unescaped_URI: string, version: string) {
     local log_msg = fmt("[HTTP] %s %s from %s to %s", method, original_URI, c$id$orig_h, c$id$resp_h);
     print log_msg;
+    
+    # Enhanced SQL injection detection with more patterns
+    if (/union.*select|drop.*table|insert.*into|select.*from|delete.*from|update.*set|exec|script|javascript|vbscript|onload|onerror|eval\(|system\(|cmd/i in unescaped_URI) {
+        NOTICE([$note=HTTP::SQL_Injection_Attacker,
+                $msg=fmt("Potential SQL injection or code injection: %s", unescaped_URI),
+                $src=c$id$orig_h]);
+    }
+    
+    # Log all HTTP requests for debugging
+    print fmt("[HTTP_DEBUG] Method: %s, URI: %s, Unescaped: %s", method, original_URI, unescaped_URI);
 }
 
 event http_reply(c: connection, version: string, code: count, reason: string) {
@@ -81,15 +123,40 @@ event http_reply(c: connection, version: string, code: count, reason: string) {
     print log_msg;
 }
 
-# Kafka status logging - removed non-existent event handler
-# The Kafka plugin will handle message delivery internally
+# Enhanced notice handling - using hook instead of event
+hook Notice::notice(n: Notice::Info) {
+    local notice_msg = fmt("[NOTICE] %s: %s (src: %s)", n$note, n$msg, n$src);
+    print notice_msg;
+}
+
+# SSH brute force detection
+event SSH::password_guesses_exceeded(guesser: addr, victim: addr) {
+    NOTICE([$note=SSH::Password_Guessing,
+            $msg=fmt("SSH brute force attack from %s against %s", guesser, victim),
+            $src=guesser]);
+}
 
 # Simple packet counting
 global packet_count = 0;
+global connection_count = 0;
 
 event new_packet(c: connection, p: pkt_hdr) {
     ++packet_count;
     if (packet_count % 100 == 0) {
         print fmt("[PACKET_COUNT] Processed %d packets", packet_count);
     }
+}
+
+event connection_state_remove(c: connection) {
+    ++connection_count;
+    if (connection_count % 10 == 0) {
+        print fmt("[CONNECTION_COUNT] Processed %d connections", connection_count);
+    }
+}
+
+# Custom weird event generation for demonstration
+event weird(name: string, c: connection, addl: string) {
+    local weird_msg = fmt("[WEIRD] %s: %s (connection: %s:%s -> %s:%s)", 
+                         name, addl, c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p);
+    print weird_msg;
 }

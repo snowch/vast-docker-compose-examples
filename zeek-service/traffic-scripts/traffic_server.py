@@ -15,6 +15,7 @@ from datetime import datetime
 from scapy.all import *
 import random
 from network_traffic_generator import NetworkTrafficGenerator
+from enhanced_traffic_generator import EnhancedTrafficGenerator
 try:
     from kafka import KafkaConsumer
     KAFKA_AVAILABLE = True
@@ -137,6 +138,7 @@ class TrafficGenerator(NetworkTrafficGenerator):
     def __init__(self):
         super().__init__()
         self.zeek_monitor_ip = get_zeek_monitor_ip()
+        self.enhanced_generator = EnhancedTrafficGenerator()
         
     def generate_http_traffic(self, target_ip=None, duration=60, packets_per_second=1):
         """Generate simulated HTTP traffic with precise timing"""
@@ -512,8 +514,11 @@ WEB_INTERFACE = """
                 <button class="scenario-btn" onclick="startScenario('video_streaming')">🎥<br>Video Stream</button>
                 <button class="scenario-btn" onclick="startScenario('office_network')">🏢<br>Office Network</button>
                 <button class="scenario-btn" onclick="startScenario('malicious_activity')">🛡️<br>Security Test</button>
+                <button class="scenario-btn" onclick="startScenario('enhanced_attacks')">⚡<br>Enhanced Attacks</button>
+                <button class="scenario-btn" onclick="startScenario('port_scan')">🔍<br>Port Scan</button>
+                <button class="scenario-btn" onclick="startScenario('sql_injection')">💉<br>SQL Injection</button>
             </div>
-            <div class="tip">💡 Each scenario runs for 2 minutes at 5 packets/second</div>
+            <div class="tip">💡 Standard scenarios run for 2 minutes. Enhanced attacks create real network connections for better detection.</div>
         </div>
         
         <div class="control-panel">
@@ -785,6 +790,21 @@ def start_scenario():
             thread = threading.Thread(
                 target=generator.generate_malicious_activity_scenario,
                 args=(duration, packets_per_second)
+            )
+        elif scenario == "enhanced_attacks":
+            thread = threading.Thread(
+                target=generator.enhanced_generator.run_comprehensive_attack_simulation,
+                args=(generator.zeek_monitor_ip, duration)
+            )
+        elif scenario == "port_scan":
+            thread = threading.Thread(
+                target=generator.enhanced_generator.generate_port_scan_traffic,
+                args=(generator.zeek_monitor_ip, duration, 5)
+            )
+        elif scenario == "sql_injection":
+            thread = threading.Thread(
+                target=generator.enhanced_generator.generate_malicious_http_traffic,
+                args=(generator.zeek_monitor_ip, duration, 2)
             )
         else:
             thread = threading.Thread(
