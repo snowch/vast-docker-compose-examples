@@ -32,6 +32,9 @@ active_sessions = {}
 kafka_messages = []
 kafka_consumer_thread = None
 kafka_running = False
+continuous_simulation_running = False
+continuous_simulation_thread = None
+continuous_simulation = None
 
 class KafkaMessageConsumer:
     def __init__(self, broker='172.200.204.1:9092', topic='zeek-live-logs'):
@@ -133,6 +136,209 @@ def get_zeek_monitor_ip():
     # Final fallback
     print("Using fallback IP: 192.168.100.2")
     return "192.168.100.2"
+
+class ContinuousSimulation:
+    """Manages continuous traffic simulation with weighted scenarios and concurrency support"""
+    
+    def __init__(self):
+        self.running = False
+        self.thread = None
+        self.max_concurrent_scenarios = 3  # Default concurrency level
+        self.active_scenario_threads = {}  # Track active scenario threads
+        
+        # Scenario weights (higher = more likely to be selected)
+        # Normal traffic scenarios have higher weights
+        self.scenario_weights = {
+            'web_browsing': 30,      # Most common - normal web traffic
+            'office_network': 25,    # Common - office activities
+            'file_transfer': 15,     # Moderate - file operations
+            'video_streaming': 10,   # Moderate - streaming content
+            'dns_queries': 8,        # Background - DNS lookups
+            'mixed_traffic': 7,      # Background - general traffic
+            'malicious_activity': 3, # Low - security incidents
+            'port_scan': 1,          # Very low - attack activity
+            'sql_injection': 1       # Very low - attack activity
+        }
+        
+        # Create weighted scenario list for random selection
+        self.weighted_scenarios = []
+        for scenario, weight in self.scenario_weights.items():
+            self.weighted_scenarios.extend([scenario] * weight)
+    
+    def start_continuous_simulation(self, min_interval=30, max_interval=180, max_concurrent=3):
+        """Start continuous simulation with random scenarios and concurrency support"""
+        if self.running:
+            return False, "Continuous simulation already running"
+        
+        self.max_concurrent_scenarios = max_concurrent
+        self.running = True
+        self.thread = threading.Thread(
+            target=self._simulation_loop,
+            args=(min_interval, max_interval)
+        )
+        self.thread.daemon = True
+        self.thread.start()
+        
+        return True, f"Continuous simulation started with max {max_concurrent} concurrent scenarios"
+    
+    def stop_continuous_simulation(self):
+        """Stop continuous simulation and all active scenarios"""
+        if not self.running:
+            return False, "Continuous simulation not running"
+        
+        self.running = False
+        
+        # Stop all active scenario threads
+        for session_id, (generator, thread) in list(self.active_scenario_threads.items()):
+            generator.running = False
+            print(f"Stopping scenario thread: {session_id}")
+        
+        # Wait for main thread to stop
+        if self.thread:
+            self.thread.join(timeout=5)
+        
+        # Clean up active threads
+        self.active_scenario_threads.clear()
+        
+        return True, "Continuous simulation stopped"
+    
+    def _simulation_loop(self, min_interval, max_interval):
+        """Main simulation loop that runs scenarios continuously with concurrency support"""
+        print(f"Starting continuous simulation loop (interval: {min_interval}-{max_interval}s, max concurrent: {self.max_concurrent_scenarios})")
+        
+        while self.running:
+            try:
+                # Clean up finished scenario threads
+                self._cleanup_finished_scenarios()
+                
+                # Check if we can start a new scenario (respect concurrency limit)
+                if len(self.active_scenario_threads) < self.max_concurrent_scenarios:
+                    # Select random scenario based on weights
+                    scenario = random.choice(self.weighted_scenarios)
+                    
+                    # Determine scenario duration (shorter for attacks, longer for normal traffic)
+                    if scenario in ['malicious_activity', 'port_scan', 'sql_injection']:
+                        duration = random.randint(30, 90)  # Shorter attack scenarios
+                        pps = random.randint(2, 5)
+                    else:
+                        duration = random.randint(60, 180)  # Longer normal scenarios
+                        pps = random.randint(1, 8)
+                    
+                    print(f"Continuous simulation: Starting {scenario} for {duration}s at {pps} pps (concurrent: {len(self.active_scenario_threads)+1}/{self.max_concurrent_scenarios})")
+                    
+                    # Create new generator for this scenario
+                    generator = TrafficGenerator()
+                    session_id = f"continuous_{scenario}_{int(time.time())}"
+                    
+                    # Start the appropriate scenario
+                    thread = self._start_scenario_thread(generator, scenario, duration, pps)
+                    if thread:
+                        # Store the session in both global and local tracking
+                        traffic_threads[session_id] = generator
+                        active_sessions[session_id] = {
+                            'type': f"continuous_{scenario}",
+                            'started': datetime.now().isoformat(),
+                            'duration': duration,
+                            'scenario': scenario,
+                            'pps': pps,
+                            'continuous': True
+                        }
+                        
+                        # Start thread and track it locally
+                        thread.start()
+                        self.active_scenario_threads[session_id] = (generator, thread)
+                
+                # Wait for a shorter interval when running concurrent scenarios
+                if self.running:
+                    # Use shorter wait times when we have capacity for more scenarios
+                    if len(self.active_scenario_threads) < self.max_concurrent_scenarios:
+                        wait_time = random.randint(min_interval // 2, min_interval)
+                    else:
+                        wait_time = random.randint(min_interval, max_interval)
+                    
+                    print(f"Continuous simulation: Waiting {wait_time}s before next scenario check (active: {len(self.active_scenario_threads)})")
+                    
+                    # Sleep in small chunks to allow for quick stopping
+                    for _ in range(wait_time):
+                        if not self.running:
+                            break
+                        time.sleep(1)
+                
+            except Exception as e:
+                print(f"Error in continuous simulation loop: {e}")
+                time.sleep(10)  # Wait before retrying
+        
+        print("Continuous simulation loop stopped")
+    
+    def _cleanup_finished_scenarios(self):
+        """Clean up finished scenario threads"""
+        finished_sessions = []
+        
+        for session_id, (generator, thread) in list(self.active_scenario_threads.items()):
+            if not generator.running or not thread.is_alive():
+                finished_sessions.append(session_id)
+        
+        for session_id in finished_sessions:
+            print(f"Cleaning up finished scenario: {session_id}")
+            del self.active_scenario_threads[session_id]
+            # Also clean up from global tracking
+            if session_id in traffic_threads:
+                del traffic_threads[session_id]
+            if session_id in active_sessions:
+                del active_sessions[session_id]
+    
+    def _start_scenario_thread(self, generator, scenario, duration, pps):
+        """Create and return a thread for the specified scenario"""
+        if scenario == "web_browsing":
+            return threading.Thread(
+                target=generator.generate_web_browsing_scenario,
+                args=(duration, pps)
+            )
+        elif scenario == "file_transfer":
+            return threading.Thread(
+                target=generator.generate_file_transfer_scenario,
+                args=(duration, pps)
+            )
+        elif scenario == "video_streaming":
+            return threading.Thread(
+                target=generator.generate_video_streaming_scenario,
+                args=(duration, pps)
+            )
+        elif scenario == "office_network":
+            return threading.Thread(
+                target=generator.generate_office_network_scenario,
+                args=(duration, pps)
+            )
+        elif scenario == "malicious_activity":
+            return threading.Thread(
+                target=generator.generate_malicious_activity_scenario,
+                args=(duration, pps)
+            )
+        elif scenario == "port_scan":
+            return threading.Thread(
+                target=generator.enhanced_generator.generate_port_scan_traffic,
+                args=(generator.zeek_monitor_ip, duration, pps)
+            )
+        elif scenario == "sql_injection":
+            return threading.Thread(
+                target=generator.enhanced_generator.generate_malicious_http_traffic,
+                args=(generator.zeek_monitor_ip, duration, 2)
+            )
+        elif scenario == "dns_queries":
+            return threading.Thread(
+                target=generator.generate_dns_traffic,
+                args=(None, duration, pps)
+            )
+        elif scenario == "mixed_traffic":
+            return threading.Thread(
+                target=generator.generate_mixed_traffic,
+                args=(duration, pps)
+            )
+        else:
+            return threading.Thread(
+                target=generator.generate_mixed_traffic,
+                args=(duration, pps)
+            )
 
 class TrafficGenerator(NetworkTrafficGenerator):
     def __init__(self):
@@ -507,6 +713,31 @@ WEB_INTERFACE = """
     
     <div class="main-grid">
         <div class="control-panel">
+            <h2 class="section-title">🔄 Continuous Simulation</h2>
+            <div class="custom-form">
+                <div class="form-group">
+                    <label>Min Interval (s)</label>
+                    <input type="number" id="minInterval" value="30" min="10" max="300">
+                </div>
+                <div class="form-group">
+                    <label>Max Interval (s)</label>
+                    <input type="number" id="maxInterval" value="180" min="30" max="600">
+                </div>
+                <div class="form-group">
+                    <label>Max Concurrent</label>
+                    <input type="number" id="maxConcurrent" value="3" min="1" max="10">
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="continuous-start-btn" class="btn btn-success" onclick="startContinuousSimulation()">Start Continuous</button>
+                    <button id="continuous-stop-btn" class="btn btn-danger" onclick="stopContinuousSimulation()" style="display: none;">Stop Continuous</button>
+                </div>
+            </div>
+            <div class="tip">🔄 Runs random scenarios continuously with weighted selection. Normal traffic (70%) vs attacks (30%). Concurrency allows multiple scenarios to run simultaneously for increased load.</div>
+            <div id="concurrent-status" class="status-display status-info" style="display: none;">Concurrent scenarios: 0/3</div>
+        </div>
+        
+        <div class="control-panel">
             <h2 class="section-title">🎭 Quick Scenarios</h2>
             <div class="scenarios">
                 <button class="scenario-btn" onclick="startScenario('web_browsing')">🌐<br>Web Browsing</button>
@@ -736,11 +967,73 @@ WEB_INTERFACE = """
             kafkaLogDiv.scrollTop = kafkaLogDiv.scrollHeight;
         }
         
+        // Continuous simulation functions
+        async function startContinuousSimulation() {
+            const minInterval = parseInt(document.getElementById('minInterval').value);
+            const maxInterval = parseInt(document.getElementById('maxInterval').value);
+            const maxConcurrent = parseInt(document.getElementById('maxConcurrent').value);
+            
+            log('Starting continuous simulation...');
+            const result = await apiCall('continuous/start', {
+                min_interval: minInterval,
+                max_interval: maxInterval,
+                max_concurrent: maxConcurrent
+            });
+            if (result && result.success) {
+                document.getElementById('continuous-start-btn').style.display = 'none';
+                document.getElementById('continuous-stop-btn').style.display = 'inline-block';
+                document.getElementById('concurrent-status').style.display = 'block';
+                showStatus('Continuous simulation started', 'success');
+                log(`Continuous simulation started (${minInterval}-${maxInterval}s intervals, max ${maxConcurrent} concurrent)`);
+            }
+        }
+        
+        async function stopContinuousSimulation() {
+            log('Stopping continuous simulation...');
+            const result = await apiCall('continuous/stop');
+            if (result && result.success) {
+                document.getElementById('continuous-start-btn').style.display = 'inline-block';
+                document.getElementById('continuous-stop-btn').style.display = 'none';
+                document.getElementById('concurrent-status').style.display = 'none';
+                showStatus('Continuous simulation stopped', 'info');
+                log('Continuous simulation stopped');
+            }
+        }
+        
+        async function getContinuousStatus() {
+            try {
+                const response = await fetch('/api/continuous/status');
+                const result = await response.json();
+                if (result && result.success) {
+                    if (result.running) {
+                        document.getElementById('continuous-start-btn').style.display = 'none';
+                        document.getElementById('continuous-stop-btn').style.display = 'inline-block';
+                        document.getElementById('concurrent-status').style.display = 'block';
+                        
+                        // Update concurrent status display
+                        const statusDiv = document.getElementById('concurrent-status');
+                        const active = result.active_concurrent || 0;
+                        const max = result.max_concurrent || 3;
+                        statusDiv.textContent = `Concurrent scenarios: ${active}/${max}`;
+                        statusDiv.className = `status-display ${active > 0 ? 'status-success' : 'status-info'}`;
+                    } else {
+                        document.getElementById('continuous-start-btn').style.display = 'inline-block';
+                        document.getElementById('continuous-stop-btn').style.display = 'none';
+                        document.getElementById('concurrent-status').style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking continuous status:', error);
+            }
+        }
+        
         // Auto-refresh status every 30 seconds
         setInterval(getStatus, 30000);
+        setInterval(getContinuousStatus, 10000);
         
         // Initial status check
         getStatus();
+        getContinuousStatus();
         log('Virtual Network Traffic Generator initialized');
     </script>
 </body>
@@ -992,6 +1285,89 @@ def clear_kafka_messages():
         'success': True,
         'message': 'Kafka messages cleared'
     })
+
+@app.route('/api/continuous/start', methods=['POST'])
+def start_continuous_simulation():
+    global continuous_simulation, continuous_simulation_running
+    
+    try:
+        data = request.get_json() or {}
+        min_interval = data.get('min_interval', 30)
+        max_interval = data.get('max_interval', 180)
+        max_concurrent = data.get('max_concurrent', 3)  # New concurrency parameter
+        
+        if continuous_simulation_running:
+            return jsonify({
+                'success': False,
+                'error': 'Continuous simulation already running'
+            })
+        
+        # Create new continuous simulation instance
+        continuous_simulation = ContinuousSimulation()
+        success, message = continuous_simulation.start_continuous_simulation(min_interval, max_interval, max_concurrent)
+        
+        if success:
+            continuous_simulation_running = True
+            return jsonify({
+                'success': True,
+                'message': message
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': message
+            })
+            
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/continuous/stop', methods=['POST'])
+def stop_continuous_simulation():
+    global continuous_simulation, continuous_simulation_running
+    
+    try:
+        if not continuous_simulation_running or not continuous_simulation:
+            return jsonify({
+                'success': False,
+                'error': 'Continuous simulation not running'
+            })
+        
+        success, message = continuous_simulation.stop_continuous_simulation()
+        
+        if success:
+            continuous_simulation_running = False
+            continuous_simulation = None
+            return jsonify({
+                'success': True,
+                'message': message
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': message
+            })
+            
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/continuous/status', methods=['GET'])
+def get_continuous_status():
+    global continuous_simulation, continuous_simulation_running
+    
+    status_data = {
+        'success': True,
+        'running': continuous_simulation_running,
+        'weights': continuous_simulation.scenario_weights if continuous_simulation else {}
+    }
+    
+    if continuous_simulation:
+        status_data.update({
+            'max_concurrent': continuous_simulation.max_concurrent_scenarios,
+            'active_concurrent': len(continuous_simulation.active_scenario_threads),
+            'active_scenarios': list(continuous_simulation.active_scenario_threads.keys())
+        })
+    
+    return jsonify(status_data)
 
 if __name__ == '__main__':
     print("Starting Virtual Network Traffic Generator Server...")
