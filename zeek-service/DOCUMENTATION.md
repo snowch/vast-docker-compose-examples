@@ -12,9 +12,9 @@ The application consists of two main Docker services connected via a standard Do
 
 ```mermaid
 graph TD
-    subgraph "Docker Bridge Network (zeek-network) 192.168.100.0/24"
-        Z[Zeek Monitor - eth0]
-        T[Traffic Simulator]
+    subgraph "Docker Network"
+        Z[Zeek Monitor Service <br> Interface: eth0]
+        T[Traffic Simulator Service]
         T -- Simulated Traffic --> Z
     end
     H[Host System]
