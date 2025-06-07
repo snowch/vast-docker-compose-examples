@@ -4,37 +4,29 @@ This document provides detailed documentation for the simplified Docker-based Ze
 
 ## 1. Overview
 
-This application provides a streamlined environment for monitoring network traffic using Zeek, an open-source network analysis framework. It leverages Docker and standard bridge networking to simplify deployment and management compared to more complex virtual network setups. The system includes a Zeek monitoring container, a traffic simulation container, and a simple web server to generate test traffic.
+This application provides a streamlined environment for monitoring network traffic using Zeek, an open-source network analysis framework. It leverages Docker and standard bridge networking to simplify deployment and management compared to more complex virtual network setups. The system includes a Zeek monitoring container and a traffic simulation container to generate test traffic.
 
 ## 2. Architecture
 
-The application consists of three main Docker services connected via a standard Docker bridge network (`zeek-network`). Zeek monitors the traffic flowing between containers on this network.
+The application consists of two main Docker services connected via a standard Docker bridge network (`zeek-network`). Zeek monitors the traffic flowing between containers on this network and outputs logs to a Kafka broker.
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                Docker Bridge Network                    │
-│                   (zeek-network)                        │
-│                  192.168.100.0/24                       │
-│                                                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
-│  │    Zeek     │  │   Traffic   │  │ Web Server  │     │
-│  │  Monitor    │  │ Simulator   │  │   (nginx)   │     │
-│  │   (eth0)    │  │             │  │             │     │
-│  └─────────────┘  └─────────────┘  └─────────────┘     │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-                           │
-                    ┌─────────────┐
-                    │ Host System │
-                    │ Port 8080   │ ← Traffic Simulator Web UI
-                    │ Port 8081   │ ← Web Server
-                    │ Port 8082   │ ← Zeek Monitor (Proxied Web Traffic)
-                    └─────────────┘
+```mermaid
+graph TD
+    subgraph "Docker Bridge Network (zeek-network) 192.168.100.0/24"
+        Z[Zeek Monitor - eth0]
+        T[Traffic Simulator]
+        T -- Simulated Traffic --> Z
+    end
+    H[Host System]
+    K[Kafka Broker]
+
+    T -- Port 8080 --> H
+    Z -- Port 8082 --> H
+    Z -- Logs to --> K
 ```
 
--   **zeek-live**: The core Zeek monitoring container. It captures traffic on its `eth0` interface within the `zeek-network`.
+-   **zeek-live**: The core Zeek monitoring container. It captures traffic on its `eth0` interface within the `zeek-network` (including traffic from the Traffic Simulator) and sends analyzed logs to the Kafka Broker.
 -   **traffic-simulator**: A Python-based container using Scapy to generate various types of network traffic. It includes a web interface for easy control.
--   **web-server**: A simple Nginx container serving static content, used to generate basic HTTP traffic for monitoring.
 
 ## 3. Setup
 
@@ -50,7 +42,7 @@ To get the application up and running, follow these steps:
     ```bash
     docker compose ps
     ```
-    You should see `zeek-live-monitor`, `scapy-traffic-sim`, and `web-server` listed with `State` as `Up`.
+    You should see `zeek-live-monitor` and `scapy-traffic-sim` listed with `State` as `Up`.
 
 ## 4. Components
 
@@ -70,7 +62,7 @@ To get the application up and running, follow these steps:
     -   **Networks**: Connected to the `zeek-network` bridge network.
     -   **Capabilities**: `NET_ADMIN`, `NET_RAW` - Required for packet capture.
     -   **Privileged**: `true` - Enables promiscuous mode for the network interface, necessary for capturing all traffic.
-    -   **Ports**: `8082:80` - Proxies host port 8082 to container port 80. This allows external access to the web server *through* the Zeek container, ensuring that traffic is monitored.
+    -   **Ports**: `8082:80` - Proxies host port 8082 to container port 80. This port is not actively used by the current services but is kept for potential future use or compatibility.
     -   **Command**: `/scripts/monitor-live.sh` - Executes the monitoring script on container startup.
 
 ### 4.2. `traffic-simulator` Service
@@ -84,18 +76,9 @@ To get the application up and running, follow these steps:
     -   **Capabilities**: `NET_ADMIN`, `NET_RAW` - Required for crafting and sending raw packets using Scapy.
     -   **Command**: `python3 /traffic-scripts/traffic_server.py` - Starts the web server for the traffic generator.
 
-### 4.3. `web-server` Service
+### 4.3. `zeek-network`
 
--   **Purpose**: A simple web server to generate basic HTTP traffic.
--   **Dockerfile**: Uses the standard `nginx:latest` image.
--   **Configuration**:
-    -   **Volumes**: `./web-content:/usr/share/nginx/html`: Mounts local web content to be served by Nginx.
-    -   **Networks**: Connected to the `zeek-network` bridge network.
-    -   **Ports**: `8081:80` - Maps host port 8081 to container port 80, exposing the Nginx web server. Note that accessing this directly bypasses the Zeek monitor unless traffic is routed through the Zeek container's proxied port (8082).
-
-### 4.4. `zeek-network`
-
--   **Purpose**: A Docker bridge network connecting the three services. This is the network segment that Zeek monitors.
+-   **Purpose**: A Docker bridge network connecting the two services. This is the network segment that Zeek monitors.
 -   **Configuration**:
     -   **Driver**: `bridge` - Standard Docker bridge network.
     -   **IPAM**: Configured with a static subnet `192.168.100.0/24`.
@@ -142,27 +125,25 @@ Traffic within the `zeek-network` is automatically monitored by the `zeek-live` 
     -   `enhanced_traffic_generator.py` focuses on creating *real* network connections using Python's `socket` and `requests` libraries (if available). This is crucial for generating traffic that Zeek can fully analyze, such as complete HTTP requests or TCP handshakes. It includes functions for generating real HTTP, malicious HTTP, DNS, port scan, SSH brute force, and data exfiltration traffic, as well as a comprehensive attack simulation.
     -   These scripts are executed by the `traffic-simulator` container.
 
-3.  **Web Server**:
-    -   Access the simple Nginx web server at `http://localhost:8081`. Browsing this site generates standard HTTP traffic.
-    -   To ensure this traffic is monitored by Zeek, access it via the Zeek container's proxied port: `http://localhost:8082`. This routes the traffic through the Zeek container's network interface being monitored.
-
-4.  **Container-to-Container Communication**:
-    -   Any communication initiated directly between containers on the `zeek-network` (e.g., `docker exec traffic-simulator ping web-server`) will also be monitored by Zeek.
+3.  **Container-to-Container Communication**:
+    -   Any communication initiated directly between containers on the `zeek-network` (e.g., `docker exec traffic-simulator ping zeek-live-monitor`) will also be monitored by Zeek.
 
 ## 7. Monitoring and Logging
 
-Zeek captures and analyzes traffic on its `eth0` interface within the `zeek-network`. Logs are generated in two primary locations:
+Zeek captures and analyzes traffic on its `eth0` interface within the `zeek-network`. Logs are generated and outputted to Kafka, and also saved to local files.
 
-1.  **Local Log Files**:
+Logs are available in two primary locations:
+
+1.  **Kafka**:
+    -   The Zeek-Kafka plugin sends all active logs to the configured Kafka broker and topic (`172.200.204.1:9092`, `zeek-live-logs`) by default.
+    -   Logs sent to Kafka are in JSON format with ISO8601 timestamps and tagged.
+    -   You can view these logs using a Kafka consumer or via the Kafka Consumer section in the traffic simulator web interface (`http://localhost:8080`).
+
+2.  **Local Log Files**:
     -   Zeek writes logs to the `/logs` directory inside the container, which is mounted to the local `./zeek-logs` directory.
     -   Logs are in JSON format (`conn.log`, `http.log`, `dns.log`, etc.).
     -   You can view these logs directly on your host machine in the `./zeek-logs` directory.
     -   Example: `cat zeek-logs/conn.log`
-
-2.  **Kafka**:
-    -   The Zeek-Kafka plugin sends all active logs to the configured Kafka broker and topic (`172.200.204.1:9092`, `zeek-live-logs`) by default.
-    -   Logs sent to Kafka are also in JSON format with ISO8601 timestamps and tagged.
-    -   You can view these logs using a Kafka consumer or via the Kafka Consumer section in the traffic simulator web interface (`http://localhost:8080`).
 
 3.  **Container Logs**:
     -   Basic event messages printed by the `monitor-live.sh` script and the custom Zeek event handlers in `kafka-live.zeek` are sent to the container's standard output.
@@ -176,9 +157,8 @@ Zeek captures and analyzes traffic on its `eth0` interface within the `zeek-netw
     -   Check available interfaces inside the container: `docker exec zeek-live-monitor ip link show`
 -   **No traffic captured**:
     -   Ensure containers are in the same `zeek-network`.
-    -   Verify traffic is being generated (check traffic simulator logs or web server access logs).
+    -   Verify traffic is being generated (check traffic simulator logs).
     -   Confirm Zeek is monitoring the correct interface (`eth0`).
-    -   If testing web traffic, ensure you are accessing the web server via the Zeek container's proxied port (`http://localhost:8082`).
 -   **Kafka connection issues**:
     -   Check the `KAFKA_BROKER` address in `docker-compose.yml` and `zeek-config/kafka-live.zeek`.
     -   Verify the Kafka broker is running and accessible from the Zeek container.
@@ -198,7 +178,6 @@ Zeek captures and analyzes traffic on its `eth0` interface within the `zeek-netw
     ```
 -   **Test connectivity between containers**:
     ```bash
-    docker exec traffic-simulator ping web-server
     docker exec traffic-simulator ping zeek-live-monitor
     ```
 -   **View Zeek container logs**:
@@ -228,5 +207,5 @@ If migrating, remember to back up existing logs and update your `docker-compose.
 
 -   [Zeek Documentation](https://docs.zeek.org/)
 -   [Zeek-Kafka Plugin](https://github.com/SeisoLLC/zeek-kafka)
--   [Docker Networking](https://docs.docker.com/network/)
+-   [Docker Networking](https://docs.docker.com/)
 -   [Scapy Documentation](https://scapy.net/)
