@@ -30,10 +30,25 @@ redef Log::enable_local_logging = T;
 redef Log::default_rotation_interval = 1hr;
 redef Log::default_logdir = "/logs";
 
-# Kafka configuration with debug settings
-redef Kafka::topic_name = "zeek-live-logs";
+
+
+# Configure detection thresholds to be more sensitive for demo purposes
+redef SSH::password_guesses_limit = 3;
+
+# Enhanced event handlers with more detailed logging
+# Check environment variables and configure Kafka at load time
+@if ( getenv("KAFKA_BROKER") == "" )
+@error "KAFKA_BROKER environment variable not set!"
+@endif
+
+@if ( getenv("KAFKA_TOPIC") == "" )  
+@error "KAFKA_TOPIC environment variable not set!"
+@endif
+
+# Configure Kafka with environment variables
+redef Kafka::topic_name = getenv("KAFKA_TOPIC");
 redef Kafka::kafka_conf = table(
-    ["metadata.broker.list"] = "172.200.204.1:9092",
+    ["metadata.broker.list"] = getenv("KAFKA_BROKER"),
     ["client.id"] = "zeek-live-monitor",
     ["batch.num.messages"] = "1", # set to 1 to immediately save to kafka
     ["queue.buffering.max.ms"] = "10", # Reduced from 1000ms to 10ms for minimal latency
@@ -59,22 +74,14 @@ redef Kafka::tag_json = T;
 # Live monitoring specific settings
 redef LogAscii::use_json = T;
 
-# Notice logging will use default policy
-
 # Fix for TCP checksum offloading in containerized environments
 # Ignore invalid checksums that are common with NIC offloading
 redef ignore_checksums = T;
 
-# Configure detection thresholds to be more sensitive for demo purposes
-redef SSH::password_guesses_limit = 3;
-
-
-
-# Enhanced event handlers with more detailed logging
 event zeek_init() {
     print "🚀 Zeek initialized with enhanced detection capabilities";
-    print fmt("📊 Kafka broker: %s", "172.200.204.1:9092");
-    print fmt("📤 Kafka topic: %s", "zeek-live-logs");
+    print fmt("📊 Kafka broker: %s", getenv("KAFKA_BROKER"));
+    print fmt("📤 Kafka topic: %s", getenv("KAFKA_TOPIC"));
     print "🔧 Kafka plugin loaded and configured";
     print "🛡️ Security detection policies loaded";
 }
@@ -129,12 +136,11 @@ hook Notice::notice(n: Notice::Info) {
     print notice_msg;
 }
 
-# SSH brute force detection
-event SSH::password_guesses_exceeded(guesser: addr, victim: addr) {
-    NOTICE([$note=SSH::Password_Guessing,
-            $msg=fmt("SSH brute force attack from %s against %s", guesser, victim),
-            $src=guesser]);
-}
+# SSH brute force detection will be handled by the loaded policy
+# The SSH::detect-bruteforcing policy will automatically generate notices
+
+# Weird activity will be captured automatically by Zeek's built-in mechanisms
+# All weird events are logged to weird.log and sent to Kafka automatically
 
 # Simple packet counting
 global packet_count = 0;
@@ -152,11 +158,4 @@ event connection_state_remove(c: connection) {
     if (connection_count % 10 == 0) {
         print fmt("[CONNECTION_COUNT] Processed %d connections", connection_count);
     }
-}
-
-# Custom weird event generation for demonstration
-event weird(name: string, c: connection, addl: string) {
-    local weird_msg = fmt("[WEIRD] %s: %s (connection: %s:%s -> %s:%s)", 
-                         name, addl, c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p);
-    print weird_msg;
 }
