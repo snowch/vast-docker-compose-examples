@@ -65,7 +65,7 @@ This guide utilizes a common Python-based stack suitable for data science and MV
 
 For this MVP, we are working with a relatively small, synthetically generated dataset (thousands of profiles). For this scale, **ChromaDB** running locally is an excellent choice – it's easy to set up and use, allowing us to focus on the core logic.
 
-However, consider a real-world deployment scenario, for instance, within an organization like **HMRC** in the United Kingdom. Such an entity deals with:
+However, consider a real-world deployment scenario, for instance, within a country's tax organisation. Such an entity deals with:
 
 * Tens of millions of taxpayers and businesses.
 * Billions or trillions of underlying records (tax lines, transactions, property records, etc.) across many years.
