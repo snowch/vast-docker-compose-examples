@@ -8,6 +8,7 @@ services:
     image: hairyhenderson/gomplate:latest
     working_dir: /workspace
     env_file:
+      - .env
       - ../.env-local
     volumes:
       - ./templates:/workspace/templates
@@ -35,6 +36,7 @@ services:
       # - --accesslog.format=json
       # - --accesslog.fields.names.ClientUsername=keep
       # - --accesslog.fields.headers.defaultMode=keep
+      - --accesslog.fields.names.HealthCheck=true
       - --providers.docker=true
       - --providers.docker.exposedByDefault=false 
       - --providers.docker.network=proxy
@@ -48,7 +50,7 @@ services:
     depends_on:
       setup_config:
         condition: service_completed_successfully
-    # mem_limit: 4g
+    mem_limit: 8g
     ports:
       - 18080:8080
     networks:
@@ -67,7 +69,8 @@ services:
       - ./generated/iceberg.properties:/etc/trino/catalog/iceberg.properties:ro
       - ./config.properties:/etc/trino/config.properties:ro
     healthcheck:
-      test: ["CMD", "trino", "--execute", "SELECT 'success'"]
+      # test: ["CMD", "trino", "--execute", "SELECT 'success'"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/info"]
       interval: 30s
       retries: 10
     labels:
@@ -79,3 +82,5 @@ services:
       # > http-server.process-forwarded=true
       - traefik.http.routers.mytrino.middlewares=trino-headers@docker
       - traefik.http.middlewares.trino-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
+      - traefik.http.services.trino.loadbalancer.healthcheck.path=/v1/info
+      - traefik.http.services.trino.loadbalancer.healthcheck.interval=10s

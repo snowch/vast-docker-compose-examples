@@ -1,10 +1,26 @@
+{{- $trinoVersion := env.Getenv "TRINO_VERSION" | required "Missing TRINO_VERSION environment variable!" }}
+{{- $dockerHost := env.Getenv "DOCKER_HOST_OR_IP" | required "Missing DOCKER_HOST_OR_IP environment variable!" }}
+{{- $s3Endpoint := env.Getenv "S3A_ENDPOINT" | required "Missing S3A_ENDPOINT environment variable!" }}
+{{- $s3AccessKey := env.Getenv "S3A_ACCESS_KEY" | required "Missing S3A_ACCESS_KEY environment variable!" }}
+{{- $s3SecretKey := env.Getenv "S3A_SECRET_KEY" | required "Missing S3A_SECRET_KEY environment variable!" }}
+
 connector.name=iceberg
-
 iceberg.catalog.type=hive_metastore
-
-hive.metastore.uri = thrift://{{ env.Getenv "DOCKER_HOST_OR_IP" | required "Missing DOCKER_HOST_OR_IP environment variable!" }}:9083
-
+hive.metastore.uri = thrift://{{ $dockerHost }}:9083
+{{- if ge (conv.Atoi $trinoVersion) 458 }}
+# Native S3 file system support (Trino 458+)
+fs.native-s3.enabled=true
+# Provide the VAST S3 Endpoint URI
+s3.endpoint={{ $s3Endpoint }}
+# Provide the VAST S3 credentials
+s3.aws-access-key={{ $s3AccessKey }}
+s3.aws-secret-key={{ $s3SecretKey }}
+{{- else }}
+# Legacy S3 file system support with Hadoop (Trino < 458)  
 fs.hadoop.enabled=true
-hive.s3.endpoint={{ env.Getenv "S3A_ENDPOINT" | required "Missing S3A_ENDPOINT environment variable!" }}
-hive.s3.aws-access-key={{ env.Getenv "S3A_ACCESS_KEY" | required "Missing S3A_ACCESS_KEY environment variable!" }}
-hive.s3.aws-secret-key={{ env.Getenv "S3A_SECRET_KEY" | required "Missing S3A_SECRET_KEY environment variable!" }}
+# Provide the VAST S3 Endpoint URI
+hive.s3.endpoint={{ $s3Endpoint }}
+# Provide the VAST S3 credentials
+hive.s3.aws-access-key={{ $s3AccessKey }}
+hive.s3.aws-secret-key={{ $s3SecretKey }}
+{{- end }}
