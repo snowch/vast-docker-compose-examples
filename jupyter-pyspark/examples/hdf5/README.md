@@ -1,4 +1,4 @@
-# Unlocking New Frontiers for H.D.F.5 Data with VAST DataBase
+# Unlocking New Frontiers for HDF5 Data with VAST DataBase
 
 These notebooks demonstrate how to ingest HDF5 files into the **VAST DataBase**, transforming scientific and research data from a static, file-based archive into a dynamic, queryable resource. This fundamental shift moves beyond the limitations of a single-file paradigm and enables new, powerful use cases that were previously impractical or impossible.
 
