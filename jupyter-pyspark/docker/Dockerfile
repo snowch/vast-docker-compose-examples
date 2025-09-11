@@ -164,7 +164,13 @@ RUN echo "Creating new Conda environment for kernel: ${NEW_KERNEL_ENV_NAME} with
 # USER ${NB_UID}
 
 # Set the startup command to run the mount script and then start Jupyter
-CMD ["/bin/bash", "-c", "/usr/local/bin/mount_s3.sh && start-notebook.sh"]
+CMD ["/bin/bash", "-c", "/usr/local/bin/mount_s3.sh && \
+if [ ! -z \"$JUPYTER_PASSWORD\" ]; then \
+  PW_HASH=$(python -c \"from jupyter_server.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))\"); \
+  start-notebook.sh --ServerApp.password=\"$PW_HASH\" --ServerApp.ip='*' --ServerApp.port=8888 --ServerApp.open_browser=False; \
+else \
+  start-notebook.sh --ServerApp.ip='*' --ServerApp.port=8888 --ServerApp.open_browser=False; \
+fi"]
 
 WORKDIR "${HOME}"
 EXPOSE 4040
