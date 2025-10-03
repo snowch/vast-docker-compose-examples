@@ -54,7 +54,7 @@ docker run --rm \
   $IMAGE_NAME /bin/bash -c "
     set -eua
     # Install necessary dependencies
-    pip install --no-cache-dir --no-warn-script-location --disable-pip-version-check --quiet nipyapi && \
+    pip install --no-cache-dir --no-warn-script-location --disable-pip-version-check --quiet nipyapi six && \
 
     # Run the Python script to set up the database connections with the optional --force-delete flag
     python3 /app/import_flow.py
